@@ -185,7 +185,10 @@ def evidence_audio(evidence_id: str) -> Response:
     if record.get("kind") != "audio":
         raise HTTPException(400, "evidence item is not audio")
     ext = Path(record.get("source", "")).suffix.lower()
-    media = {".mp3": "audio/mpeg", ".flac": "audio/flac", ".m4a": "audio/mp4"}.get(ext, "audio/wav")
+    media = {".mp3": "audio/mpeg", ".flac": "audio/flac", ".m4a": "audio/mp4",
+             ".mp4": "audio/mp4", ".aac": "audio/aac", ".ogg": "audio/ogg",
+             ".opus": "audio/ogg", ".webm": "audio/webm", ".amr": "audio/amr",
+             ".3gp": "audio/3gpp", ".wma": "audio/x-ms-wma"}.get(ext, "audio/wav")
     return Response(blob, media_type=media)
 
 

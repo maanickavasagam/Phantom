@@ -18,7 +18,10 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 
-SUPPORTED_FORMATS = {".wav", ".mp3", ".flac", ".m4a"}
+# Phone recorders and messaging apps: WhatsApp voice notes are .opus/.ogg, many
+# Android recorders save .amr/.3gp/.aac. ffmpeg converts all of them.
+SUPPORTED_FORMATS = {".wav", ".mp3", ".flac", ".m4a", ".ogg", ".opus", ".aac", ".amr", ".3gp",
+                     ".webm", ".mp4", ".wma"}
 MAX_DURATION_S = 600  # 10 minutes, per docs/ECHO_SCOPE.md
 TARGET_SAMPLE_RATE = 16000
 SILENCE_RMS_THRESHOLD = 1e-4
