@@ -72,6 +72,32 @@ python -m phantom.echo.evaluate librispeech --root data/raw/LibriSpeech/test-cle
 ```
 See `docs/ECHO_EVAL.md` for the per-condition table, label audit and limitations.
 
+## BLACKBOX: safe website investigation
+Open **BLACKBOX · Web** in the demo, pick a local test site, choose a strategy (neural ranker,
+fixed rules or random) and a budget. A headless browser locked to 127.0.0.1 explores the site
+and reports planted scam behaviours, with screenshots and the click-by-click trace. Live websites
+are out of scope.
+
+On 24 held-out sites with themes never seen in training (12-action budget, 5 trials), the
+share of planted behaviours found was:
+
+| Strategy | Found |
+|---|---|
+| Random | 12% |
+| Fixed rules | 41% |
+| **Neural ranker** | **45%** |
+| Oracle (upper bound) | 71% |
+
+No strategy reported a false positive. The ranker beats random clearly (p < 0.001), but its edge
+over the fixed rules is **not statistically significant** (p = 0.14).
+
+```bash
+python -m playwright install chromium
+python -m phantom.blackbox.sites --out data/blackbox_sites
+python -m phantom.blackbox.evaluate --trials 5
+```
+See `docs/BLACKBOX_EVAL.md`.
+
 ## Layout
 ```
 docs/            SCOPE.md, DATASET_AUDIT.md, MIRAGE_EVAL.md, ECHO_SCOPE.md, ECHO_EVAL.md
@@ -84,9 +110,10 @@ phantom/echo/    ingestion, Whisper transcription, claim extraction, indicators,
 phantom/api/static/  single-page demo UI for MIRAGE + ECHO + evaluation (served at /)
 data/demo/       7 synthetic invoice demo cases + manifest with ground truth
 data/demo_echo/  7 scripted demo calls + manifest with ground truth
-phantom/blackbox/(Phase 4)
+phantom/blackbox/ synthetic sites, safe Playwright browser, detectors, explorer strategies,
+                 neural action ranker, evaluation, investigation API
 phantom/api/     FastAPI app: /health, /mirage/analyze, /echo/analyze (full pipelines),
-                 /blackbox/investigate (mock), /evidence/{id}[/image|/audio]
+                 /blackbox/investigate, /evidence/{id}[/image|/audio]
 tests/           pytest suite
 ```
 

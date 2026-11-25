@@ -1,0 +1,16 @@
+{
+  "hidden": [
+    32
+  ],
+  "alpha": 0.01,
+  "val_discovery": 0.556,
+  "n_examples": 14645,
+  "pos_rate": 0.21,
+  "val_fixed_rule": 0.506,
+  "val_random": 0.086,
+  "fit_sites": 32,
+  "val_sites": 8,
+  "budget": 12,
+  "trained_on": "TRAIN-theme sites only (shop, bank, lottery, courier, jobs)",
+  "features": "observable only: link text (hashed words + simple cues), page region, form fields, visit counts, depth, budget used, behaviours found"
+}

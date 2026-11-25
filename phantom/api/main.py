@@ -1,4 +1,4 @@
-"""FastAPI app. MIRAGE and ECHO are complete pipelines; BLACKBOX is still a mock."""
+"""FastAPI app: MIRAGE, ECHO and BLACKBOX pipelines, evidence store, demo UI."""
 
 from __future__ import annotations
 
@@ -12,6 +12,8 @@ import numpy as np
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, Response
 
+from phantom.blackbox.investigate import investigate as bb_investigate
+from phantom.blackbox.investigate import list_sites as bb_list_sites
 from phantom.common.evidence_store import EvidenceStore
 from phantom.common.schemas import ModuleName, ToolResult
 from phantom.echo.analyze import analyze_audio
@@ -25,6 +27,7 @@ store = EvidenceStore(REPO_ROOT / "evidence_store")
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 DEMO_DIR = REPO_ROOT / "data" / "demo"
 ECHO_DEMO_DIR = REPO_ROOT / "data" / "demo_echo"
+BLACKBOX_ROOT = REPO_ROOT / "data" / "blackbox_sites"  # generated: python -m phantom.blackbox.sites
 EVAL_FILES = {
     "holdout_hard": REPO_ROOT / "docs" / "mirage_eval_holdout_hard.json",
     "holdout_hard_final": REPO_ROOT / "docs" / "mirage_eval_holdout_hard_final.json",
@@ -40,6 +43,7 @@ EVAL_FILES = {
     "echo_public": REPO_ROOT / "docs" / "echo_eval_public.json",
     "echo_public_frozen": REPO_ROOT / "docs" / "echo_eval_public_frozen.json",
     "echo_hybrid": REPO_ROOT / "docs" / "echo_eval_hybrid.json",
+    "blackbox": REPO_ROOT / "docs" / "blackbox_eval.json",
 }
 # Real receipts are third-party data (Find it again!): never committed, served only
 # from a local download (data/raw/findit2), listed by docs/findit_demo_cases.json.
@@ -133,14 +137,6 @@ def mirage_verdict(result: ToolResult) -> dict:
     return {"verdict": overall_outcome(result).value}
 
 
-def _mock(module: ModuleName) -> ToolResult:
-    return ToolResult(
-        module=module,
-        limitations=["mock endpoint: module not implemented yet"],
-        needs_human_review=True,
-    )
-
-
 @app.post("/echo/analyze", response_model=ToolResult)
 async def echo_analyze(file: UploadFile = File(...)) -> ToolResult:
     """Full ECHO pipeline: validate audio, transcribe locally (Whisper), extract
@@ -193,8 +189,37 @@ def evidence_audio(evidence_id: str) -> Response:
 
 
 @app.post("/blackbox/investigate", response_model=ToolResult)
-def blackbox_investigate() -> ToolResult:
-    return _mock(ModuleName.BLACKBOX)
+def blackbox_investigate(site: str = "", strategy: str = "learned", budget: int = 12,
+                         seed: int = 0) -> ToolResult:
+    """Explore one LOCAL synthetic test site with a safe, budgeted headless browser.
+    Live websites are out of scope. See docs/BLACKBOX_EVAL.md."""
+    if strategy not in ("learned", "fixed_rule", "random"):
+        raise HTTPException(400, "strategy must be learned, fixed_rule or random")
+    return bb_investigate(BLACKBOX_ROOT, site, store, strategy, budget, seed)
+
+
+@app.get("/blackbox/sites")
+def blackbox_sites() -> dict:
+    """Local synthetic test sites. Ground truth is shown only for the demo's
+    'planted behaviours' toggle and is never given to the explorer."""
+    sites = []
+    for s in bb_list_sites(BLACKBOX_ROOT):
+        truth = json.loads((BLACKBOX_ROOT / "truth" / f"{s['id']}.json").read_text())
+        sites.append({**s, "n_pages": truth["n_pages"],
+                      "planted": [{"type": b["type"], "page": b["page"]}
+                                  for b in truth["planted"]]})
+    return {"sites": sites}
+
+
+@app.get("/evidence/{evidence_id}/png")
+def evidence_png(evidence_id: str) -> Response:
+    try:
+        blob, record = store.get(evidence_id)
+    except KeyError as e:
+        raise HTTPException(404, "evidence not found") from e
+    if record.get("kind") != "screenshot":
+        raise HTTPException(400, "evidence item is not a screenshot")
+    return Response(blob, media_type="image/png")
 
 
 @app.get("/evidence/{evidence_id}")

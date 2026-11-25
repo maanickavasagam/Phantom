@@ -79,5 +79,8 @@ def test_echo_analyze_bad_audio(tmp_path, monkeypatch):
     assert body["errors"][0]["code"] == "ingest_failed"
 
 
-def test_blackbox_mock():
-    assert client.post("/blackbox/investigate").json()["module"] == "blackbox"
+def test_blackbox_rejects_non_local_sites():
+    body = client.post("/blackbox/investigate", params={"site": "https://example.com"}).json()
+    assert body["module"] == "blackbox" and body["errors"][0]["code"] == "unknown_site"
+    assert client.post("/blackbox/investigate",
+                       params={"site": "x", "strategy": "evil"}).status_code == 400
