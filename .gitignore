@@ -1,0 +1,35 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+evidence_store/
+data/raw/
+*.pt
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Virtual environments
+venv/
+env/
+
+# Python and IDE
+*.py[cod]
+.vscode/
+.idea/
+
+# Testing and temporary files
+.coverage
+htmlcov/
+*.log
+.DS_Store
+Thumbs.db.env
+.env.*
+!.env.example
+venv/
+env/
+.vscode/
+.idea/
+*.log

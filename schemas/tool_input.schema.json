@@ -1,0 +1,59 @@
+{
+  "$defs": {
+    "ModuleName": {
+      "enum": [
+        "mirage",
+        "echo",
+        "blackbox"
+      ],
+      "title": "ModuleName",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "module": {
+      "$ref": "#/$defs/ModuleName"
+    },
+    "input_path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Input Path"
+    },
+    "target_url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Target Url"
+    },
+    "options": {
+      "additionalProperties": true,
+      "title": "Options",
+      "type": "object"
+    },
+    "timeout_s": {
+      "default": 60.0,
+      "exclusiveMinimum": 0,
+      "maximum": 600,
+      "title": "Timeout S",
+      "type": "number"
+    }
+  },
+  "required": [
+    "module"
+  ],
+  "title": "ToolInput",
+  "type": "object"
+}

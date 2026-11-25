@@ -1,0 +1,193 @@
+{
+  "$defs": {
+    "EvidenceRef": {
+      "properties": {
+        "evidence_id": {
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "kind": {
+          "description": "e.g. page_region, transcript_segment, screenshot, action_trace",
+          "title": "Kind",
+          "type": "string"
+        },
+        "locator": {
+          "additionalProperties": true,
+          "description": "page/bbox, start/end s, url",
+          "title": "Locator",
+          "type": "object"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "kind"
+      ],
+      "title": "EvidenceRef",
+      "type": "object"
+    },
+    "Finding": {
+      "properties": {
+        "finding_id": {
+          "title": "Finding Id",
+          "type": "string"
+        },
+        "check": {
+          "title": "Check",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "outcome": {
+          "$ref": "#/$defs/Outcome"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "uncertainty": {
+          "$ref": "#/$defs/Uncertainty"
+        }
+      },
+      "required": [
+        "check",
+        "description",
+        "outcome",
+        "evidence",
+        "uncertainty"
+      ],
+      "title": "Finding",
+      "type": "object"
+    },
+    "ModuleName": {
+      "enum": [
+        "mirage",
+        "echo",
+        "blackbox"
+      ],
+      "title": "ModuleName",
+      "type": "string"
+    },
+    "Outcome": {
+      "enum": [
+        "suspicious",
+        "benign",
+        "inconclusive"
+      ],
+      "title": "Outcome",
+      "type": "string"
+    },
+    "ToolError": {
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "recoverable": {
+          "default": true,
+          "title": "Recoverable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "ToolError",
+      "type": "object"
+    },
+    "Uncertainty": {
+      "properties": {
+        "confidence": {
+          "description": "Module-local, uncalibrated score",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "calibrated": {
+          "default": false,
+          "title": "Calibrated",
+          "type": "boolean"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "confidence"
+      ],
+      "title": "Uncertainty",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "module": {
+      "$ref": "#/$defs/ModuleName"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "findings": {
+      "items": {
+        "$ref": "#/$defs/Finding"
+      },
+      "title": "Findings",
+      "type": "array"
+    },
+    "evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "errors": {
+      "items": {
+        "$ref": "#/$defs/ToolError"
+      },
+      "title": "Errors",
+      "type": "array"
+    },
+    "needs_human_review": {
+      "default": true,
+      "title": "Needs Human Review",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "module"
+  ],
+  "title": "ToolResult",
+  "type": "object"
+}
