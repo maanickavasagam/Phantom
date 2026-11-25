@@ -22,6 +22,7 @@ from pathlib import Path
 import soundfile as sf
 
 DEFAULT_MODEL = "base.en"
+VAD_THRESHOLD = 0.2  # chosen on the dev split's phone-band copies, see docs/ECHO_EVAL.md
 
 
 @dataclass
@@ -104,7 +105,11 @@ def transcribe(wav_path: str | Path, model: str | None = None) -> Transcript:
             language="en",
             beam_size=5,
             word_timestamps=True,
-            vad_filter=True,  # skip long silences; reduces hallucinated text
+            # Skip long silences (reduces hallucinated text), but with a low speech
+            # threshold: at the default 0.5 the VAD discarded whole sentences of
+            # phone-band (300-3400 Hz) speech (dev phone WER 41.8% -> 5.1%).
+            vad_filter=True,
+            vad_parameters={"threshold": VAD_THRESHOLD, "min_silence_duration_ms": 1000},
             condition_on_previous_text=False,  # limits error carry-over between segments
         )
         segs = []

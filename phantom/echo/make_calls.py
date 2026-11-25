@@ -333,7 +333,7 @@ def _phone_band(x: np.ndarray) -> np.ndarray:
     return np.clip(np.interp(np.arange(len(x)) / 2, np.arange(len(y8)), y8), -1, 1).astype(np.float32)
 
 
-def main(out: str, fills: int, seed: int) -> None:
+def main(out: str, fills: int, seed: int, dev_variants: bool = False) -> None:
     out_dir = Path(out)
     out_dir.mkdir(parents=True, exist_ok=True)
     rng, nrng = random.Random(seed), np.random.default_rng(seed)
@@ -365,6 +365,10 @@ def main(out: str, fills: int, seed: int) -> None:
         if c["split"] == "test":
             variants += [("snr10", _add_noise(audio, 10, nrng)), ("snr5", _add_noise(audio, 5, nrng)),
                          ("phone", _phone_band(audio))]
+        elif dev_variants:
+            # Dev-only degraded copies for tuning (e.g. the VAD threshold); added after
+            # the first test run, so they are opt-in to keep the default set unchanged.
+            variants.append(("phone", _phone_band(audio)))
         for cond, a in variants:
             name = f"{c['id']}_{cond}.wav"
             sf.write(out_dir / name, a, 16000)
@@ -380,5 +384,7 @@ if __name__ == "__main__":
     ap.add_argument("--out", default="data/echo_calls")
     ap.add_argument("--fills", type=int, default=3, help="slot fillings per family and phrasing")
     ap.add_argument("--seed", type=int, default=4)
+    ap.add_argument("--dev-variants", action="store_true",
+                    help="also write phone-band copies of dev calls (for tuning)")
     a = ap.parse_args()
-    main(a.out, a.fills, a.seed)
+    main(a.out, a.fills, a.seed, a.dev_variants)

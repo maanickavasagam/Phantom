@@ -36,6 +36,7 @@ env/
 
 # Week 3: large generated eval sets (reproducible from their seeds, see docs/MIRAGE_EVAL.md)
 data/echo_calls/
+data/echo_calls_devphone/
 data/dev_hard/
 data/holdout_hard/
 .eval_ev/

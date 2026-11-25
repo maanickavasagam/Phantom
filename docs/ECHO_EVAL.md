@@ -42,20 +42,49 @@ Each family has two wordings. Wording 0 is the dev split, wording 1 is the test 
 test calls never reuse dev phrasing. Test calls are also scored with white noise at 10 and
 5 dB SNR, and through a simulated 8 kHz phone line.
 
-### Held-out test results (run once, as recorded)
+### Held-out test results (current pipeline: second test run, after a dev-only fix)
 
 | Audio | Calls | Claim P | Claim R | **Claim F1** | Scam P / R | FP rate (genuine) | WER |
 |---|---|---|---|---|---|---|---|
-| **Clean** | 42 | 0.77 | 0.90 | **0.83** | **1.00 / 1.00** | **0.00** | 2.2% |
-| Noise 10 dB | 42 | 0.74 | 0.85 | 0.80 | 1.00 / 1.00 | 0.00 | 3.8% |
+| **Clean** | 42 | 0.78 | 0.92 | **0.85** | **1.00 / 1.00** | **0.00** | 4.6% |
+| Noise 10 dB | 42 | 0.75 | 0.86 | 0.80 | 1.00 / 1.00 | 0.00 | 3.7% |
 | Noise 5 dB | 42 | 0.75 | 0.86 | 0.80 | 1.00 / 1.00 | 0.00 | 4.7% |
-| Phone line (8 kHz) | 42 | 0.72 | 0.50 | 0.59 | 1.00 / 0.46 | 0.00 | 35.9% |
+| **Phone line (8 kHz)** | 42 | 0.75 | 0.86 | **0.80** | **1.00 / 1.00** | **0.00** | **3.3%** |
 
-Targets (`SCOPE.md`): claim F1 ≥ 0.70, met for clean and noisy audio; degrade gracefully on
-noisy audio. On phone-band audio ECHO misses more, but it never raises a false alarm.
+Targets (`SCOPE.md`): claim F1 ≥ 0.70, met in **every** condition; degrade gracefully on noisy
+audio.
 
-Dev split, for reference (tuning set, clean): claim F1 0.97, scam detection 24/24,
-0 false alarms.
+**Phone-line fix (VAD threshold).** The first test run (`docs/echo_eval_calls_test_v1.json`)
+scored claim F1 0.59, scam recall 11/24 and WER 35.9% on phone-band audio. The cause was not
+recognition: Whisper's voice-activity filter (Silero VAD, default threshold 0.5) dropped
+whole sentences of band-limited speech as "silence". We diagnosed and tuned this **only on
+phone-band copies of the dev calls** (`make_calls --dev-variants`):
+
+| Dev phone copies | WER | Claim F1 | Scams caught |
+|---|---|---|---|
+| VAD threshold 0.5 (default) | 46.9% | 0.51 | 10 / 24 |
+| VAD off | 5.9%* | – | – |
+| **VAD threshold 0.2, min silence 1 s** | **3.2%** | **0.94** | **24 / 24** |
+
+\*On 10 calls. We kept a low-threshold VAD rather than turning it off, because skipping true
+silence prevents Whisper from inventing text in gaps.
+
+We then re-ran the test split once. This is a second look at the test set, so both runs are
+reported:
+
+| Test split | Run 1 (original) | Run 2 (VAD fix) |
+|---|---|---|
+| Phone: claim F1 / scams caught / WER | 0.59 / 11 of 24 / 35.9% | **0.80 / 24 of 24 / 3.3%** |
+| Clean: claim F1 / WER | 0.83 / 2.2% | 0.85 / 4.6% |
+| Noise 10 dB: claim F1 | 0.80 | 0.80 |
+| Noise 5 dB: claim F1 | 0.80 | 0.80 |
+| LibriSpeech WER | 5.3% | 5.3% (unchanged) |
+
+Clean-audio WER rose slightly (2.2% → 4.6%). The more sensitive filter now passes a little
+non-speech audio, which Whisper occasionally transcribes. Claim accuracy still improved.
+
+Dev split, for reference (tuning set): clean claim F1 0.97, phone claim F1 0.94, scam
+detection 24/24 in both, 0 false alarms.
 
 ### Label audit (stated separately, not the headline)
 
@@ -65,12 +94,12 @@ department"), but which the generator forgot to include in the expected claims. 
 annotation error in *our* ground truth. With only those labels added (listed in
 `docs/echo_eval_label_audit.json`), claim F1 is:
 
-| Audio | Claim F1 (as recorded) | Claim F1 (labels corrected) |
+| Audio (run 2) | Claim F1 (as recorded) | Claim F1 (labels corrected) |
 |---|---|---|
-| Clean | 0.83 | 0.92 |
-| Noise 10 dB | 0.80 | 0.89 |
+| Clean | 0.85 | 0.93 |
+| Noise 10 dB | 0.80 | 0.90 |
 | Noise 5 dB | 0.80 | 0.89 |
-| Phone line | 0.59 | 0.72 |
+| Phone line | 0.80 | 0.89 |
 
 The as-recorded numbers above remain the official result. The generator is fixed for future
 runs (see next steps).
@@ -93,9 +122,9 @@ runs (see next steps).
   numbers as an upper bound until the team records real scripted calls (as planned in the
   scope doc). The generator and evaluator work unchanged on recorded WAVs with a
   `labels.json`.
-- **Phone-quality audio** (8 kHz) roughly halves recall with `base.en`. A larger Whisper model
-  (`small.en`) or a phone-band fine-tune is the obvious next step: set
-  `ECHO_WHISPER_MODEL=small.en`.
+- **Phone-quality audio** is now handled with the low-threshold VAD (claim F1 0.80 on test).
+  Our phone simulation is a clean band-limit, though. Real phone lines add codec artefacts and
+  packet loss, which a larger model (`ECHO_WHISPER_MODEL=small.en`) would handle better.
 - **Name spelling.** Whisper misspells proper nouns ("ICICI" → "ISISI", "Meera" → "Mira"). The
   evaluation scores names leniently (≥ 0.8 similarity, or the transcribed name containing the
   expected one); all other claim types must match exactly.
@@ -107,5 +136,5 @@ runs (see next steps).
 
 - Record 20–30 real scripted calls (team members, consented) and run the same evaluator.
 - Fix the generator labels for organisation mentions, then regenerate.
-- Try `small.en` on the phone condition; add a 3-tier verdict with "inconclusive" for single
+- Try `small.en` on real phone recordings; add a 3-tier verdict with "inconclusive" for single
   weak indicators if reviewers want them surfaced.

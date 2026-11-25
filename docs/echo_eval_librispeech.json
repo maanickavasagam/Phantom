@@ -2,5 +2,5 @@
   "n_utterances": 200,
   "audio_minutes": 27.0,
   "wer": 0.0525,
-  "real_time_factor": 0.154
+  "real_time_factor": 0.131
 }

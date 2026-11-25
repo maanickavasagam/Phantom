@@ -640,8 +640,9 @@ function echoEvalCard(ev) {
       </div>
       <table><tr><th>Audio</th><th class="num">Calls</th><th class="num">Claim P</th><th class="num">Claim R</th><th class="num">Claim F1</th>
         <th class="num">Scam P / R</th><th class="num">FP rate</th><th class="num">WER</th></tr>${rows}</table>
-      <p class="note-muted" style="margin:10px 0 0">Phone-band audio is the weak spot: recognition errors rise sharply, so ECHO finds fewer claims (it still raises no false alarms).
-      Some name "errors" are missing labels in our generated ground truth; see docs/ECHO_EVAL.md for the corrected-label numbers.</p></div></div>`;
+      <p class="note-muted" style="margin:10px 0 0">Phone-line audio was fixed by lowering the voice-activity threshold, tuned on dev copies only
+      (first test run: claim F1 0.59, 11/24 scams; second run: 0.80, 24/24). Some name "errors" are missing labels in our generated
+      ground truth; see docs/ECHO_EVAL.md for both runs and the corrected-label numbers.</p></div></div>`;
 }
 let evalDone = false;
 const f2 = v => (v ?? 0).toFixed(2);

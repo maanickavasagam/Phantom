@@ -51,9 +51,10 @@ be. It then flags strong indicators (credential requests, gift cards / crypto / 
 apps) and combinations of pressure tactics. Claims are marked on the audio timeline, and
 every finding links to its timestamp.
 
-Held-out scripted calls (run once): **claim F1 0.83 on clean audio, 0.80 with 5–10 dB noise;
-all scam calls caught with 0 false alarms**. Speech recognition: **WER 5.3% on LibriSpeech
-test-clean** (target ≤ 15%). Phone-band audio is the weak spot (claim F1 0.59).
+Held-out scripted calls: **claim F1 0.85 on clean audio and 0.80 with noise or over a simulated
+phone line; all scam calls caught with 0 false alarms in every condition**. Speech recognition:
+**WER 5.3% on LibriSpeech test-clean** (target ≤ 15%). The phone-line result comes from a
+second test run after a dev-only VAD fix; both runs are in `docs/ECHO_EVAL.md`.
 ```bash
 python -m phantom.echo.make_calls --out data/echo_calls --fills 3
 python -m phantom.echo.evaluate calls --split test
