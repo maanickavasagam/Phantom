@@ -19,6 +19,30 @@ def test_mirage_analyze_and_evidence(doc_png, tmp_path, monkeypatch):
     assert ev["integrity_ok"]
 
 
+def test_demo_ui_and_cases():
+    assert "MIRAGE" in client.get("/").text
+    cases = client.get("/demo/cases").json()["cases"]
+    assert cases, "data/demo/manifest.json should list demo cases"
+    assert client.get(f"/demo/cases/{cases[0]['file']}").status_code == 200
+    assert client.get("/demo/cases/..%2Fmanifest.json").status_code == 404
+    assert client.get("/demo/cases/does_not_exist.png").status_code == 404
+
+
+def test_page_evidence_renders_and_verdict(doc_png, tmp_path, monkeypatch):
+    monkeypatch.setattr(main, "store", main.EvidenceStore(tmp_path / "ev"))
+    body = client.post("/mirage/analyze", files={"file": ("doc.png", doc_png.read_bytes())}).json()
+    doc_id, page_id = body["evidence_ids"][:2]
+    img = client.get(f"/evidence/{page_id}/image")
+    assert img.status_code == 200 and img.headers["content-type"] == "image/png"
+    assert client.get(f"/evidence/{doc_id}/image").status_code == 400  # not a rendered page
+    verdict = client.post("/mirage/verdict", json=body).json()["verdict"]
+    assert verdict in ("benign", "inconclusive", "suspicious")
+
+
+def test_mirage_eval_endpoint():
+    assert isinstance(client.get("/mirage/eval").json(), dict)
+
+
 def test_mirage_bad_type(tmp_path, monkeypatch):
     monkeypatch.setattr(main, "store", main.EvidenceStore(tmp_path / "ev"))
     body = client.post("/mirage/analyze", files={"file": ("x.docx", b"abc")}).json()

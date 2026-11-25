@@ -13,13 +13,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import tempfile
 import time
 from dataclasses import dataclass
 from pathlib import Path
 
 from phantom.common.evidence_store import EvidenceStore
 from phantom.common.schemas import Outcome
-from phantom.mirage.analyze import analyze_document
+from phantom.mirage.analyze import analyze_document, overall_outcome
 
 
 @dataclass
@@ -28,11 +29,37 @@ class EvalRow:
     label: str
     predicted_suspicious: bool
     runtime_s: float
+    attack: str | None = None  # manipulation type (+ variant) for suspicious docs
+    checks_fired: tuple[str, ...] = ()
+
+
+def _attack_name(entry: dict) -> str | None:
+    """Manipulation type from either label format (make_samples / make_hard_samples)."""
+    if entry["label"] != "suspicious":
+        return None
+    m = entry.get("manipulation")
+    if m:
+        variant = "consistent" if m.get("arithmetic_consistent") else "inconsistent"
+        return f"{m['type']} ({m['stage']}, {variant})"
+    regions = entry.get("regions") or [{}]
+    return regions[0].get("type", "unknown")
+
+
+def _recall_by_attack(rows: list[EvalRow]) -> dict[str, dict]:
+    out: dict[str, dict] = {}
+    for r in rows:
+        if r.attack is None:
+            continue
+        d = out.setdefault(r.attack, {"n": 0, "caught": 0})
+        d["n"] += 1
+        d["caught"] += int(r.predicted_suspicious)
+    for d in out.values():
+        d["recall"] = round(d["caught"] / d["n"], 3)
+    return dict(sorted(out.items()))
 
 
 def _predict(result) -> bool:
-    non_quality = [f for f in result.findings if f.check not in ("input_quality", "ocr_confidence")]
-    return any(f.outcome != Outcome.BENIGN for f in non_quality)
+    return overall_outcome(result) != Outcome.BENIGN
 
 
 def evaluate(
@@ -49,7 +76,10 @@ def evaluate(
         start = time.perf_counter()
         result = analyze_document(samples_dir / entry["file"], store, source=entry["file"])
         elapsed = time.perf_counter() - start
-        rows.append(EvalRow(entry["file"], entry["label"], _predict(result), round(elapsed, 3)))
+        fired = tuple(sorted({f.check for f in result.findings
+                              if f.outcome != Outcome.BENIGN and f.check != "overall"}))
+        rows.append(EvalRow(entry["file"], entry["label"], _predict(result), round(elapsed, 3),
+                            _attack_name(entry), fired))
 
     tp = sum(1 for r in rows if r.label == "suspicious" and r.predicted_suspicious)
     fn = sum(1 for r in rows if r.label == "suspicious" and not r.predicted_suspicious)
@@ -71,6 +101,9 @@ def evaluate(
         "f1": round(f1, 3),
         "false_positive_rate": round(false_positive_rate, 3),
         "mean_runtime_s": round(mean_runtime, 3),
+        "recall_by_attack": _recall_by_attack(rows),
+        "false_positive_files": [r.file for r in rows
+                                 if r.label == "benign" and r.predicted_suspicious],
         "rows": [r.__dict__ for r in rows],
     }
 
@@ -80,7 +113,10 @@ if __name__ == "__main__":
     ap.add_argument("--samples", default="data/samples")
     ap.add_argument("--holdout-template", type=int, default=None,
                      help="evaluate only this template family, simulating a held-out source")
-    ap.add_argument("--evidence-dir", default="/tmp/mirage_eval_evidence")
+    ap.add_argument("--evidence-dir", default=str(Path(tempfile.gettempdir()) / "mirage_eval"))
+    ap.add_argument("--json-out", default=None, help="also write full metrics (with rows) here")
     args = ap.parse_args()
     metrics = evaluate(args.samples, args.holdout_template, args.evidence_dir)
     print(json.dumps({k: v for k, v in metrics.items() if k != "rows"}, indent=2))
+    if args.json_out:
+        Path(args.json_out).write_text(json.dumps(metrics, indent=2))

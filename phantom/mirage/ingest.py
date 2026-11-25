@@ -39,6 +39,22 @@ class Page:
     image: np.ndarray  # grayscale, normalized
     rotation_corrected_deg: float
     quality: QualityReport
+    # Grayscale page at its original resolution, before deskew/resize. Pixel-exact
+    # checks (copy-move) need it: resampling destroys exact duplicates.
+    original: np.ndarray | None = None
+    # 2x3 affine matrix mapping original-pixel coordinates to `image` coordinates.
+    to_normalized: np.ndarray | None = None
+
+    def map_bbox(self, bbox: tuple[int, int, int, int]) -> tuple[int, int, int, int]:
+        """Map an (x, y, w, h) box from original pixels to normalized-page pixels."""
+        if self.to_normalized is None:
+            return bbox
+        x, y, w, h = bbox
+        corners = np.array([[x, y, 1], [x + w, y, 1], [x, y + h, 1], [x + w, y + h, 1]], float)
+        pts = corners @ self.to_normalized.T
+        x0, y0 = pts.min(axis=0)
+        x1, y1 = pts.max(axis=0)
+        return int(round(x0)), int(round(y0)), int(round(x1 - x0)), int(round(y1 - y0))
 
 
 def load_images(path: str | Path) -> list[np.ndarray]:
@@ -74,50 +90,86 @@ def quality_check(gray: np.ndarray) -> QualityReport:
         issues.append("low_resolution")
     if blur < BLUR_THRESHOLD:
         issues.append("possibly_blurry")
+    ink_fraction = float((gray < 128).mean())
     if brightness < 60:
         issues.append("too_dark")
-    elif brightness > 250:
+    elif ink_fraction < 0.001:
+        # A normal invoice is mostly white paper (mean brightness > 250 is
+        # typical), so "blank" means almost no ink, not a bright page.
         issues.append("nearly_blank")
     return QualityReport(w, h, round(blur, 2), round(brightness, 2), issues)
 
 
+MAX_SKEW_DEG = 8.0
+
+
+def _profile_score(binary: np.ndarray, angle: float) -> float:
+    """How 'line-like' the page is when rotated by angle: text rows give sharp
+    peaks in the horizontal projection, so the sum of squared row-to-row
+    differences is largest when the lines are exactly horizontal."""
+    h, w = binary.shape
+    m = cv2.getRotationMatrix2D((w / 2, h / 2), angle, 1.0)
+    rotated = cv2.warpAffine(binary, m, (w, h), flags=cv2.INTER_NEAREST, borderValue=0)
+    profile = rotated.sum(axis=1, dtype=np.float64)
+    return float(np.sum(np.diff(profile) ** 2))
+
+
 def estimate_skew(gray: np.ndarray) -> float:
-    """Estimate small skew angle (degrees) from text pixels using minAreaRect."""
+    """Estimate small skew angle (degrees) by projection-profile search.
+
+    Returns the rotation to pass to deskew(). Replaces the Day 7 minAreaRect
+    estimate, which (a) flipped upright pages by 90 deg under OpenCV >= 4.5's
+    angle convention and (b) left ~0.5 deg of residual skew on noisy scans,
+    enough to shift a right-hand amount column ~8 px off its row labels.
+    """
     _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
-    coords = np.column_stack(np.where(binary > 0))
-    if len(coords) < 50:
+    if int((binary > 0).sum()) < 50:
         return 0.0
-    angle = cv2.minAreaRect(coords[:, ::-1].astype(np.float32))[-1]
-    if angle > 45:
-        angle -= 90
-    return float(angle)
+    scale = 800.0 / max(binary.shape)
+    small = cv2.resize(binary, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+    small = (small > 64).astype(np.float32)
+    coarse = np.arange(-MAX_SKEW_DEG, MAX_SKEW_DEG + 1e-6, 0.25)
+    best = max(coarse, key=lambda a: _profile_score(small, a))
+    fine = np.arange(best - 0.3, best + 0.3 + 1e-6, 0.05)
+    best = max(fine, key=lambda a: _profile_score(small, a))
+    return round(float(best), 2)
 
 
 def deskew(gray: np.ndarray, angle: float) -> np.ndarray:
-    if abs(angle) < 0.3:
+    if abs(angle) < 0.1:
         return gray
     h, w = gray.shape
     m = cv2.getRotationMatrix2D((w / 2, h / 2), angle, 1.0)
-    return cv2.warpAffine(gray, m, (w, h), flags=cv2.INTER_CUBIC, borderValue=255)
+    # Fill exposed corners with the page's own paper tone, not pure white, so the
+    # background checks don't see bright triangles on a grey scan.
+    paper = int(np.median(gray))
+    return cv2.warpAffine(gray, m, (w, h), flags=cv2.INTER_CUBIC, borderValue=paper)
 
 
-def normalize(img: np.ndarray) -> tuple[np.ndarray, float]:
+def normalize(img: np.ndarray) -> tuple[np.ndarray, float, np.ndarray]:
+    """Deskew and resize to TARGET_WIDTH. Returns (page, angle, 2x3 transform
+    from original-pixel to normalized-pixel coordinates)."""
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if img.ndim == 3 else img
+    h, w = gray.shape
     angle = estimate_skew(gray)
     gray = deskew(gray, angle)
-    h, w = gray.shape
+    transform = (
+        cv2.getRotationMatrix2D((w / 2, h / 2), angle, 1.0)
+        if abs(angle) >= 0.1 else np.array([[1.0, 0, 0], [0, 1.0, 0]])
+    )
     if w != TARGET_WIDTH:
         scale = TARGET_WIDTH / w
         interp = cv2.INTER_AREA if scale < 1 else cv2.INTER_CUBIC
         gray = cv2.resize(gray, (TARGET_WIDTH, int(h * scale)), interpolation=interp)
-    return gray, angle
+        transform = transform * scale
+    return gray, angle, transform
 
 
 def ingest(path: str | Path) -> list[Page]:
     pages = []
     for i, img in enumerate(load_images(path), start=1):
-        raw_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        raw_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if img.ndim == 3 else img
         quality = quality_check(raw_gray)
-        norm, angle = normalize(img)
-        pages.append(Page(i, norm, round(angle, 2), quality))
+        norm, angle, transform = normalize(img)
+        pages.append(Page(i, norm, round(angle, 2), quality, raw_gray, transform))
     return pages

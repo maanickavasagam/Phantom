@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PHANTOM AI · MIRAGE</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --surface: #ffffff; --surface-2: #f9fafb; --border: #e4e7ec; --border-2: #d0d5dd;
+    --text: #101828; --text-2: #475467; --text-3: #667085;
+    --brand: #3b5bdb; --brand-soft: #eef2ff; --brand-ink: #2f49b6;
+    --sus: #d92d20; --sus-soft: #fef3f2; --sus-line: #fda29b;
+    --inc: #b54708; --inc-soft: #fffaeb; --inc-line: #fec84b;
+    --ok: #067647; --ok-soft: #ecfdf3; --ok-line: #75e0a7;
+    --truth: #7a5af8; --clone: #e8590c;
+    --side: #0f172a; --side-2: #1e293b; --side-text: #cbd5e1; --side-muted: #64748b;
+    --shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
+    --shadow-lg: 0 12px 32px -8px rgba(16,24,40,.18);
+    --radius: 10px;
+    --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font: 14px/1.5 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  button { font: inherit; }
+  .app { display: grid; grid-template-columns: 232px 1fr; height: 100%; }
+
+  /* ---------- sidebar */
+  .side { background: var(--side); color: var(--side-text); display: flex; flex-direction: column; padding: 18px 14px; }
+  .brand { display: flex; gap: 10px; align-items: center; padding: 4px 8px 22px; }
+  .brand .mark { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg,#5c7cfa,#3b5bdb);
+    display: grid; place-items: center; box-shadow: 0 4px 12px rgba(59,91,219,.45); }
+  .brand b { color: #fff; font-size: 15px; letter-spacing: .06em; display: block; line-height: 1.1; }
+  .brand span { font-size: 11px; color: var(--side-muted); letter-spacing: .04em; }
+  .navlabel { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--side-muted); padding: 14px 10px 6px; }
+  .nav { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; color: var(--side-text);
+    cursor: pointer; border: 0; background: none; width: 100%; text-align: left; }
+  .nav:hover { background: var(--side-2); }
+  .nav.active { background: var(--side-2); color: #fff; box-shadow: inset 3px 0 0 #5c7cfa; }
+  .nav svg { width: 17px; height: 17px; opacity: .85; flex: none; }
+  .nav .soon { margin-left: auto; font-size: 10px; color: var(--side-muted); border: 1px solid #334155; border-radius: 99px; padding: 0 6px; }
+  .nav.disabled { cursor: default; opacity: .55; }
+  .nav.disabled:hover { background: none; }
+  .side .foot { margin-top: auto; font-size: 11.5px; color: var(--side-muted); padding: 10px; border-top: 1px solid #1e293b; line-height: 1.5; }
+
+  /* ---------- main */
+  .main { display: flex; flex-direction: column; min-width: 0; height: 100%; }
+  .topbar { height: 60px; flex: none; display: flex; align-items: center; gap: 14px; padding: 0 24px;
+    background: var(--surface); border-bottom: 1px solid var(--border); }
+  .crumbs { color: var(--text-3); font-size: 13px; }
+  .crumbs b { color: var(--text); font-weight: 600; }
+  .grow { flex: 1; }
+  .badge-guard { display: inline-flex; gap: 6px; align-items: center; font-size: 12px; color: var(--text-2);
+    background: var(--surface-2); border: 1px solid var(--border); padding: 4px 10px; border-radius: 99px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border-2); background: var(--surface);
+    color: var(--text); padding: 7px 12px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 13px; box-shadow: var(--shadow); }
+  .btn:hover { background: var(--surface-2); }
+  .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .btn.primary:hover { background: var(--brand-ink); }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .btn svg { width: 15px; height: 15px; }
+  .view { flex: 1; min-height: 0; }
+  .hidden { display: none !important; }
+
+  /* ---------- investigate layout */
+  .inv { display: grid; grid-template-columns: 300px 1fr 430px; height: 100%; }
+  .lib { background: var(--surface); border-right: 1px solid var(--border); overflow-y: auto; padding: 18px 14px; }
+  .lib h3, .insp h3 { font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3);
+    margin: 4px 6px 10px; font-weight: 600; }
+  .seg { display: flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 3px; margin: 0 4px 14px; }
+  .seg button { flex: 1; border: 0; background: none; padding: 5px 6px; border-radius: 6px; cursor: pointer; color: var(--text-2); font-size: 12.5px; font-weight: 500; }
+  .seg button.on { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+  .case { display: flex; gap: 11px; align-items: flex-start; padding: 10px; border-radius: 9px; cursor: pointer; border: 1px solid transparent; margin-bottom: 4px; }
+  .case:hover { background: var(--surface-2); }
+  .case.active { background: var(--brand-soft); border-color: #c7d2fe; }
+  .thumb { width: 38px; height: 48px; flex: none; border-radius: 5px; border: 1px solid var(--border);
+    background: #fff top center / 100% auto no-repeat; box-shadow: var(--shadow); }
+  .case .t { font-weight: 600; font-size: 13px; line-height: 1.3; }
+  .case .s { font-size: 12px; color: var(--text-3); margin-top: 3px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .tag { font-size: 10.5px; font-weight: 600; padding: 1px 7px; border-radius: 99px; border: 1px solid; text-transform: uppercase; letter-spacing: .03em; }
+  .tag.sus { color: var(--sus); background: var(--sus-soft); border-color: var(--sus-line); }
+  .tag.ok { color: var(--ok); background: var(--ok-soft); border-color: var(--ok-line); }
+  .tag.inc { color: var(--inc); background: var(--inc-soft); border-color: var(--inc-line); }
+  .tag.neutral { color: var(--text-2); background: var(--surface-2); border-color: var(--border); }
+  .drop { margin: 16px 4px 4px; border: 1.5px dashed var(--border-2); border-radius: 10px; padding: 18px 12px; text-align: center;
+    color: var(--text-3); cursor: pointer; background: var(--surface-2); font-size: 12.5px; }
+  .drop b { color: var(--text); display: block; margin: 6px 0 2px; font-size: 13px; }
+  .drop.over { border-color: var(--brand); background: var(--brand-soft); }
+  .drop svg { width: 22px; height: 22px; color: var(--brand); }
+
+  .stagecol { display: flex; flex-direction: column; min-width: 0; }
+  .toolbar { height: 50px; flex: none; display: flex; align-items: center; gap: 10px; padding: 0 16px;
+    border-bottom: 1px solid var(--border); background: var(--surface); }
+  .toolbar .name { font-weight: 600; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 260px; }
+  .tgl { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-2); cursor: pointer; user-select: none; }
+  .tgl input { accent-color: var(--brand); }
+  .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .zoom { display: inline-flex; border: 1px solid var(--border-2); border-radius: 8px; overflow: hidden; }
+  .zoom button { border: 0; background: var(--surface); padding: 4px 9px; cursor: pointer; color: var(--text-2); }
+  .zoom button:hover { background: var(--surface-2); }
+  .zoom span { padding: 4px 8px; font-size: 12px; color: var(--text-2); border-left: 1px solid var(--border); border-right: 1px solid var(--border); min-width: 48px; text-align: center; }
+  .canvas { flex: 1; overflow: auto; padding: 28px; display: flex; justify-content: center; align-items: flex-start;
+    background: #eceef2; background-image: radial-gradient(#d9dce3 1px, transparent 1px); background-size: 18px 18px; }
+  .sheet { position: relative; background: #fff; box-shadow: var(--shadow-lg); border-radius: 3px; flex: none; }
+  .sheet img { display: block; width: 100%; height: auto; border-radius: 3px; }
+  .sheet svg.ov { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .ov rect { fill-opacity: .1; stroke-width: 2.5; vector-effect: non-scaling-stroke; transition: fill-opacity .12s; }
+  .ov rect.suspicious { stroke: var(--sus); fill: var(--sus); }
+  .ov rect.inconclusive { stroke: var(--inc); fill: var(--inc); }
+  .ov rect.sumref { stroke: #6b7cff; fill: none; stroke-width: 1.2; stroke-dasharray: 3 3; }
+  .ov rect.clone { stroke: var(--clone); fill: var(--clone); }
+  .ov rect.truth { stroke: var(--truth); fill: none; stroke-dasharray: 6 4; stroke-width: 2; }
+  .ov line.clone { stroke: var(--clone); stroke-width: 1.6; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }
+  .ov .hl { fill-opacity: .28; stroke-width: 4; }
+  .ov text { font: 700 12px "Segoe UI", sans-serif; paint-order: stroke; stroke: #fff; stroke-width: 3px; }
+  .empty { margin: auto; text-align: center; color: var(--text-3); max-width: 420px; }
+  .empty .ill { width: 72px; height: 72px; border-radius: 18px; background: var(--brand-soft); display: grid; place-items: center; margin: 0 auto 16px; }
+  .empty h2 { color: var(--text); font-size: 17px; margin: 0 0 6px; }
+  .loader { margin: auto; text-align: center; color: var(--text-2); }
+  .loader .steps { margin-top: 14px; text-align: left; display: inline-block; font-size: 13px; }
+  .loader .steps div { padding: 2px 0; color: var(--text-3); }
+  .loader .steps div.on { color: var(--text); font-weight: 500; }
+  .spin { width: 34px; height: 34px; border: 3px solid var(--border); border-top-color: var(--brand); border-radius: 50%;
+    animation: spin .8s linear infinite; margin: 0 auto; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- inspector */
+  .insp { background: var(--surface); border-left: 1px solid var(--border); overflow-y: auto; display: flex; flex-direction: column; }
+  .verdict { margin: 18px 18px 0; border-radius: var(--radius); padding: 16px; border: 1px solid; }
+  .verdict.suspicious { background: var(--sus-soft); border-color: var(--sus-line); }
+  .verdict.inconclusive { background: var(--inc-soft); border-color: var(--inc-line); }
+  .verdict.benign { background: var(--ok-soft); border-color: var(--ok-line); }
+  .verdict .lbl { font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); font-weight: 600; }
+  .verdict .v { display: flex; align-items: center; gap: 10px; font-size: 21px; font-weight: 700; margin: 4px 0 4px; }
+  .verdict.suspicious .v { color: var(--sus); } .verdict.inconclusive .v { color: var(--inc); } .verdict.benign .v { color: var(--ok); }
+  .verdict .v svg { width: 24px; height: 24px; }
+  .verdict p { margin: 0; color: var(--text-2); font-size: 13px; }
+  .gt { margin: 12px 18px 0; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 9px;
+    background: var(--surface-2); border: 1px solid var(--border); font-size: 13px; }
+  .gt .ok { color: var(--ok); font-weight: 600; } .gt .bad { color: var(--sus); font-weight: 600; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); margin: 12px 18px 0; border: 1px solid var(--border); border-radius: 9px; overflow: hidden; }
+  .stats div { padding: 9px 10px; border-right: 1px solid var(--border); }
+  .stats div:last-child { border-right: 0; }
+  .stats b { display: block; font-size: 16px; }
+  .stats span { font-size: 11px; color: var(--text-3); }
+  .story { margin: 12px 18px 0; font-size: 13px; color: var(--text-2); line-height: 1.55; }
+  .tabs { display: flex; gap: 2px; padding: 0 18px; border-bottom: 1px solid var(--border); margin-top: 16px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .tabs button { border: 0; background: none; padding: 10px 10px; cursor: pointer; color: var(--text-3); font-weight: 500; font-size: 13px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tabs button.on { color: var(--brand); border-bottom-color: var(--brand); }
+  .tabs .n { font-size: 11px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 99px; padding: 0 6px; margin-left: 4px; color: var(--text-2); }
+  .pane { padding: 14px 18px 24px; }
+  .fcard { border: 1px solid var(--border); border-radius: 9px; padding: 12px; margin-bottom: 10px; background: var(--surface); box-shadow: var(--shadow); transition: border-color .12s, box-shadow .12s; }
+  .fcard:hover, .fcard.hl { border-color: #a5b4fc; box-shadow: 0 0 0 3px #e0e7ff; }
+  .fcard .h { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .fcard .ic { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; flex: none; }
+  .fcard .ic svg { width: 15px; height: 15px; }
+  .fcard .ic.suspicious { background: var(--sus-soft); color: var(--sus); }
+  .fcard .ic.inconclusive { background: var(--inc-soft); color: var(--inc); }
+  .fcard .ic.benign { background: var(--ok-soft); color: var(--ok); }
+  .fcard .name { font-weight: 600; font-size: 13.5px; }
+  .fcard .d { font-size: 13px; color: var(--text-2); }
+  .fcard .meta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; font-size: 11.5px; color: var(--text-3); }
+  .conf { display: inline-flex; align-items: center; gap: 6px; }
+  .conf i { width: 54px; height: 5px; border-radius: 3px; background: var(--border); overflow: hidden; display: inline-block; }
+  .conf i b { display: block; height: 100%; background: var(--text-2); }
+  .ev { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px; margin-bottom: 8px; font-size: 12.5px; }
+  .ev .id { font-family: var(--mono); font-weight: 600; }
+  .ev .sha { font-family: var(--mono); color: var(--text-3); font-size: 11.5px; grid-column: 1 / -1; word-break: break-all; }
+  .ev .k { color: var(--text-3); }
+  .okline { color: var(--ok); font-weight: 600; display: inline-flex; gap: 4px; align-items: center; }
+  .badline { color: var(--sus); font-weight: 600; }
+  ul.notes { margin: 0; padding-left: 18px; color: var(--text-2); font-size: 13px; }
+  ul.notes li { margin-bottom: 7px; }
+  pre.json { font-family: var(--mono); font-size: 11px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; white-space: pre-wrap; word-break: break-word; max-height: 60vh; overflow: auto; margin: 0; }
+  .note-muted { color: var(--text-3); font-size: 13px; }
+
+  /* ---------- evaluation */
+  .evalv { overflow-y: auto; height: 100%; padding: 28px 32px 48px; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  .ph { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 18px; }
+  .ph h1 { margin: 0; font-size: 22px; letter-spacing: -.01em; }
+  .ph p { margin: 4px 0 0; color: var(--text-3); }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+  .kpi .l { font-size: 12.5px; color: var(--text-3); font-weight: 500; }
+  .kpi .n { font-size: 28px; font-weight: 700; letter-spacing: -.02em; margin-top: 4px; }
+  .kpi .delta { font-size: 12px; margin-top: 2px; color: var(--text-3); }
+  .kpi .delta b { color: var(--ok); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 18px; }
+  .card .ch { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .card .ch h2 { font-size: 15px; margin: 0; }
+  .card .ch p { margin: 0; font-size: 12.5px; color: var(--text-3); }
+  .card .cb { padding: 6px 18px 14px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); font-weight: 600; padding: 10px 8px; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 8px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: 0; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.hero td { background: var(--brand-soft); font-weight: 600; }
+  .bar { display: inline-block; width: 140px; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; vertical-align: middle; margin-right: 10px; }
+  .bar b { display: block; height: 100%; background: var(--brand); border-radius: 4px; }
+  .bar.red b { background: var(--sus); }
+  .callout { border-left: 3px solid var(--brand); background: var(--brand-soft); padding: 12px 14px; border-radius: 0 8px 8px 0; color: var(--text-2); font-size: 13px; margin: 0 0 18px; }
+  .callout.warn { border-color: var(--inc); background: var(--inc-soft); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .pill-check { font-family: var(--mono); font-size: 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; }
+
+  @media print {
+    .side, .topbar, .lib, .toolbar, .tabs, .btn { display: none !important; }
+    .app, .inv { display: block; height: auto; }
+    .canvas { background: none; padding: 0; overflow: visible; }
+    .insp { border: 0; overflow: visible; }
+    .pane.hidden { display: block !important; }
+    .sheet { box-shadow: none; width: 100% !important; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h2M7 8v8M11 5v14M15 9v6M19 11v2M21 12h0"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8M18 8l-5 8"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4M12 17h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></symbol>
+  <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></symbol>
+  <symbol id="i-align" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 4v16M6 8h10M10 12h6M4 16h12"/></symbol>
+  <symbol id="i-font" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 10 4l6 16M6.5 14h7M17 20h4"/></symbol>
+  <symbol id="i-layer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="7"/></symbol>
+</svg>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 3c-4 0-7 3-7 7v10l2.5-2 2.5 2 2-2 2 2 2.5-2L19 20V10c0-4-3-7-7-7z"/><circle cx="9.5" cy="10" r=".6" fill="#fff"/><circle cx="14.5" cy="10" r=".6" fill="#fff"/></svg></div>
+      <div><b>PHANTOM AI</b><span>Investigation workbench</span></div>
+    </div>
+    <div class="navlabel">Modules</div>
+    <button class="nav active" data-view="investigate"><svg><use href="#i-doc"/></svg>MIRAGE · Documents</button>
+    <button class="nav disabled" title="Phase 3"><svg><use href="#i-wave"/></svg>ECHO · Audio<span class="soon">soon</span></button>
+    <button class="nav disabled" title="Phase 4"><svg><use href="#i-globe"/></svg>BLACKBOX · Web<span class="soon">soon</span></button>
+    <button class="nav disabled" title="Phase 5"><svg><use href="#i-flow"/></svg>Coordinator<span class="soon">soon</span></button>
+    <div class="navlabel">Quality</div>
+    <button class="nav" data-view="eval"><svg><use href="#i-chart"/></svg>Evaluation</button>
+    <div class="foot">Decision support only. Findings are indicators, not proof. Every result requires human review.</div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumbs" id="crumbs">MIRAGE <span style="margin:0 6px">/</span> <b>Investigate</b></div>
+      <div class="grow"></div>
+      <span class="badge-guard"><svg width="14" height="14"><use href="#i-shield"/></svg>Evidence hashed &amp; integrity-checked</span>
+      <button class="btn" id="btnJson" disabled><svg><use href="#i-download"/></svg>Export JSON</button>
+      <button class="btn primary" id="btnPrint" disabled><svg><use href="#i-print"/></svg>Print report</button>
+    </header>
+
+    <!-- ===================== INVESTIGATE ===================== -->
+    <section class="view" id="v-investigate">
+      <div class="inv">
+        <div class="lib">
+          <h3>Case library</h3>
+          <div class="seg" id="libSeg">
+            <button class="on" data-lib="real">Real receipts</button>
+            <button data-lib="synthetic">Synthetic invoices</button>
+          </div>
+          <div id="cases"></div>
+          <div class="drop" id="drop">
+            <svg><use href="#i-upload"/></svg>
+            <b>Analyse your own document</b>PNG, JPG, TIFF or PDF · click or drop
+            <input type="file" id="file" accept=".png,.jpg,.jpeg,.tif,.tiff,.pdf" hidden>
+          </div>
+        </div>
+
+        <div class="stagecol">
+          <div class="toolbar" id="toolbar">
+            <span class="name" id="docname">No document</span>
+            <div class="grow"></div>
+            <label class="tgl"><input type="checkbox" id="tFind" checked><span class="swatch" style="background:var(--sus)"></span>Findings</label>
+            <label class="tgl" id="tTruthWrap"><input type="checkbox" id="tTruth"><span class="swatch" style="background:var(--truth)"></span>Ground truth</label>
+            <div class="zoom"><button id="zOut" title="Zoom out">−</button><span id="zLbl">Fit</span><button id="zIn" title="Zoom in">+</button><button id="zFit" title="Fit to view" style="border-left:1px solid var(--border)">Fit</button></div>
+          </div>
+          <div class="canvas" id="canvas">
+            <div class="empty">
+              <div class="ill"><svg width="34" height="34" style="color:var(--brand)"><use href="#i-search"/></svg></div>
+              <h2>Select a case to investigate</h2>
+              MIRAGE reads the document, checks that its numbers agree, looks for copy-pasted characters and
+              layout inconsistencies, and ties every finding to a region of the page.
+            </div>
+          </div>
+        </div>
+
+        <div class="insp" id="insp">
+          <div class="pane"><h3>Result</h3><div class="note-muted">No document analysed yet.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EVALUATION ===================== -->
+    <section class="view hidden" id="v-eval"><div class="evalv"><div class="wrap" id="evalBody"></div></div></section>
+  </div>
+</div>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const CHECKS = {
+  copy_move:            { name: "Copy-paste clone",    icon: "i-copy" },
+  numeric_consistency:  { name: "Arithmetic",          icon: "i-calc" },
+  field_alignment:      { name: "Column alignment",    icon: "i-align" },
+  row_baseline:         { name: "Row baseline",        icon: "i-align" },
+  font_consistency:     { name: "Font / stroke width", icon: "i-font" },
+  region_inconsistency: { name: "Background patch",    icon: "i-layer" },
+  input_quality:        { name: "Input quality",       icon: "i-help" },
+  ocr_confidence:       { name: "OCR confidence",      icon: "i-help" },
+  overall:              { name: "Overall",             icon: "i-check" },
+};
+const ORDER = { suspicious: 0, inconclusive: 1, benign: 2 };
+const VERDICT = {
+  suspicious:   { t: "Suspicious",      icon: "i-alert", p: "At least one check found evidence consistent with tampering." },
+  inconclusive: { t: "Inconclusive",    icon: "i-help",  p: "Checks could not reach a conclusion; review manually." },
+  benign:       { t: "No flags raised", icon: "i-check", p: "No check found a problem. This is not proof that the document is genuine." },
+};
+let libs = { real: null, synthetic: null }, libKey = "real", state = null, zoom = null;
+
+// ------------------------------------------------------------ navigation
+$$(".nav[data-view]").forEach(b => b.onclick = () => {
+  $$(".nav").forEach(x => x.classList.toggle("active", x === b));
+  const v = b.dataset.view;
+  $("#v-investigate").classList.toggle("hidden", v !== "investigate");
+  $("#v-eval").classList.toggle("hidden", v !== "eval");
+  $("#crumbs").innerHTML = v === "eval" ? `Quality <span style="margin:0 6px">/</span> <b>Evaluation</b>`
+                                        : `MIRAGE <span style="margin:0 6px">/</span> <b>Investigate</b>`;
+  if (v === "eval") loadEval();
+});
+
+// ------------------------------------------------------------ case library
+async function loadLib(key) {
+  if (!libs[key]) libs[key] = await (await fetch(key === "real" ? "/demo/real-cases" : "/demo/cases")).json();
+  return libs[key];
+}
+async function renderLib() {
+  const lib = await loadLib(libKey);
+  const base = libKey === "real" ? "/demo/real-cases/" : "/demo/cases/";
+  $("#cases").innerHTML = (lib.cases || []).map((c, i) => {
+    const sus = c.truth.label === "suspicious";
+    return `<div class="case" data-i="${i}">
+      <div class="thumb" style="background-image:url('${base}${encodeURIComponent(c.file)}')"></div>
+      <div><div class="t">${esc(c.title)}</div>
+        <div class="s"><span class="tag ${sus ? "sus" : "ok"}">${sus ? "forged" : "genuine"}</span>${c.truth.type ? esc(c.truth.type) : ""}</div></div>
+    </div>`; }).join("") || `<div class="note-muted" style="padding:6px">${esc(lib.note || "No cases available.")}</div>`;
+  $$(".case").forEach(el => el.onclick = () => openCase(+el.dataset.i));
+}
+$$("#libSeg button").forEach(b => b.onclick = () => {
+  $$("#libSeg button").forEach(x => x.classList.toggle("on", x === b));
+  libKey = b.dataset.lib; renderLib();
+});
+async function openCase(i) {
+  $$(".case").forEach(el => el.classList.toggle("active", +el.dataset.i === i));
+  const lib = libs[libKey], c = lib.cases[i];
+  const base = libKey === "real" ? "/demo/real-cases/" : "/demo/cases/";
+  const blob = await (await fetch(base + encodeURIComponent(c.file))).blob();
+  analyze(new File([blob], c.file, { type: blob.type }), { ...c, origWidth: c.orig_width || lib.orig_width });
+}
+
+// ------------------------------------------------------------ upload
+const drop = $("#drop"), fileIn = $("#file");
+drop.onclick = () => fileIn.click();
+fileIn.onchange = () => fileIn.files[0] && upload(fileIn.files[0]);
+drop.ondragover = e => { e.preventDefault(); drop.classList.add("over"); };
+drop.ondragleave = () => drop.classList.remove("over");
+drop.ondrop = e => { e.preventDefault(); drop.classList.remove("over"); e.dataTransfer.files[0] && upload(e.dataTransfer.files[0]); };
+function upload(f) { $$(".case").forEach(el => el.classList.remove("active")); analyze(f, null); }
+
+// ------------------------------------------------------------ analysis
+async function analyze(file, demo) {
+  $("#docname").textContent = file.name;
+  const steps = ["Ingest & normalise page", "OCR words with positions", "Arithmetic & layout checks", "Copy-paste clone search", "Store evidence"];
+  $("#canvas").innerHTML = `<div class="loader"><div class="spin"></div><div style="margin-top:12px;font-weight:600">Analysing document…</div>
+    <div class="steps">${steps.map((s, i) => `<div data-s="${i}">○ ${s}</div>`).join("")}</div></div>`;
+  let k = 0; const tick = setInterval(() => { const el = $(`[data-s="${k}"]`); if (el) { el.classList.add("on"); el.textContent = "● " + steps[k]; } k = Math.min(k + 1, steps.length - 1); }, 260);
+  $("#insp").innerHTML = `<div class="pane"><h3>Result</h3><div class="note-muted">Running checks…</div></div>`;
+  ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = true);
+  const fd = new FormData(); fd.append("file", file);
+  const t0 = performance.now();
+  try {
+    const result = await (await fetch("/mirage/analyze", { method: "POST", body: fd })).json();
+    const ms = performance.now() - t0;
+    const verdict = (await (await fetch("/mirage/verdict", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(result) })).json()).verdict;
+    const records = await Promise.all(result.evidence_ids.map(async id => ({ id, ...(await (await fetch("/evidence/" + id)).json()) })));
+    const pages = records.filter(r => r.kind === "page_region").map(r => ({ id: r.id, page: r.meta.page, shape: r.meta.shape }));
+    state = { result, verdict, records, pages, pageIdx: 0, demo, name: file.name, ms };
+    zoom = null;
+    renderStage(); renderInspector();
+    ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = false);
+  } catch (e) {
+    $("#canvas").innerHTML = `<div class="empty"><h2>Analysis failed</h2>${esc(e.message)}</div>`;
+  } finally { clearInterval(tick); }
+}
+
+// ------------------------------------------------------------ stage + overlay
+function renderStage() {
+  const s = state;
+  $("#tTruthWrap").style.display = s.demo ? "inline-flex" : "none";
+  if (s.result.errors.length || !s.pages.length) {
+    $("#canvas").innerHTML = `<div class="empty"><h2>No page to display</h2>${esc(s.result.errors.map(e => e.message).join("; "))}</div>`;
+    return;
+  }
+  const pg = s.pages[s.pageIdx];
+  $("#canvas").innerHTML = `<div class="sheet" id="sheet"><img id="pimg" src="/evidence/${pg.id}/image" alt="analysed page">
+    <svg class="ov" id="ov"></svg></div>`;
+  $("#pimg").onload = () => { applyZoom(); drawOverlay(); };
+}
+function applyZoom() {
+  const img = $("#pimg"), sheet = $("#sheet"), canvas = $("#canvas");
+  if (!img || !sheet) return;
+  const fit = Math.min((canvas.clientWidth - 56) / img.naturalWidth, (canvas.clientHeight - 56) / img.naturalHeight, 1);
+  const z = zoom ?? Math.max(fit, 0.15);
+  sheet.style.width = (img.naturalWidth * z) + "px";
+  $("#zLbl").textContent = zoom == null ? "Fit" : Math.round(z * 100) + "%";
+}
+$("#zIn").onclick = () => { zoom = Math.min(3, (zoom ?? currentScale()) * 1.25); applyZoom(); };
+$("#zOut").onclick = () => { zoom = Math.max(0.1, (zoom ?? currentScale()) / 1.25); applyZoom(); };
+$("#zFit").onclick = () => { zoom = null; applyZoom(); };
+function currentScale() { const img = $("#pimg"); return img ? $("#sheet").clientWidth / img.naturalWidth : 1; }
+window.addEventListener("resize", () => state && zoom == null && applyZoom());
+
+function drawOverlay() {
+  const s = state, img = $("#pimg"), ov = $("#ov");
+  if (!img || !ov) return;
+  const W = img.naturalWidth, H = img.naturalHeight, page = s.pages[s.pageIdx].page;
+  ov.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const parts = [];
+  const rect = (b, cls, fid, pad = 4) => `<rect class="${cls}" ${fid ? `data-f="${fid}"` : ""} x="${b[0] - pad}" y="${b[1] - pad}" width="${b[2] + 2 * pad}" height="${b[3] + 2 * pad}" rx="3"/>`;
+  if ($("#tTruth").checked && s.demo) {
+    const k = W / (s.demo.origWidth || W);
+    for (const r of s.demo.truth.regions || []) parts.push(rect(r.bbox.map(v => v * k), "truth", null, 3));
+  }
+  if ($("#tFind").checked) {
+    for (const f of s.result.findings) {
+      if (f.check === "overall") continue;
+      if (f.check === "copy_move") {
+        const pairs = {};
+        for (const e of f.evidence) if (e.locator.page === page && e.locator.bbox) (pairs[e.locator.clone_pair] ||= []).push(e.locator.bbox);
+        for (const [n, boxes] of Object.entries(pairs)) {
+          boxes.forEach(b => parts.push(rect(b, "clone", f.finding_id, 5)));
+          if (boxes.length === 2) {
+            const c = b => [b[0] + b[2] / 2, b[1] + b[3] / 2], [a, z] = boxes.map(c);
+            parts.push(`<line class="clone" x1="${a[0]}" y1="${a[1]}" x2="${z[0]}" y2="${z[1]}"/>`);
+            parts.push(`<text x="${boxes[0][0] - 6}" y="${boxes[0][1] - 10}" fill="var(--clone)">#${n}</text>`);
+          }
+        }
+        continue;
+      }
+      for (const e of f.evidence) {
+        if (e.locator.page !== page || !e.locator.bbox) continue;
+        parts.push(rect(e.locator.bbox, f.check === "numeric_consistency" ? "sumref" : f.outcome, f.finding_id));
+      }
+    }
+  }
+  ov.innerHTML = parts.join("");
+  $$("rect[data-f]", ov).forEach(r => { r.onmouseenter = () => hl(r.dataset.f, true); r.onmouseleave = () => hl(r.dataset.f, false); });
+}
+$("#tFind").onchange = () => drawOverlay();
+$("#tTruth").onchange = () => drawOverlay();
+function hl(fid, on) {
+  $$(`#ov [data-f="${fid}"]`).forEach(r => r.classList.toggle("hl", on));
+  const card = $(`.fcard[data-f="${fid}"]`); if (card) card.classList.toggle("hl", on);
+}
+
+// ------------------------------------------------------------ inspector
+function renderInspector() {
+  const { result, verdict, records, demo, ms } = state, V = VERDICT[verdict];
+  const content = result.findings.filter(f => !["overall", "input_quality", "ocr_confidence"].includes(f.check));
+  const flagged = content.filter(f => f.outcome !== "benign");
+  const intact = records.every(r => r.integrity_ok);
+  let gt = "";
+  if (demo) {
+    const correct = (verdict !== "benign") === (demo.truth.label === "suspicious");
+    gt = `<div class="gt"><span>Ground truth: <b>${demo.truth.label === "suspicious" ? "forged" : "genuine"}</b>${demo.truth.type ? " · " + esc(demo.truth.type) : ""}</span>
+      <span class="grow"></span><span class="${correct ? "ok" : "bad"}">${correct ? "✓ MIRAGE agrees" : "✗ MIRAGE missed it"}</span></div>`;
+  }
+  const findings = [...result.findings].filter(f => f.check !== "overall" || result.findings.length === 1)
+    .sort((a, b) => ORDER[a.outcome] - ORDER[b.outcome]);
+  const fhtml = findings.map(f => {
+    const C = CHECKS[f.check] || { name: f.check, icon: "i-help" };
+    return `<div class="fcard" data-f="${f.finding_id}">
+      <div class="h"><div class="ic ${f.outcome}"><svg><use href="#${C.icon}"/></svg></div>
+        <span class="name">${esc(C.name)}</span><span class="grow"></span>
+        <span class="tag ${f.outcome === "suspicious" ? "sus" : f.outcome === "benign" ? "ok" : "inc"}">${f.outcome}</span></div>
+      <div class="d">${esc(f.description)}</div>
+      <div class="meta"><span class="conf">confidence <i><b style="width:${100 * f.uncertainty.confidence}%"></b></i>${f.uncertainty.confidence}</span>
+        <span>${f.evidence.length} evidence region${f.evidence.length > 1 ? "s" : ""}</span>
+        <span class="pill-check">${esc(f.check)}</span></div>
+    </div>`; }).join("") || `<div class="note-muted">No findings.</div>`;
+  const errs = result.errors.map(e => `<div class="fcard"><div class="h"><span class="tag sus">error</span><b>${esc(e.code)}</b></div><div class="d">${esc(e.message)}</div></div>`).join("");
+  const evhtml = records.map(r => `<div class="ev"><span class="id">${esc(r.id)}</span>
+      <span>${r.integrity_ok ? `<span class="okline"><svg width="13" height="13"><use href="#i-check"/></svg>verified</span>` : `<span class="badline">integrity FAILED</span>`}</span>
+      <span class="k">${esc(r.kind)}${r.meta && r.meta.page ? " · page " + r.meta.page : ""} · ${esc(r.source)}</span><span class="k">${esc((r.stored_at || "").slice(0, 19).replace("T", " "))}</span>
+      <span class="sha">sha256 ${esc(r.sha256)}</span></div>`).join("");
+  $("#insp").innerHTML = `
+    <div class="verdict ${verdict}">
+      <div class="lbl">MIRAGE verdict</div>
+      <div class="v"><svg><use href="#${V.icon}"/></svg>${V.t}</div>
+      <p>${V.p}</p>
+    </div>
+    ${gt}
+    <div class="stats">
+      <div><b>${flagged.length}</b><span>flags</span></div>
+      <div><b>${content.length}</b><span>findings</span></div>
+      <div><b>${(ms / 1000).toFixed(1)}s</b><span>runtime</span></div>
+      <div><b style="color:${intact ? "var(--ok)" : "var(--sus)"}">${intact ? "OK" : "FAIL"}</b><span>integrity</span></div>
+    </div>
+    ${demo && demo.story ? `<p class="story">${esc(demo.story)}</p>` : ""}
+    <div class="tabs">
+      <button class="on" data-t="f">Findings<span class="n">${findings.length}</span></button>
+      <button data-t="e">Evidence<span class="n">${records.length}</span></button>
+      <button data-t="n">Notes<span class="n">${result.limitations.length}</span></button>
+      <button data-t="j">Raw JSON</button>
+    </div>
+    <div class="pane" data-p="f">${errs}${fhtml}</div>
+    <div class="pane hidden" data-p="e"><p class="note-muted" style="margin-top:0">Every input and analysed page is stored content-addressed (SHA-256) and re-verified on read.</p>${evhtml}</div>
+    <div class="pane hidden" data-p="n"><ul class="notes">${result.limitations.map(l => `<li>${esc(l)}</li>`).join("")}</ul>
+      <p class="note-muted">Run <span class="pill-check">${esc(result.run_id)}</span> · human review ${result.needs_human_review ? "required" : "not required"}</p></div>
+    <div class="pane hidden" data-p="j"><pre class="json">${esc(JSON.stringify(result, null, 2))}</pre></div>`;
+  $$(".tabs button").forEach(b => b.onclick = () => {
+    $$(".tabs button").forEach(x => x.classList.toggle("on", x === b));
+    $$(".insp .pane[data-p]").forEach(p => p.classList.toggle("hidden", p.dataset.p !== b.dataset.t));
+  });
+  $$(".fcard[data-f]").forEach(el => { el.onmouseenter = () => hl(el.dataset.f, true); el.onmouseleave = () => hl(el.dataset.f, false); });
+}
+
+// ------------------------------------------------------------ export
+$("#btnJson").onclick = () => {
+  if (!state) return;
+  const blob = new Blob([JSON.stringify({ verdict: state.verdict, document: state.name, result: state.result }, null, 2)], { type: "application/json" });
+  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `mirage_${state.result.run_id}.json` });
+  a.click(); URL.revokeObjectURL(a.href);
+};
+$("#btnPrint").onclick = () => state && window.print();
+
+// ------------------------------------------------------------ evaluation
+let evalDone = false;
+const f2 = v => (v ?? 0).toFixed(2);
+async function loadEval() {
+  if (evalDone) return;
+  const ev = await (await fetch("/mirage/eval")).json();
+  const real = ev.findit_test, realVal = ev.findit_val, h = ev.holdout_hard_final || ev.holdout_hard;
+  const row = (name, m, hero) => m ? `<tr class="${hero ? "hero" : ""}"><td>${name}</td><td class="num">${m.n_documents}</td>
+    <td class="num">${f2(m.precision)}</td><td class="num">${f2(m.recall)}</td><td class="num">${f2(m.f1)}</td>
+    <td class="num">${f2(m.false_positive_rate)}</td><td class="num">${f2(m.mean_runtime_s)} s</td></tr>` : "";
+  const kpi = (l, n, d) => `<div class="kpi"><div class="l">${l}</div><div class="n">${n}</div><div class="delta">${d}</div></div>`;
+  const realBlock = real ? `
+    <div class="kpis">
+      ${kpi("F1 · real forged receipts (test)", f2(real.f1), "Find it again!, untuned, run once")}
+      ${kpi("Precision", f2(real.precision), `${real.tp} of ${real.tp + real.fp} flags were real forgeries`)}
+      ${kpi("Recall", f2(real.recall), `${real.tp} of ${real.n_forged} forged receipts caught`)}
+      ${kpi("False-positive rate", f2(real.false_positive_rate), `on ${real.fp + real.tn} genuine receipts`)}
+    </div>` : `<div class="callout warn">Real-data test results not recorded yet.</div>`;
+  const checks = real ? Object.entries(real.fired_by_check || {}).map(([c, d]) => `<tr><td><span class="pill-check">${esc(c)}</span></td>
+    <td class="num">${d.on_forged}</td><td class="num">${d.on_genuine}</td>
+    <td><span class="bar"><b style="width:${100 * d.on_forged / Math.max(1, real.n_forged)}%"></b></span>${Math.round(100 * d.on_forged / Math.max(1, real.n_forged))}% of forged</td></tr>`).join("") : "";
+  const attacks = h ? Object.entries(h.recall_by_attack).map(([k, d]) => `<tr><td>${esc(k)}</td><td class="num">${d.caught} / ${d.n}</td>
+    <td><span class="bar"><b style="width:${100 * d.recall}%"></b></span></td></tr>`).join("") : "";
+  $("#evalBody").innerHTML = `
+    <div class="ph"><div><h1>MIRAGE evaluation</h1><p>Measured results only. Tuning and test data are kept separate; test sets are run once.</p></div></div>
+    <div class="card"><div class="ch"><h2>Real-world benchmark · Find it again! (ICDAR 2023)</h2><span class="grow"></span><span class="tag neutral">real scans · human forgers</span></div>
+      <div class="cb" style="padding-top:14px">${realBlock}
+        <table><tr><th>Configuration</th><th class="num">Docs</th><th class="num">Precision</th><th class="num">Recall</th><th class="num">F1</th><th class="num">FP rate</th><th class="num">Runtime</th></tr>
+          ${row("Before receipt work (val split)", ev.findit_val_baseline)}
+          ${row("Current pipeline · val split (tuning)", realVal)}
+          ${row("Current pipeline · test split (untuned, run once)", real, true)}
+        </table></div></div>
+    ${checks ? `<div class="card"><div class="ch"><h2>Which checks fired on the real test split</h2><p>A useful check fires on forged receipts and stays quiet on genuine ones.</p></div>
+      <div class="cb"><table><tr><th>Check</th><th class="num">On forged</th><th class="num">On genuine</th><th>Share of forgeries caught</th></tr>${checks}</table></div></div>` : ""}
+    <div class="grid2">
+      <div class="card"><div class="ch"><h2>Synthetic invoices</h2></div><div class="cb"><table>
+        <tr><th>Set</th><th class="num">Docs</th><th class="num">P</th><th class="num">R</th><th class="num">F1</th><th class="num">FPR</th><th class="num">Time</th></tr>
+        <tr><td>Week 2 (as reported)</td><td class="num">40</td><td class="num">0.67</td><td class="num">0.60</td><td class="num">0.63</td><td class="num">0.30</td><td class="num">0.30 s</td></tr>
+        ${row("Hard held-out · first Week 3 version", ev.holdout_hard)}
+        ${row("Hard held-out · final pipeline", ev.holdout_hard_final, true)}</table>
+        <p class="note-muted" style="margin:10px 0 0">The final pipeline requires two independent checks to agree before a layout hint
+        counts. That lowered synthetic recall but removed every false alarm on real receipts.</p></div></div>
+      <div class="card"><div class="ch"><h2>Synthetic held-out recall by attack (final)</h2></div><div class="cb"><table>${attacks}</table></div></div>
+    </div>
+    <div class="callout">Copy-paste detection is the strongest signal on real forgeries: real forgers mostly clone digits that already exist on the receipt.
+      Edits that leave no pixel-level trace (typed in a matching font, or re-printed and re-scanned) remain the main limitation. See docs/MIRAGE_EVAL.md.</div>`;
+  evalDone = true;
+}
+
+renderLib();
+</script>
+</body>
+</html>

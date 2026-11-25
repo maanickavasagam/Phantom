@@ -1,0 +1,2716 @@
+{
+  "split": "val",
+  "n_documents": 192,
+  "n_forged": 33,
+  "missing_from_download": [
+    "X51006619709.png"
+  ],
+  "tp": 21,
+  "fp": 127,
+  "fn": 12,
+  "tn": 32,
+  "precision": 0.142,
+  "recall": 0.636,
+  "f1": 0.232,
+  "false_positive_rate": 0.799,
+  "flagged_forged_correctly_localised": 5,
+  "fp_rate_on_genuine_with_handwriting": 0.753,
+  "fired_by_check": {
+    "font_consistency": {
+      "on_forged": 8,
+      "on_genuine": 52
+    },
+    "numeric_consistency": {
+      "on_forged": 12,
+      "on_genuine": 97
+    },
+    "field_alignment": {
+      "on_forged": 10,
+      "on_genuine": 62
+    },
+    "row_baseline": {
+      "on_forged": 9,
+      "on_genuine": 59
+    },
+    "region_inconsistency": {
+      "on_forged": 5,
+      "on_genuine": 22
+    }
+  },
+  "mean_runtime_s": 1.265,
+  "errors": 0,
+  "rows": [
+    {
+      "file": "X00016469612.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.062,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005200931.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.827,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005230605.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.179,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005433538.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.636,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005441401.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.777,
+      "entities": [
+        "Product",
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005441407.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.082,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005442344.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.75,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005442376.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.608,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency",
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005442386.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.614,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005442392.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.601,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005444037.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.383,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005444040.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.124,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005444041.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.294,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005444046.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.265,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005447841.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.226,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005447844.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.229,
+      "entities": [],
+      "checks_fired": [
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005447852.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.016,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005568890.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.211,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005568891.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "inconclusive",
+      "localised": false,
+      "runtime_s": 1.504,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005568899.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.971,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005582745.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.573,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005605333.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.5,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005605335.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.27,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005663272.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.795,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005663278.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.508,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [
+        "numeric_consistency",
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005676538.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.203,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005676539.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.09,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005676543.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.186,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005676548.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.143,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005677327.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.264,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005677332.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.074,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005677334.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.179,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005677335.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.241,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005705804.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.142,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency",
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005711404.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.93,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005711446.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.213,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005711454.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.396,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [
+        "numeric_consistency",
+        "region_inconsistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005712021.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.368,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005712038.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.443,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005715006.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.112,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005719873.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.456,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005719874.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.011,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005719895.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.703,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency",
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005719896.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 2.274,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005719898.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.345,
+      "entities": [
+        "Product"
+      ],
+      "checks_fired": [
+        "field_alignment"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005719904.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.024,
+      "entities": [
+        "Product",
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005722668.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.183,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005724624.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.264,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005724626.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.25,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005741929.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.107,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005741944.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.37,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005745187.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.077,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005745214.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.131,
+      "entities": [],
+      "checks_fired": [
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005749912.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.234,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency",
+        "region_inconsistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005757282.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.699,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "region_inconsistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005757292.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "inconclusive",
+      "localised": false,
+      "runtime_s": 1.276,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005757304.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.483,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005757323.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "inconclusive",
+      "localised": false,
+      "runtime_s": 1.394,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005757346.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.319,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005763964.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "inconclusive",
+      "localised": false,
+      "runtime_s": 1.236,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005764154.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 2.192,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005806678.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.691,
+      "entities": [],
+      "checks_fired": [
+        "region_inconsistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005806696.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.163,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005806702.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.393,
+      "entities": [
+        "Product",
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006008086.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.81,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006008095.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.258,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006008166.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.478,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "region_inconsistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006248253.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.362,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006311764.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.26,
+      "entities": [
+        "Product",
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006311779.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.285,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006311780.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.726,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "region_inconsistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006327953.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.913,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006328913.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.953,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006329395.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.887,
+      "entities": [],
+      "checks_fired": [
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006334770.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.274,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006334819.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.234,
+      "entities": [],
+      "checks_fired": [
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006335547.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.08,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006387812.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.555,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006387950.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.322,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006387973.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 2.081,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006388066.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.178,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006393377.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.754,
+      "entities": [
+        "Product"
+      ],
+      "checks_fired": [
+        "field_alignment",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006414392.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.703,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006414429.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.523,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006414483.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.369,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency",
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006414600.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "inconclusive",
+      "localised": false,
+      "runtime_s": 1.65,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006414636.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.891,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006414675.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.493,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006414719.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.325,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006414728.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.45,
+      "entities": [
+        "Product",
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "font_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006441474.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.18,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006466055.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 2.987,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006466056.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.121,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006466070.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.945,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006466778.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.68,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006502533.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.093,
+      "entities": [],
+      "checks_fired": [
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006554833.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.304,
+      "entities": [],
+      "checks_fired": [
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006555072.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.208,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006555125.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.853,
+      "entities": [
+        "Other",
+        "Product",
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006555780.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.428,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006555835.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.493,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006556596.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.574,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006556658.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.54,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006556732.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "inconclusive",
+      "localised": false,
+      "runtime_s": 1.429,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006556815.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.562,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006556821.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.405,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006556851.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.787,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006557119.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "inconclusive",
+      "localised": false,
+      "runtime_s": 1.511,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006557169.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.53,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006557173.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.593,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006557194.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.724,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency",
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006557210.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.551,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006619346.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.517,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006619545.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.975,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "region_inconsistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006619563.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.868,
+      "entities": [],
+      "checks_fired": [
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006619567.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.841,
+      "entities": [],
+      "checks_fired": [
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006619783.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.941,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006619785.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.941,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006620161.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.191,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006620176.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.007,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006714066.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.183,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006828199.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.977,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006828201.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.132,
+      "entities": [
+        "Company",
+        "Other",
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006828217.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.539,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006857132.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.058,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006857660.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.205,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "field_alignment"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006912960.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.228,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006912976.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.482,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006913030.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.23,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency",
+        "region_inconsistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006913051.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.407,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006913068.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.289,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006913073.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.445,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007103641.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.474,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007103687.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "inconclusive",
+      "localised": false,
+      "runtime_s": 1.002,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007135247.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.018,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007225399.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.068,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007225417.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.981,
+      "entities": [
+        "Other"
+      ],
+      "checks_fired": [
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007225442.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.371,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007231275.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.214,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [
+        "font_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339095.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.605,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339097.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.379,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339110.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.475,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339114.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.441,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339117.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.557,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339120.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.377,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339121.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.376,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339131.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.454,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339133.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.287,
+      "entities": [
+        "Company",
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "field_alignment"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339135.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.375,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339136.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.546,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339139.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.469,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339157.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.406,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339650.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.982,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339651.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.923,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339657.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 2.103,
+      "entities": [],
+      "checks_fired": [
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007419197.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.753,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "numeric_consistency",
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007579725.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.814,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "field_alignment"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007579726.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.003,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007846283.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.489,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007846309.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.168,
+      "entities": [],
+      "checks_fired": [
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007846310.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.199,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007846370.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.141,
+      "entities": [],
+      "checks_fired": [
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007846372.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.15,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007846391.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.124,
+      "entities": [],
+      "checks_fired": [
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008030563.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.943,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008042777.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.911,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008042779.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.978,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency",
+        "region_inconsistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008042783.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.885,
+      "entities": [],
+      "checks_fired": [
+        "region_inconsistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008042792.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.812,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008064061.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "inconclusive",
+      "localised": false,
+      "runtime_s": 1.143,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008099041.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.853,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008099048.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.93,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008099049.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.087,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008099054.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.067,
+      "entities": [],
+      "checks_fired": [
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008099083.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.814,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008099085.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.002,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008099089.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.05,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency",
+        "region_inconsistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008099100.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "inconclusive",
+      "localised": false,
+      "runtime_s": 1.148,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008114281.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.054,
+      "entities": [],
+      "checks_fired": [
+        "region_inconsistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008114283.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.142,
+      "entities": [
+        "Other"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008114284.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.058,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008123446.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.894,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008123476.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.892,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008142032.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.091,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [
+        "font_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008142060.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.166,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008142061.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.183,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "region_inconsistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008142062.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.134,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "numeric_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008142065.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.148,
+      "entities": [],
+      "checks_fired": [
+        "font_consistency",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008164510.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.779,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008164997.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.967,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "font_consistency",
+        "row_baseline"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51008164999.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.037,
+      "entities": [],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51009008095.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 0.973,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency"
+      ],
+      "errors": []
+    }
+  ]
+}

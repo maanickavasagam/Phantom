@@ -1,0 +1,261 @@
+{
+  "note": "Real scanned receipts from the Find it again! test split (Martinez Tornes et al., ICDAR 2023). Images are not redistributed; they are served only from a local download in data/raw/findit2.",
+  "cases": [
+    {
+      "file": "X51005568866.png",
+      "title": "Item price and total changed",
+      "story": "A forger copied digits from elsewhere on the receipt to change an item price and the total, so the receipt still adds up. MIRAGE finds characters that are pixel-for-pixel clones, which never happens with real printing and scanning. The connecting lines show which character was copied where.",
+      "orig_width": 936,
+      "truth": {
+        "label": "suspicious",
+        "type": "Product, Total/payment",
+        "regions": [
+          {
+            "bbox": [
+              95,
+              1483,
+              49,
+              44
+            ],
+            "entity": "Product"
+          },
+          {
+            "bbox": [
+              717,
+              1483,
+              47,
+              46
+            ],
+            "entity": "Product"
+          },
+          {
+            "bbox": [
+              785,
+              1489,
+              24,
+              38
+            ],
+            "entity": "Product"
+          },
+          {
+            "bbox": [
+              717,
+              1632,
+              27,
+              44
+            ],
+            "entity": "Total/payment"
+          },
+          {
+            "bbox": [
+              783,
+              1637,
+              28,
+              41
+            ],
+            "entity": "Total/payment"
+          },
+          {
+            "bbox": [
+              720,
+              1736,
+              21,
+              37
+            ],
+            "entity": "Total/payment"
+          },
+          {
+            "bbox": [
+              788,
+              1737,
+              23,
+              39
+            ],
+            "entity": "Total/payment"
+          },
+          {
+            "bbox": [
+              719,
+              1786,
+              24,
+              37
+            ],
+            "entity": "Total/payment"
+          },
+          {
+            "bbox": [
+              700,
+              1787,
+              20,
+              37
+            ],
+            "entity": "Total/payment"
+          },
+          {
+            "bbox": [
+              674,
+              1792,
+              23,
+              23
+            ],
+            "entity": "Total/payment"
+          },
+          {
+            "bbox": [
+              721,
+              1832,
+              20,
+              41
+            ],
+            "entity": "Total/payment"
+          },
+          {
+            "bbox": [
+              786,
+              1835,
+              20,
+              37
+            ],
+            "entity": "Total/payment"
+          }
+        ]
+      },
+      "mirage_on_test_run": "suspicious"
+    },
+    {
+      "file": "X51006556726.png",
+      "title": "Total / payment altered",
+      "story": "Only the payment lines were changed, using characters cloned from the same receipt.",
+      "orig_width": 620,
+      "truth": {
+        "label": "suspicious",
+        "type": "Total/payment",
+        "regions": [
+          {
+            "bbox": [
+              427,
+              880,
+              35,
+              51
+            ],
+            "entity": "Total/payment"
+          }
+        ]
+      },
+      "mirage_on_test_run": "suspicious"
+    },
+    {
+      "file": "X51006008206.png",
+      "title": "Date / metadata altered",
+      "story": "The forger changed metadata (such as the date or document number), not an amount. Copy-paste detection doesn't care which field was edited.",
+      "orig_width": 747,
+      "truth": {
+        "label": "suspicious",
+        "type": "Metadata",
+        "regions": [
+          {
+            "bbox": [
+              289,
+              483,
+              10,
+              34
+            ],
+            "entity": "Metadata"
+          }
+        ]
+      },
+      "mirage_on_test_run": "suspicious"
+    },
+    {
+      "file": "X00016469619.png",
+      "title": "Genuine receipt with handwriting",
+      "story": "Genuine receipt with handwritten notes. These used to trigger the old layout checks; MIRAGE now raises nothing. In the test split it had 0 false alarms on 183 genuine receipts.",
+      "orig_width": 439,
+      "truth": {
+        "label": "benign",
+        "type": null,
+        "regions": []
+      },
+      "mirage_on_test_run": "benign"
+    },
+    {
+      "file": "X51005230657.png",
+      "title": "Genuine receipt",
+      "story": "A normal genuine receipt. No flags.",
+      "orig_width": 616,
+      "truth": {
+        "label": "benign",
+        "type": null,
+        "regions": []
+      },
+      "mirage_on_test_run": "benign"
+    },
+    {
+      "file": "X51008123447.png",
+      "title": "Known miss: edit without copy-paste",
+      "story": "This forgery was made without cloning characters, so it leaves no copy-paste trace and MIRAGE misses it. 11 of 35 test forgeries are like this. It's the main limitation, and the reason every result goes to a human reviewer.",
+      "orig_width": 532,
+      "truth": {
+        "label": "suspicious",
+        "type": "Metadata, Product, Total/payment",
+        "regions": [
+          {
+            "bbox": [
+              280,
+              526,
+              28,
+              28
+            ],
+            "entity": "Metadata"
+          },
+          {
+            "bbox": [
+              407,
+              596,
+              22,
+              27
+            ],
+            "entity": "Product"
+          },
+          {
+            "bbox": [
+              405,
+              772,
+              27,
+              29
+            ],
+            "entity": "Total/payment"
+          },
+          {
+            "bbox": [
+              404,
+              837,
+              26,
+              31
+            ],
+            "entity": "Total/payment"
+          },
+          {
+            "bbox": [
+              409,
+              875,
+              24,
+              25
+            ],
+            "entity": "Total/payment"
+          },
+          {
+            "bbox": [
+              404,
+              906,
+              27,
+              30
+            ],
+            "entity": "Total/payment"
+          }
+        ]
+      },
+      "mirage_on_test_run": "benign"
+    }
+  ]
+}

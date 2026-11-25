@@ -1,0 +1,429 @@
+{
+  "n_documents": 40,
+  "holdout_template": null,
+  "tp": 17,
+  "fp": 0,
+  "fn": 3,
+  "tn": 20,
+  "precision": 1.0,
+  "recall": 0.85,
+  "f1": 0.919,
+  "false_positive_rate": 0.0,
+  "mean_runtime_s": 0.602,
+  "recall_by_attack": {
+    "altered_amount (before_scan, inconsistent)": {
+      "n": 4,
+      "caught": 4,
+      "recall": 1.0
+    },
+    "consistent_edit (after_scan, consistent)": {
+      "n": 1,
+      "caught": 0,
+      "recall": 0.0
+    },
+    "consistent_edit (before_scan, consistent)": {
+      "n": 1,
+      "caught": 0,
+      "recall": 0.0
+    },
+    "font_mismatch (after_scan, consistent)": {
+      "n": 2,
+      "caught": 1,
+      "recall": 0.5
+    },
+    "font_mismatch (before_scan, inconsistent)": {
+      "n": 2,
+      "caught": 2,
+      "recall": 1.0
+    },
+    "misaligned_field (after_scan, consistent)": {
+      "n": 3,
+      "caught": 3,
+      "recall": 1.0
+    },
+    "misaligned_field (after_scan, inconsistent)": {
+      "n": 2,
+      "caught": 2,
+      "recall": 1.0
+    },
+    "misaligned_field (before_scan, consistent)": {
+      "n": 1,
+      "caught": 1,
+      "recall": 1.0
+    },
+    "pasted_patch (after_scan, inconsistent)": {
+      "n": 3,
+      "caught": 3,
+      "recall": 1.0
+    },
+    "pasted_patch (before_scan, inconsistent)": {
+      "n": 1,
+      "caught": 1,
+      "recall": 1.0
+    }
+  },
+  "false_positive_files": [],
+  "rows": [
+    {
+      "file": "hard_000_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.627,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_000_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.508,
+      "attack": "misaligned_field (after_scan, consistent)",
+      "checks_fired": [
+        "row_baseline"
+      ]
+    },
+    {
+      "file": "hard_001_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.668,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_001_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.708,
+      "attack": "altered_amount (before_scan, inconsistent)",
+      "checks_fired": [
+        "numeric_consistency"
+      ]
+    },
+    {
+      "file": "hard_002_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.523,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_002_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.681,
+      "attack": "altered_amount (before_scan, inconsistent)",
+      "checks_fired": [
+        "numeric_consistency"
+      ]
+    },
+    {
+      "file": "hard_003_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.622,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_003_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.658,
+      "attack": "font_mismatch (before_scan, inconsistent)",
+      "checks_fired": [
+        "numeric_consistency"
+      ]
+    },
+    {
+      "file": "hard_004_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.609,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_004_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.485,
+      "attack": "altered_amount (before_scan, inconsistent)",
+      "checks_fired": [
+        "numeric_consistency"
+      ]
+    },
+    {
+      "file": "hard_005_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.523,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_005_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.511,
+      "attack": "misaligned_field (after_scan, inconsistent)",
+      "checks_fired": [
+        "numeric_consistency"
+      ]
+    },
+    {
+      "file": "hard_006_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.667,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_006_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.635,
+      "attack": "font_mismatch (after_scan, consistent)",
+      "checks_fired": [
+        "font_consistency"
+      ]
+    },
+    {
+      "file": "hard_007_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.61,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_007_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.604,
+      "attack": "pasted_patch (after_scan, inconsistent)",
+      "checks_fired": [
+        "numeric_consistency"
+      ]
+    },
+    {
+      "file": "hard_008_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.757,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_008_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.561,
+      "attack": "font_mismatch (before_scan, inconsistent)",
+      "checks_fired": [
+        "numeric_consistency"
+      ]
+    },
+    {
+      "file": "hard_009_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.559,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_009_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.67,
+      "attack": "altered_amount (before_scan, inconsistent)",
+      "checks_fired": [
+        "numeric_consistency"
+      ]
+    },
+    {
+      "file": "hard_010_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.652,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_010_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": false,
+      "runtime_s": 0.634,
+      "attack": "font_mismatch (after_scan, consistent)",
+      "checks_fired": []
+    },
+    {
+      "file": "hard_011_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.686,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_011_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.682,
+      "attack": "pasted_patch (after_scan, inconsistent)",
+      "checks_fired": [
+        "numeric_consistency"
+      ]
+    },
+    {
+      "file": "hard_012_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.664,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_012_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.524,
+      "attack": "misaligned_field (before_scan, consistent)",
+      "checks_fired": [
+        "field_alignment",
+        "row_baseline"
+      ]
+    },
+    {
+      "file": "hard_013_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.595,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_013_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": false,
+      "runtime_s": 0.566,
+      "attack": "consistent_edit (before_scan, consistent)",
+      "checks_fired": []
+    },
+    {
+      "file": "hard_014_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.659,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_014_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.626,
+      "attack": "misaligned_field (after_scan, consistent)",
+      "checks_fired": [
+        "field_alignment",
+        "region_inconsistency",
+        "row_baseline"
+      ]
+    },
+    {
+      "file": "hard_015_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.624,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_015_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": false,
+      "runtime_s": 0.572,
+      "attack": "consistent_edit (after_scan, consistent)",
+      "checks_fired": []
+    },
+    {
+      "file": "hard_016_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.485,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_016_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.488,
+      "attack": "misaligned_field (after_scan, inconsistent)",
+      "checks_fired": [
+        "field_alignment",
+        "numeric_consistency",
+        "row_baseline"
+      ]
+    },
+    {
+      "file": "hard_017_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.541,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_017_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.551,
+      "attack": "pasted_patch (after_scan, inconsistent)",
+      "checks_fired": [
+        "numeric_consistency"
+      ]
+    },
+    {
+      "file": "hard_018_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.51,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_018_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.515,
+      "attack": "misaligned_field (after_scan, consistent)",
+      "checks_fired": [
+        "field_alignment",
+        "region_inconsistency",
+        "row_baseline"
+      ]
+    },
+    {
+      "file": "hard_019_benign.png",
+      "label": "benign",
+      "predicted_suspicious": false,
+      "runtime_s": 0.688,
+      "attack": null,
+      "checks_fired": []
+    },
+    {
+      "file": "hard_019_suspicious.png",
+      "label": "suspicious",
+      "predicted_suspicious": true,
+      "runtime_s": 0.628,
+      "attack": "pasted_patch (before_scan, inconsistent)",
+      "checks_fired": [
+        "numeric_consistency"
+      ]
+    }
+  ]
+}
