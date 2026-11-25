@@ -5,9 +5,13 @@ intelligence), **BLACKBOX** (controlled browser investigation with a learned act
 a bounded agentic coordinator. Outputs are evidence-linked and always flagged for human review.
 
 ## Quick start
-System dependencies: [Tesseract OCR](https://github.com/UB-Mannheim/tesseract/wiki) (MIRAGE)
-and ffmpeg (ECHO). On Windows, Tesseract is found automatically at
-`C:\Program Files\Tesseract-OCR`; otherwise put it on PATH or set `TESSERACT_CMD`.
+System dependencies:
+- [Tesseract OCR](https://github.com/UB-Mannheim/tesseract/wiki) for MIRAGE. On Windows it's
+  found automatically at `C:\Program Files\Tesseract-OCR`; otherwise put it on PATH or set
+  `TESSERACT_CMD`.
+- ffmpeg for ECHO. Put it on PATH or set `FFMPEG_BINARY`.
+- ECHO downloads the Whisper `base.en` model (~145 MB) on first use. Set `ECHO_MODEL_DIR` to
+  choose where it's cached, and `ECHO_WHISPER_MODEL` to pick another model (e.g. `small.en`).
 
 ```bash
 pip install -r requirements.txt
@@ -39,20 +43,40 @@ python -m phantom.mirage.sample_report data/demo/03_font_swap.png
 Synthetic held-out with the final pipeline: precision 1.00, recall 0.50, F1 0.67, FP rate 0.00.
 See `docs/MIRAGE_EVAL.md` for both benchmarks, the per-attack breakdown and limitations.
 
+## ECHO: call analysis
+Open the **ECHO · Calls** page in the demo. You can pick one of 7 scripted calls
+(`data/demo_echo/`) or upload a WAV/MP3/FLAC/M4A. ECHO transcribes it locally with Whisper,
+extracts amounts, deadlines, payment and credential requests, and who the caller claims to
+be. It then flags strong indicators (credential requests, gift cards / crypto / remote-access
+apps) and combinations of pressure tactics. Claims are marked on the audio timeline, and
+every finding links to its timestamp.
+
+Held-out scripted calls (run once): **claim F1 0.83 on clean audio, 0.80 with 5–10 dB noise;
+all scam calls caught with 0 false alarms**. Speech recognition: **WER 5.3% on LibriSpeech
+test-clean** (target ≤ 15%). Phone-band audio is the weak spot (claim F1 0.59).
+```bash
+python -m phantom.echo.make_calls --out data/echo_calls --fills 3
+python -m phantom.echo.evaluate calls --split test
+python -m phantom.echo.evaluate librispeech --root data/raw/LibriSpeech/test-clean --n 200
+```
+See `docs/ECHO_EVAL.md` for the per-condition table, label audit and limitations.
+
 ## Layout
 ```
-docs/            SCOPE.md, DATASET_AUDIT.md, MIRAGE_EVAL.md
+docs/            SCOPE.md, DATASET_AUDIT.md, MIRAGE_EVAL.md, ECHO_SCOPE.md, ECHO_EVAL.md
 schemas/         tool_result.schema.json (generated from phantom/common/schemas.py)
 phantom/common/  shared ToolResult contract + evidence store
 phantom/mirage/  ingestion, OCR, field extraction, numeric consistency check, visual checks,
                  analyze pipeline, evaluation, sample generators and report renderer
-phantom/api/static/  single-page MIRAGE demo UI (served at /)
-data/demo/       7 held-out demo cases + manifest with ground truth
-phantom/echo/    scope defined (docs/ECHO_SCOPE.md); audio ingestion live (Phase 3)
+phantom/echo/    ingestion, Whisper transcription, claim extraction, indicators, analyze
+                 pipeline, scripted-call generator, evaluation (WER, claim F1, detection)
+phantom/api/static/  single-page demo UI for MIRAGE + ECHO + evaluation (served at /)
+data/demo/       7 synthetic invoice demo cases + manifest with ground truth
+data/demo_echo/  7 scripted demo calls + manifest with ground truth
 phantom/blackbox/(Phase 4)
-phantom/api/     FastAPI app: /health, /mirage/analyze (full pipeline),
-                 /echo/analyze (mock), /blackbox/investigate (mock), /evidence/{id}
-tests/           pytest suite (52 tests)
+phantom/api/     FastAPI app: /health, /mirage/analyze, /echo/analyze (full pipelines),
+                 /blackbox/investigate (mock), /evidence/{id}[/image|/audio]
+tests/           pytest suite
 ```
 
 See `docs/MIRAGE_EVAL.md` for MIRAGE's current accuracy numbers and known

@@ -73,3 +73,8 @@ class ToolResult(BaseModel):
     limitations: list[str] = Field(default_factory=list)
     errors: list[ToolError] = Field(default_factory=list)
     needs_human_review: bool = True
+    artifacts: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Module-specific structured output that isn't a finding, e.g. ECHO's "
+        "transcript segments and extracted claim records. Optional; findings remain the contract.",
+    )

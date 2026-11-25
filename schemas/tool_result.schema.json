@@ -183,6 +183,12 @@
       "default": true,
       "title": "Needs Human Review",
       "type": "boolean"
+    },
+    "artifacts": {
+      "additionalProperties": true,
+      "description": "Module-specific structured output that isn't a finding, e.g. ECHO's transcript segments and extracted claim records. Optional; findings remain the contract.",
+      "title": "Artifacts",
+      "type": "object"
     }
   },
   "required": [

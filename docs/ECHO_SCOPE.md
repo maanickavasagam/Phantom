@@ -39,7 +39,15 @@ Each claim record: `{type, value, start_s, end_s, supporting_text}`.
 - Claim-extraction precision/recall/F1 ≥ 0.70 on the team-recorded scripted set.
 - Degrades gracefully (lower confidence, not silent failure) on noisy audio.
 
-## Open decisions for Week 3
+## Decisions (resolved Week 4)
+- **Speech-recognition engine: local Whisper** (faster-whisper, `base.en`, int8 on CPU).
+  It runs offline, so no audio leaves the machine and no licensing/privacy review of a
+  hosted API is needed. The model is configurable via `ECHO_WHISPER_MODEL`.
+- **Tamil: deferred to future work.** v1 is English only.
+
+Results: `docs/ECHO_EVAL.md`.
+
+## Open decisions for Week 3 (original text, kept for the record)
 - Speech-recognition engine: local Whisper (offline, no data leaves the
   machine, heavier compute) vs. a hosted API (faster to integrate, sends audio
   off-device — needs a licensing/privacy check before use on any recording

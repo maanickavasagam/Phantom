@@ -1,0 +1,1377 @@
+{
+  "split": "dev",
+  "n_recordings": 42,
+  "by_condition": {
+    "clean": {
+      "n": 42,
+      "claims": {
+        "tp": 134,
+        "fp": 4,
+        "fn": 4,
+        "precision": 0.971,
+        "recall": 0.971,
+        "f1": 0.971
+      },
+      "claims_by_type": {
+        "amount": {
+          "tp": 36,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "credential_request": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "deadline": {
+          "tp": 30,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "name": {
+          "tp": 38,
+          "fp": 4,
+          "fn": 4,
+          "precision": 0.905,
+          "recall": 0.905,
+          "f1": 0.905
+        },
+        "payment_request": {
+          "tp": 27,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scam_detection": {
+        "tp": 24,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_rate": 0.0
+      },
+      "mean_wer": 0.028,
+      "mean_runtime_s": 1.36
+    }
+  },
+  "rows": [
+    {
+      "file": "dev_digital_arrest_v0_0_clean.wav",
+      "family": "digital_arrest",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern"
+      ],
+      "tp": [
+        [
+          "amount",
+          "25000"
+        ],
+        [
+          "deadline",
+          "1 hour"
+        ],
+        [
+          "name",
+          "customs department"
+        ],
+        [
+          "name",
+          "varma"
+        ],
+        [
+          "payment_request",
+          "payment"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.018,
+      "runtime_s": 3.57,
+      "errors": [],
+      "hypothesis": "Hello, this is Inspector Varma calling from the customs department. Yes, what is this about? A parcel in your name contains illegal drugs. There is an arrest warrant against you. To clear your name you must transfer 25,000 rupees to our verification account within one hours. Do not tell anyone about this call and do not disconnect."
+    },
+    {
+      "file": "dev_digital_arrest_v0_1_clean.wav",
+      "family": "digital_arrest",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern"
+      ],
+      "tp": [
+        [
+          "amount",
+          "50000"
+        ],
+        [
+          "deadline",
+          "2 hour"
+        ],
+        [
+          "name",
+          "mumbai police"
+        ],
+        [
+          "name",
+          "reddy"
+        ],
+        [
+          "payment_request",
+          "payment"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.36,
+      "errors": [],
+      "hypothesis": "Hello, this is Inspector Reddy calling from the Mumbai Police. Yes, what is this about? A parcel in your name contains illegal drugs. There is an arrest warrant against you. To clear your name you must transfer 50,000 rupees to our verification account within two hours. Do not tell anyone about this call and do not disconnect."
+    },
+    {
+      "file": "dev_digital_arrest_v0_2_clean.wav",
+      "family": "digital_arrest",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern"
+      ],
+      "tp": [
+        [
+          "amount",
+          "12500"
+        ],
+        [
+          "deadline",
+          "1 hour"
+        ],
+        [
+          "name",
+          "cyber crime department"
+        ],
+        [
+          "name",
+          "sharmah"
+        ],
+        [
+          "payment_request",
+          "payment"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.017,
+      "runtime_s": 1.88,
+      "errors": [],
+      "hypothesis": "Hello, this is Officer Sharmah calling from the Cyber Crime Department. Yes, what is this about? A parcel in your name contains illegal drugs. There is an arrest warrant against you. To clear your name you must transfer 12,500 rupees to our verification account within one hours. Do not tell anyone about this call and do not disconnect."
+    },
+    {
+      "file": "dev_bank_kyc_v0_0_clean.wav",
+      "family": "bank_kyc",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "credential_request",
+        "pressure_pattern"
+      ],
+      "tp": [
+        [
+          "credential_request",
+          "otp"
+        ],
+        [
+          "deadline",
+          "15 minute"
+        ]
+      ],
+      "fp": [
+        [
+          "name",
+          "isisi bank customer care"
+        ]
+      ],
+      "fn": [
+        [
+          "name",
+          "icici bank"
+        ]
+      ],
+      "wer": 0.043,
+      "runtime_s": 1.2,
+      "errors": [],
+      "hypothesis": "Hello, Madam, I am calling from ISISI Bank Customer Care. Your account will be blocked within 15 minutes because your KYC is not updated. Oh no, what should I do? I have sent a code to your phone. Please read me the OTP to verify your identity."
+    },
+    {
+      "file": "dev_bank_kyc_v0_1_clean.wav",
+      "family": "bank_kyc",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "credential_request",
+        "pressure_pattern"
+      ],
+      "tp": [
+        [
+          "credential_request",
+          "otp"
+        ],
+        [
+          "deadline",
+          "30 minute"
+        ],
+        [
+          "name",
+          "hdfc bank customer care"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.021,
+      "runtime_s": 1.2,
+      "errors": [],
+      "hypothesis": "Hello, Madam, I am calling from HDFC Bank Customer Care. Your account will be blocked within 30 minutes because your KYC is not updated. Oh no, what should I do? I have sent a code to your phone. Please read me the OTP to verify your identity."
+    },
+    {
+      "file": "dev_bank_kyc_v0_2_clean.wav",
+      "family": "bank_kyc",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "credential_request",
+        "pressure_pattern"
+      ],
+      "tp": [
+        [
+          "credential_request",
+          "otp"
+        ],
+        [
+          "deadline",
+          "15 minute"
+        ]
+      ],
+      "fp": [
+        [
+          "name",
+          "isisi bank customer care"
+        ]
+      ],
+      "fn": [
+        [
+          "name",
+          "icici bank"
+        ]
+      ],
+      "wer": 0.043,
+      "runtime_s": 1.2,
+      "errors": [],
+      "hypothesis": "Hello, Madam, I am calling from ISISI Bank Customer Care. Your account will be blocked within 15 minutes because your KYC is not updated. Oh no, what should I do? I have sent a code to your phone. Please read me the OTP to verify your identity."
+    },
+    {
+      "file": "dev_gift_card_boss_v0_0_clean.wav",
+      "family": "gift_card_boss",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern",
+        "unusual_payment_channel"
+      ],
+      "tp": [
+        [
+          "amount",
+          "50000"
+        ],
+        [
+          "deadline",
+          "immediately"
+        ],
+        [
+          "name",
+          "rahul"
+        ],
+        [
+          "payment_request",
+          "gift card"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.024,
+      "runtime_s": 1.18,
+      "errors": [],
+      "hypothesis": "Hi, this is Rahul, your manager. I am in a meeting and need a favor. Buy Google Play gift cards worth 50,000 rupees and send me the codes immediately. Is everything alright? It is urgent. Don't tell anyone in the office."
+    },
+    {
+      "file": "dev_gift_card_boss_v0_1_clean.wav",
+      "family": "gift_card_boss",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern",
+        "unusual_payment_channel"
+      ],
+      "tp": [
+        [
+          "amount",
+          "12500"
+        ],
+        [
+          "deadline",
+          "immediately"
+        ],
+        [
+          "name",
+          "rahul"
+        ],
+        [
+          "payment_request",
+          "gift card"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.098,
+      "runtime_s": 1.23,
+      "errors": [],
+      "hypothesis": "Hi, this is Rahul, your manager. I am in a meeting and need a favor. By Google Play gift cards worth 12,500 rupees and send me the codes immediately. Is everything all right? It is urgent. Don't tell anyone in the office."
+    },
+    {
+      "file": "dev_gift_card_boss_v0_2_clean.wav",
+      "family": "gift_card_boss",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern",
+        "unusual_payment_channel"
+      ],
+      "tp": [
+        [
+          "amount",
+          "25000"
+        ],
+        [
+          "deadline",
+          "immediately"
+        ],
+        [
+          "name",
+          "anita"
+        ],
+        [
+          "payment_request",
+          "gift card"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.122,
+      "runtime_s": 3.56,
+      "errors": [],
+      "hypothesis": "Hi, this is Anita, your manager. I am in a meeting and need a favor. By Google Play gift cards worth 25,000 rupees and send me the codes immediately. Is everything all right? It is urgent. Don't tell anyone in the office. service. ."
+    },
+    {
+      "file": "dev_tech_support_v0_0_clean.wav",
+      "family": "tech_support",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "unusual_payment_channel"
+      ],
+      "tp": [
+        [
+          "amount",
+          "450"
+        ],
+        [
+          "name",
+          "microsoft technical support"
+        ],
+        [
+          "payment_request",
+          "payment"
+        ],
+        [
+          "payment_request",
+          "remote access app"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.079,
+      "runtime_s": 1.19,
+      "errors": [],
+      "hypothesis": "Hello, I am calling from Microsoft Technical Support. Your computer has a virus. Really? I didn't notice anything. Please download any desk so I can fix it remotely. After that you must pay 450 rupees for the security license."
+    },
+    {
+      "file": "dev_tech_support_v0_1_clean.wav",
+      "family": "tech_support",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "unusual_payment_channel"
+      ],
+      "tp": [
+        [
+          "amount",
+          "2500"
+        ],
+        [
+          "name",
+          "microsoft technical support"
+        ],
+        [
+          "payment_request",
+          "payment"
+        ],
+        [
+          "payment_request",
+          "remote access app"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.079,
+      "runtime_s": 1.14,
+      "errors": [],
+      "hypothesis": "Hello, I am calling from Microsoft Technical Support. Your computer has a virus. Really? I didn't notice anything. Please download any desk so I can fix it remotely. After that you must pay 2,500 rupees for the security license."
+    },
+    {
+      "file": "dev_tech_support_v0_2_clean.wav",
+      "family": "tech_support",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "unusual_payment_channel"
+      ],
+      "tp": [
+        [
+          "amount",
+          "2500"
+        ],
+        [
+          "name",
+          "microsoft technical support"
+        ],
+        [
+          "payment_request",
+          "payment"
+        ],
+        [
+          "payment_request",
+          "remote access app"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.079,
+      "runtime_s": 1.39,
+      "errors": [],
+      "hypothesis": "Hello, I am calling from Microsoft Technical Support. Your computer has a virus. Really? I didn't notice anything. Please download any desk so I can fix it remotely. After that you must pay 2,500 rupees for the security license."
+    },
+    {
+      "file": "dev_lottery_v0_0_clean.wav",
+      "family": "lottery",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern"
+      ],
+      "tp": [
+        [
+          "amount",
+          "450"
+        ],
+        [
+          "amount",
+          "50000"
+        ],
+        [
+          "deadline",
+          "today itself"
+        ],
+        [
+          "payment_request",
+          "upi"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.27,
+      "errors": [],
+      "hypothesis": "Congratulations. You have won 50,000 rupees in the Lucky Draw. Wow, really? To release the prize you must pay a processing fee of 450 rupees by Google Pay Today itself."
+    },
+    {
+      "file": "dev_lottery_v0_1_clean.wav",
+      "family": "lottery",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern"
+      ],
+      "tp": [
+        [
+          "amount",
+          "1200"
+        ],
+        [
+          "amount",
+          "75000"
+        ],
+        [
+          "deadline",
+          "today itself"
+        ],
+        [
+          "payment_request",
+          "upi"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.2,
+      "errors": [],
+      "hypothesis": "Congratulations. You have won 75,000 rupees in the Lucky Draw. Wow, really? To release the prize you must pay a processing fee of 1,200 rupees by Google Pay Today itself."
+    },
+    {
+      "file": "dev_lottery_v0_2_clean.wav",
+      "family": "lottery",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern"
+      ],
+      "tp": [
+        [
+          "amount",
+          "25000"
+        ],
+        [
+          "amount",
+          "300"
+        ],
+        [
+          "deadline",
+          "today itself"
+        ],
+        [
+          "payment_request",
+          "upi"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.19,
+      "errors": [],
+      "hypothesis": "Congratulations. You have won 25,000 rupees in the Lucky Draw. Wow, really? To release the prize you must pay a processing fee of 300 rupees by Google Pay Today itself."
+    },
+    {
+      "file": "dev_courier_customs_v0_0_clean.wav",
+      "family": "courier_customs",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern"
+      ],
+      "tp": [
+        [
+          "amount",
+          "50000"
+        ],
+        [
+          "deadline",
+          "immediately"
+        ],
+        [
+          "name",
+          "fedex courier"
+        ],
+        [
+          "name",
+          "khan"
+        ],
+        [
+          "payment_request",
+          "bank transfer"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.41,
+      "errors": [],
+      "hypothesis": "Hello, I am calling from FedEx Courier. A package in your name was stopped by Customs. I am connecting you to Officer Khan. This is Officer Khan. The package has illegal items. You will face legal action. Pay a fine of 50,000 rupees by bank transfer immediately to close the case."
+    },
+    {
+      "file": "dev_courier_customs_v0_1_clean.wav",
+      "family": "courier_customs",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern"
+      ],
+      "tp": [
+        [
+          "amount",
+          "25000"
+        ],
+        [
+          "deadline",
+          "immediately"
+        ],
+        [
+          "name",
+          "fedex courier"
+        ],
+        [
+          "name",
+          "varma"
+        ],
+        [
+          "payment_request",
+          "bank transfer"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.039,
+      "runtime_s": 1.45,
+      "errors": [],
+      "hypothesis": "Hello, I am calling from FedEx Courier. A package in your name was stopped by customs. I am connecting you to Inspector Varma. This is Inspector Varma. The package has illegal items. You will face legal action. Pay a fine of 25,000 rupees by bank transfer immediately to close the case."
+    },
+    {
+      "file": "dev_courier_customs_v0_2_clean.wav",
+      "family": "courier_customs",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern"
+      ],
+      "tp": [
+        [
+          "amount",
+          "50000"
+        ],
+        [
+          "deadline",
+          "immediately"
+        ],
+        [
+          "name",
+          "fedex courier"
+        ],
+        [
+          "name",
+          "reddy"
+        ],
+        [
+          "payment_request",
+          "bank transfer"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.53,
+      "errors": [],
+      "hypothesis": "Hello, I am calling from FedEx Courier. A package in your name was stopped by Customs. I am connecting you to Inspector Reddy. This is Inspector Reddy. The package has illegal items. You will face legal action. Pay a fine of 50,000 rupees by bank transfer immediately to close the case."
+    },
+    {
+      "file": "dev_electricity_v0_0_clean.wav",
+      "family": "electricity",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern",
+        "unusual_payment_channel"
+      ],
+      "tp": [
+        [
+          "amount",
+          "1200"
+        ],
+        [
+          "deadline",
+          "tonight"
+        ],
+        [
+          "name",
+          "electricity board"
+        ],
+        [
+          "payment_request",
+          "qr code"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.13,
+      "errors": [],
+      "hypothesis": "Dear customer, I am calling from the electricity board. Your power connection will be disconnected tonight because your last bill is not updated. Pay 1,200 rupees by scanning the QR code I am sending you on WhatsApp."
+    },
+    {
+      "file": "dev_electricity_v0_1_clean.wav",
+      "family": "electricity",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern",
+        "unusual_payment_channel"
+      ],
+      "tp": [
+        [
+          "amount",
+          "450"
+        ],
+        [
+          "deadline",
+          "tonight"
+        ],
+        [
+          "name",
+          "electricity board"
+        ],
+        [
+          "payment_request",
+          "qr code"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.3,
+      "errors": [],
+      "hypothesis": "Dear customer, I am calling from the electricity board. Your power connection will be disconnected tonight because your last bill is not updated. Pay 450 rupees by scanning the QR code I am sending you on WhatsApp."
+    },
+    {
+      "file": "dev_electricity_v0_2_clean.wav",
+      "family": "electricity",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern",
+        "unusual_payment_channel"
+      ],
+      "tp": [
+        [
+          "amount",
+          "1200"
+        ],
+        [
+          "deadline",
+          "tonight"
+        ],
+        [
+          "name",
+          "electricity board"
+        ],
+        [
+          "payment_request",
+          "qr code"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.15,
+      "errors": [],
+      "hypothesis": "Dear customer, I am calling from the electricity board. Your power connection will be disconnected tonight because your last bill is not updated. Pay 1,200 rupees by scanning the QR code I am sending you on WhatsApp."
+    },
+    {
+      "file": "dev_crypto_v0_0_clean.wav",
+      "family": "crypto",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern",
+        "unusual_payment_channel"
+      ],
+      "tp": [
+        [
+          "amount",
+          "75000"
+        ],
+        [
+          "deadline",
+          "right now"
+        ],
+        [
+          "payment_request",
+          "crypto"
+        ]
+      ],
+      "fp": [
+        [
+          "name",
+          "mira"
+        ]
+      ],
+      "fn": [
+        [
+          "name",
+          "meera"
+        ]
+      ],
+      "wer": 0.024,
+      "runtime_s": 1.25,
+      "errors": [],
+      "hypothesis": "Hi, my name is Mira, I am an investment advisor. If you invest 75,000 rupees in Bitcoin today, it will double in one week. How do I invest? Send the money to my crypto wallet right now, the offer closes soon."
+    },
+    {
+      "file": "dev_crypto_v0_1_clean.wav",
+      "family": "crypto",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern",
+        "unusual_payment_channel"
+      ],
+      "tp": [
+        [
+          "amount",
+          "199000"
+        ],
+        [
+          "deadline",
+          "right now"
+        ],
+        [
+          "name",
+          "rahul"
+        ],
+        [
+          "payment_request",
+          "crypto"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.24,
+      "errors": [],
+      "hypothesis": "Hi, my name is Rahul, I am an investment advisor. If you invest 1,99,000 rupees in Bitcoin today, it will double in one week. How do I invest? Send the money to my crypto wallet right now, the offer closes soon."
+    },
+    {
+      "file": "dev_crypto_v0_2_clean.wav",
+      "family": "crypto",
+      "label": "scam",
+      "condition": "clean",
+      "verdict": "suspicious",
+      "fired": [
+        "pressure_pattern",
+        "unusual_payment_channel"
+      ],
+      "tp": [
+        [
+          "amount",
+          "25000"
+        ],
+        [
+          "deadline",
+          "right now"
+        ],
+        [
+          "name",
+          "anita"
+        ],
+        [
+          "payment_request",
+          "crypto"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.25,
+      "errors": [],
+      "hypothesis": "Hi, my name is Anita, I am an investment advisor. If you invest 25,000 rupees in Bitcoin today, it will double in one week. How do I invest? Send the money to my crypto wallet right now, the offer closes soon."
+    },
+    {
+      "file": "dev_bank_reminder_v0_0_clean.wav",
+      "family": "bank_reminder",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "amount",
+          "1200"
+        ],
+        [
+          "deadline",
+          "tomorrow"
+        ],
+        [
+          "name",
+          "state bank"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.17,
+      "errors": [],
+      "hypothesis": "Hello, this is an automated reminder from State Bank. Your credit card bill of 1,200 rupees is due by tomorrow. Please remember, we will never ask you to share your OTP or PIN over the phone."
+    },
+    {
+      "file": "dev_bank_reminder_v0_1_clean.wav",
+      "family": "bank_reminder",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "amount",
+          "300"
+        ],
+        [
+          "deadline",
+          "tomorrow"
+        ],
+        [
+          "name",
+          "isisi bank"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.028,
+      "runtime_s": 1.13,
+      "errors": [],
+      "hypothesis": "Hello, this is an automated reminder from ISISI Bank. Your credit card bill of 300 rupees is due by tomorrow. Please remember, we will never ask you to share your OTP or PIN over the phone."
+    },
+    {
+      "file": "dev_bank_reminder_v0_2_clean.wav",
+      "family": "bank_reminder",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "amount",
+          "1200"
+        ],
+        [
+          "deadline",
+          "tomorrow"
+        ],
+        [
+          "name",
+          "isisi bank"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.028,
+      "runtime_s": 1.18,
+      "errors": [],
+      "hypothesis": "Hello, this is an automated reminder from ISISI Bank. Your credit card bill of 1,200 rupees is due by tomorrow. Please remember, we will never ask you to share your OTP or PIN over the phone."
+    },
+    {
+      "file": "dev_doctor_v0_0_clean.wav",
+      "family": "doctor",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.08,
+      "errors": [],
+      "hypothesis": "Hello, this is the City Clinic reception. I am calling to confirm the appointment for Vikram on Monday at 10 in the morning. Yes, that's fine, thank you."
+    },
+    {
+      "file": "dev_doctor_v0_1_clean.wav",
+      "family": "doctor",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.12,
+      "errors": [],
+      "hypothesis": "Hello, this is the City Clinic reception. I am calling to confirm the appointment for Anita on Monday at 10 in the morning. Yes, that's fine, thank you."
+    },
+    {
+      "file": "dev_doctor_v0_2_clean.wav",
+      "family": "doctor",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.09,
+      "errors": [],
+      "hypothesis": "Hello, this is the City Clinic reception. I am calling to confirm the appointment for Rahul on Monday at 10 in the morning. Yes, that's fine, thank you."
+    },
+    {
+      "file": "dev_family_v0_0_clean.wav",
+      "family": "family",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "amount",
+          "1200"
+        ],
+        [
+          "name",
+          "rahul"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.19,
+      "errors": [],
+      "hypothesis": "Hi, it's Rahul. Are you coming for dinner on Sunday? Yes. I already bought the movie tickets for $1,200 rupees. Great. See you then."
+    },
+    {
+      "file": "dev_family_v0_1_clean.wav",
+      "family": "family",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "amount",
+          "300"
+        ]
+      ],
+      "fp": [
+        [
+          "name",
+          "mira"
+        ]
+      ],
+      "fn": [
+        [
+          "name",
+          "meera"
+        ]
+      ],
+      "wer": 0.042,
+      "runtime_s": 1.08,
+      "errors": [],
+      "hypothesis": "Hi, it's Mira. Are you coming for dinner on Sunday? Yes. I already bought the movie tickets for 300 Rupees. Great. See you then."
+    },
+    {
+      "file": "dev_family_v0_2_clean.wav",
+      "family": "family",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "amount",
+          "300"
+        ],
+        [
+          "name",
+          "anita"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.12,
+      "errors": [],
+      "hypothesis": "Hi, it's Anita. Are you coming for dinner on Sunday? Yes. I already bought the movie tickets for 300 rupees. Great. See you then."
+    },
+    {
+      "file": "dev_delivery_v0_0_clean.wav",
+      "family": "delivery",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "deadline",
+          "5 pm"
+        ],
+        [
+          "name",
+          "blue dart"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.065,
+      "runtime_s": 1.12,
+      "errors": [],
+      "hypothesis": "Hello, I'm calling from Blue Dart. I have a delivery for you. I will reach your building by 5pm. Will someone be at home? Yes, my mother is at home."
+    },
+    {
+      "file": "dev_delivery_v0_1_clean.wav",
+      "family": "delivery",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "deadline",
+          "5 pm"
+        ],
+        [
+          "name",
+          "blue dart"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.065,
+      "runtime_s": 1.14,
+      "errors": [],
+      "hypothesis": "Hello, I'm calling from Blue Dart. I have a delivery for you. I will reach your building by 5pm. Will someone be at home? Yes, my mother is at home."
+    },
+    {
+      "file": "dev_delivery_v0_2_clean.wav",
+      "family": "delivery",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "deadline",
+          "5 pm"
+        ],
+        [
+          "name",
+          "blue dart"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.065,
+      "runtime_s": 1.15,
+      "errors": [],
+      "hypothesis": "Hello, I'm calling from Blue Dart. I have a delivery for you. I will reach your building by 5pm. Will someone be at home? Yes, my mother is at home."
+    },
+    {
+      "file": "dev_friend_upi_v0_0_clean.wav",
+      "family": "friend_upi",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "amount",
+          "450"
+        ],
+        [
+          "name",
+          "vikram"
+        ],
+        [
+          "payment_request",
+          "upi"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.86,
+      "errors": [],
+      "hypothesis": "Hey, it's Vikram. You owe me for the lunch yesterday. Can you send 450 rupees on Google Pay when you get time? Sure, I'll do it tonight."
+    },
+    {
+      "file": "dev_friend_upi_v0_1_clean.wav",
+      "family": "friend_upi",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "amount",
+          "450"
+        ],
+        [
+          "name",
+          "vikram"
+        ],
+        [
+          "payment_request",
+          "upi"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.87,
+      "errors": [],
+      "hypothesis": "Hey, it's Vikram. You owe me for the lunch yesterday. Can you send 450 rupees on Google Pay when you get time? Sure, I'll do it tonight."
+    },
+    {
+      "file": "dev_friend_upi_v0_2_clean.wav",
+      "family": "friend_upi",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "amount",
+          "300"
+        ],
+        [
+          "name",
+          "priya"
+        ],
+        [
+          "payment_request",
+          "upi"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.0,
+      "runtime_s": 1.09,
+      "errors": [],
+      "hypothesis": "Hey, it's Priya. You owe me for the lunch yesterday. Can you send 300 rupees on Google Pay when you get time? Sure, I'll do it tonight."
+    },
+    {
+      "file": "dev_insurance_v0_0_clean.wav",
+      "family": "insurance",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "amount",
+          "25000"
+        ],
+        [
+          "deadline",
+          "30 day"
+        ],
+        [
+          "name",
+          "lick"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.061,
+      "runtime_s": 1.15,
+      "errors": [],
+      "hypothesis": "Hello Sir, I am calling from Lick regarding your policy renewal. Your premium of 25,000 rupees is due within 30 days. You can pay through net banking or at any of our branches."
+    },
+    {
+      "file": "dev_insurance_v0_1_clean.wav",
+      "family": "insurance",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "amount",
+          "12500"
+        ],
+        [
+          "deadline",
+          "30 day"
+        ],
+        [
+          "name",
+          "lick"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.061,
+      "runtime_s": 1.16,
+      "errors": [],
+      "hypothesis": "Hello Sir, I am calling from Lick regarding your policy renewal. Your premium of 12,500 rupees is due within 30 days. You can pay through net banking or at any of our branches."
+    },
+    {
+      "file": "dev_insurance_v0_2_clean.wav",
+      "family": "insurance",
+      "label": "benign",
+      "condition": "clean",
+      "verdict": "benign",
+      "fired": [],
+      "tp": [
+        [
+          "amount",
+          "50000"
+        ],
+        [
+          "deadline",
+          "30 day"
+        ],
+        [
+          "name",
+          "lick"
+        ]
+      ],
+      "fp": [],
+      "fn": [],
+      "wer": 0.061,
+      "runtime_s": 1.1,
+      "errors": [],
+      "hypothesis": "Hello sir, I am calling from Lick regarding your policy renewal. Your premium of 50,000 rupees is due within 30 days. You can pay through net banking or at any of our branches."
+    }
+  ]
+}

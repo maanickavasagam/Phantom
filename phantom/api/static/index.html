@@ -205,6 +205,38 @@
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   .pill-check { font-family: var(--mono); font-size: 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; }
 
+  /* ---------- ECHO */
+  .echo-main { flex: 1; overflow: auto; padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; background: var(--bg); }
+  .player { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; }
+  .player audio { width: 100%; height: 36px; }
+  .tl { position: relative; height: 34px; margin-top: 12px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--border); overflow: hidden; cursor: pointer; }
+  .tl .seg { position: absolute; top: 12px; height: 10px; background: #dfe3ea; border-radius: 3px; }
+  .tl .mk { position: absolute; top: 4px; height: 26px; min-width: 4px; border-radius: 3px; opacity: .85; }
+  .tl .head { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--text); pointer-events: none; }
+  .tl-l { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-3); margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .transcript { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 6px 0; }
+  .transcript h3 { font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); margin: 10px 18px 6px; font-weight: 600; }
+  .line { display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 8px 18px; cursor: pointer; border-left: 3px solid transparent; line-height: 1.6; }
+  .line:hover { background: var(--surface-2); }
+  .line.now { background: var(--brand-soft); border-left-color: var(--brand); }
+  .line .ts { font-family: var(--mono); font-size: 12px; color: var(--text-3); padding-top: 2px; }
+  .w.c { border-radius: 4px; padding: 1px 2px; font-weight: 600; }
+  .cl, .w.c { --c: #888; }
+  .amount { --c: #0e9384; } .deadline { --c: #dc6803; } .payment_request { --c: #7a5af8; } .name { --c: #2e90fa; } .credential_request { --c: #d92d20; }
+  .w.c { background: color-mix(in srgb, var(--c) 14%, transparent); box-shadow: inset 0 -2px 0 var(--c); }
+  .tl .mk { background: var(--c); }
+  .legend { font-size: 12px; color: var(--text-3); display: inline-flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .legend .cl { display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--c); margin-right: -6px; }
+  .claim { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 10px; align-items: center; padding: 10px 12px; border: 1px solid var(--border);
+    border-radius: 9px; margin-bottom: 8px; cursor: pointer; box-shadow: var(--shadow); }
+  .claim:hover { border-color: #a5b4fc; }
+  .claim .k { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--c);
+    background: color-mix(in srgb, var(--c) 12%, transparent); padding: 2px 7px; border-radius: 99px; }
+  .claim .v { font-weight: 600; }
+  .claim .t { font-family: var(--mono); font-size: 12px; color: var(--text-3); }
+  .claim .s { grid-column: 1 / -1; font-size: 12.5px; color: var(--text-2); }
+  .gtc { font-size: 12px; color: var(--text-3); margin-top: 6px; }
+
   @media print {
     .side, .topbar, .lib, .toolbar, .tabs, .btn { display: none !important; }
     .app, .inv { display: block; height: auto; }
@@ -245,7 +277,7 @@
     </div>
     <div class="navlabel">Modules</div>
     <button class="nav active" data-view="investigate"><svg><use href="#i-doc"/></svg>MIRAGE · Documents</button>
-    <button class="nav disabled" title="Phase 3"><svg><use href="#i-wave"/></svg>ECHO · Audio<span class="soon">soon</span></button>
+    <button class="nav" data-view="echo"><svg><use href="#i-wave"/></svg>ECHO · Calls</button>
     <button class="nav disabled" title="Phase 4"><svg><use href="#i-globe"/></svg>BLACKBOX · Web<span class="soon">soon</span></button>
     <button class="nav disabled" title="Phase 5"><svg><use href="#i-flow"/></svg>Coordinator<span class="soon">soon</span></button>
     <div class="navlabel">Quality</div>
@@ -303,6 +335,36 @@
       </div>
     </section>
 
+    <!-- ===================== ECHO ===================== -->
+    <section class="view hidden" id="v-echo">
+      <div class="inv">
+        <div class="lib">
+          <h3>Call library</h3>
+          <div id="echoCases"></div>
+          <div class="drop" id="echoDrop">
+            <svg><use href="#i-upload"/></svg>
+            <b>Analyse a recording</b>WAV, MP3, FLAC or M4A · up to 10 min
+            <input type="file" id="echoFile" accept=".wav,.mp3,.flac,.m4a" hidden>
+          </div>
+          <p class="note-muted" style="margin:12px 6px 0;font-size:12px">Speech is transcribed locally with Whisper. Audio never leaves this machine.</p>
+        </div>
+        <div class="stagecol">
+          <div class="toolbar"><span class="name" id="echoName">No recording</span><div class="grow"></div>
+            <span class="legend"><i class="cl amount"></i>amount <i class="cl deadline"></i>deadline <i class="cl payment_request"></i>payment
+              <i class="cl name"></i>name <i class="cl credential_request"></i>credential</span></div>
+          <div class="echo-main" id="echoMain">
+            <div class="empty">
+              <div class="ill"><svg width="34" height="34" style="color:var(--brand)"><use href="#i-wave"/></svg></div>
+              <h2>Select a call to analyse</h2>
+              ECHO transcribes the call, extracts amounts, deadlines, payment and credential requests and who the caller
+              claims to be, then looks for social-engineering patterns. Every claim links to the second of audio it came from.
+            </div>
+          </div>
+        </div>
+        <div class="insp" id="echoInsp"><div class="pane"><h3>Result</h3><div class="note-muted">No call analysed yet.</div></div></div>
+      </div>
+    </section>
+
     <!-- ===================== EVALUATION ===================== -->
     <section class="view hidden" id="v-eval"><div class="evalv"><div class="wrap" id="evalBody"></div></div></section>
   </div>
@@ -322,6 +384,9 @@ const CHECKS = {
   input_quality:        { name: "Input quality",       icon: "i-help" },
   ocr_confidence:       { name: "OCR confidence",      icon: "i-help" },
   overall:              { name: "Overall",             icon: "i-check" },
+  credential_request:   { name: "Credential request",  icon: "i-shield" },
+  unusual_payment_channel: { name: "Unusual payment channel", icon: "i-alert" },
+  pressure_pattern:     { name: "Pressure pattern",    icon: "i-alert" },
 };
 const ORDER = { suspicious: 0, inconclusive: 1, benign: 2 };
 const VERDICT = {
@@ -332,14 +397,17 @@ const VERDICT = {
 let libs = { real: null, synthetic: null }, libKey = "real", state = null, zoom = null;
 
 // ------------------------------------------------------------ navigation
+let activeView = "investigate";
+const CRUMBS = { investigate: ["MIRAGE", "Documents"], echo: ["ECHO", "Calls"], eval: ["Quality", "Evaluation"] };
 $$(".nav[data-view]").forEach(b => b.onclick = () => {
   $$(".nav").forEach(x => x.classList.toggle("active", x === b));
-  const v = b.dataset.view;
-  $("#v-investigate").classList.toggle("hidden", v !== "investigate");
-  $("#v-eval").classList.toggle("hidden", v !== "eval");
-  $("#crumbs").innerHTML = v === "eval" ? `Quality <span style="margin:0 6px">/</span> <b>Evaluation</b>`
-                                        : `MIRAGE <span style="margin:0 6px">/</span> <b>Investigate</b>`;
+  const v = activeView = b.dataset.view;
+  ["investigate", "echo", "eval"].forEach(k => $("#v-" + k).classList.toggle("hidden", v !== k));
+  $("#crumbs").innerHTML = `${CRUMBS[v][0]} <span style="margin:0 6px">/</span> <b>${CRUMBS[v][1]}</b>`;
+  const st = v === "echo" ? echoState : v === "investigate" ? state : null;
+  ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = !st);
   if (v === "eval") loadEval();
+  if (v === "echo") renderEchoLib();
 });
 
 // ------------------------------------------------------------ case library
@@ -540,14 +608,41 @@ function renderInspector() {
 
 // ------------------------------------------------------------ export
 $("#btnJson").onclick = () => {
-  if (!state) return;
-  const blob = new Blob([JSON.stringify({ verdict: state.verdict, document: state.name, result: state.result }, null, 2)], { type: "application/json" });
-  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `mirage_${state.result.run_id}.json` });
+  const st = activeView === "echo" ? echoState : state;
+  if (!st) return;
+  const mod = activeView === "echo" ? "echo" : "mirage";
+  const blob = new Blob([JSON.stringify({ verdict: st.verdict, input: st.name, result: st.result }, null, 2)], { type: "application/json" });
+  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `${mod}_${st.result.run_id}.json` });
   a.click(); URL.revokeObjectURL(a.href);
 };
-$("#btnPrint").onclick = () => state && window.print();
+$("#btnPrint").onclick = () => (activeView === "echo" ? echoState : state) && window.print();
 
 // ------------------------------------------------------------ evaluation
+function echoEvalCard(ev) {
+  const t = ev.echo_calls_test, ls = ev.echo_librispeech;
+  if (!t) return "";
+  const names = { clean: "Clean", snr10: "Noise 10 dB", snr5: "Noise 5 dB", phone: "Phone line (8 kHz)" };
+  const order = ["clean", "snr10", "snr5", "phone"].filter(k => t.by_condition[k]);
+  const rows = order.map(k => { const m = t.by_condition[k];
+    return `<tr class="${k === "clean" ? "hero" : ""}"><td>${names[k]}</td><td class="num">${m.n}</td>
+      <td class="num">${f2(m.claims.precision)}</td><td class="num">${f2(m.claims.recall)}</td><td class="num">${f2(m.claims.f1)}</td>
+      <td class="num">${f2(m.scam_detection.precision)} / ${f2(m.scam_detection.recall)}</td>
+      <td class="num">${f2(m.scam_detection.false_positive_rate)}</td><td class="num">${(100 * m.mean_wer).toFixed(1)}%</td></tr>`; }).join("");
+  const c = t.by_condition.clean;
+  return `<div class="card"><div class="ch"><h2>ECHO · scripted calls (held-out wording, run once)</h2><span class="grow"></span>
+      <span class="tag neutral">synthetic voices · 42 calls × 4 conditions</span></div>
+    <div class="cb" style="padding-top:14px">
+      <div class="kpis">
+        <div class="kpi"><div class="l">Claim extraction F1 (clean)</div><div class="n">${f2(c.claims.f1)}</div><div class="delta">target ≥ 0.70</div></div>
+        <div class="kpi"><div class="l">Scam calls caught (clean)</div><div class="n">${c.scam_detection.tp} / ${c.scam_detection.tp + c.scam_detection.fn}</div><div class="delta">0 false alarms on genuine calls</div></div>
+        <div class="kpi"><div class="l">WER · LibriSpeech test-clean</div><div class="n">${ls ? (100 * ls.wer).toFixed(1) + "%" : "–"}</div><div class="delta">target ≤ 15%${ls ? ` · ${ls.n_utterances} utterances` : ""}</div></div>
+        <div class="kpi"><div class="l">Runtime per call</div><div class="n">${c.mean_runtime_s.toFixed(1)} s</div><div class="delta">local Whisper base.en on CPU</div></div>
+      </div>
+      <table><tr><th>Audio</th><th class="num">Calls</th><th class="num">Claim P</th><th class="num">Claim R</th><th class="num">Claim F1</th>
+        <th class="num">Scam P / R</th><th class="num">FP rate</th><th class="num">WER</th></tr>${rows}</table>
+      <p class="note-muted" style="margin:10px 0 0">Phone-band audio is the weak spot: recognition errors rise sharply, so ECHO finds fewer claims (it still raises no false alarms).
+      Some name "errors" are missing labels in our generated ground truth; see docs/ECHO_EVAL.md for the corrected-label numbers.</p></div></div>`;
+}
 let evalDone = false;
 const f2 = v => (v ?? 0).toFixed(2);
 async function loadEval() {
@@ -571,7 +666,7 @@ async function loadEval() {
   const attacks = h ? Object.entries(h.recall_by_attack).map(([k, d]) => `<tr><td>${esc(k)}</td><td class="num">${d.caught} / ${d.n}</td>
     <td><span class="bar"><b style="width:${100 * d.recall}%"></b></span></td></tr>`).join("") : "";
   $("#evalBody").innerHTML = `
-    <div class="ph"><div><h1>MIRAGE evaluation</h1><p>Measured results only. Tuning and test data are kept separate; test sets are run once.</p></div></div>
+    <div class="ph"><div><h1>Evaluation</h1><p>Measured results only. Tuning and test data are kept separate; test sets are run once.</p></div></div>
     <div class="card"><div class="ch"><h2>Real-world benchmark · Find it again! (ICDAR 2023)</h2><span class="grow"></span><span class="tag neutral">real scans · human forgers</span></div>
       <div class="cb" style="padding-top:14px">${realBlock}
         <table><tr><th>Configuration</th><th class="num">Docs</th><th class="num">Precision</th><th class="num">Recall</th><th class="num">F1</th><th class="num">FP rate</th><th class="num">Runtime</th></tr>
@@ -581,6 +676,7 @@ async function loadEval() {
         </table></div></div>
     ${checks ? `<div class="card"><div class="ch"><h2>Which checks fired on the real test split</h2><p>A useful check fires on forged receipts and stays quiet on genuine ones.</p></div>
       <div class="cb"><table><tr><th>Check</th><th class="num">On forged</th><th class="num">On genuine</th><th>Share of forgeries caught</th></tr>${checks}</table></div></div>` : ""}
+    ${echoEvalCard(ev)}
     <div class="grid2">
       <div class="card"><div class="ch"><h2>Synthetic invoices</h2></div><div class="cb"><table>
         <tr><th>Set</th><th class="num">Docs</th><th class="num">P</th><th class="num">R</th><th class="num">F1</th><th class="num">FPR</th><th class="num">Time</th></tr>
@@ -594,6 +690,157 @@ async function loadEval() {
     <div class="callout">Copy-paste detection is the strongest signal on real forgeries: real forgers mostly clone digits that already exist on the receipt.
       Edits that leave no pixel-level trace (typed in a matching font, or re-printed and re-scanned) remain the main limitation. See docs/MIRAGE_EVAL.md.</div>`;
   evalDone = true;
+}
+
+// ============================================================ ECHO
+let echoLib = null, echoState = null;
+const CLAIM_LABEL = { amount: "Amount", deadline: "Deadline", payment_request: "Payment", name: "Name", credential_request: "Credential" };
+const fmtT = s => { s = Math.max(0, s || 0); return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`; };
+
+async function renderEchoLib() {
+  if (!echoLib) echoLib = await (await fetch("/demo/echo-cases")).json();
+  $("#echoCases").innerHTML = (echoLib.cases || []).map((c, i) => {
+    const sus = c.truth.label === "suspicious";
+    return `<div class="case" data-e="${i}"><div class="thumb" style="display:grid;place-items:center;color:var(--brand);background:var(--brand-soft)">
+      <svg width="18" height="18"><use href="#i-wave"/></svg></div>
+      <div><div class="t">${esc(c.title)}</div><div class="s"><span class="tag ${sus ? "sus" : "ok"}">${sus ? "scam" : "genuine"}</span>
+      ${c.truth.condition !== "clean" ? `<span class="tag neutral">${esc(c.truth.condition)}</span>` : ""}</div></div></div>`;
+  }).join("") || `<div class="note-muted">No demo calls found.</div>`;
+  $$("#echoCases .case").forEach(el => el.onclick = async () => {
+    $$("#echoCases .case").forEach(x => x.classList.toggle("active", x === el));
+    const c = echoLib.cases[+el.dataset.e];
+    const blob = await (await fetch("/demo/echo-cases/" + encodeURIComponent(c.file))).blob();
+    echoAnalyze(new File([blob], c.file, { type: blob.type || "audio/wav" }), c);
+  });
+}
+const eDrop = $("#echoDrop"), eFile = $("#echoFile");
+eDrop.onclick = () => eFile.click();
+eFile.onchange = () => eFile.files[0] && echoAnalyze(eFile.files[0], null);
+eDrop.ondragover = e => { e.preventDefault(); eDrop.classList.add("over"); };
+eDrop.ondragleave = () => eDrop.classList.remove("over");
+eDrop.ondrop = e => { e.preventDefault(); eDrop.classList.remove("over"); e.dataTransfer.files[0] && echoAnalyze(e.dataTransfer.files[0], null); };
+
+async function echoAnalyze(file, demo) {
+  $("#echoName").textContent = file.name;
+  const steps = ["Validate & convert audio", "Transcribe locally (Whisper)", "Extract claims", "Detect pressure tactics", "Store evidence"];
+  $("#echoMain").innerHTML = `<div class="loader"><div class="spin"></div><div style="margin-top:12px;font-weight:600">Analysing call…</div>
+    <div class="steps">${steps.map((s, i) => `<div data-es="${i}">○ ${s}</div>`).join("")}</div>
+    <p class="note-muted" style="margin-top:10px">The first call after start-up also loads the speech model (~20 s).</p></div>`;
+  let k = 0; const tick = setInterval(() => { const el = $(`[data-es="${k}"]`); if (el) { el.classList.add("on"); el.textContent = "● " + steps[k]; } k = Math.min(k + 1, steps.length - 1); }, 700);
+  $("#echoInsp").innerHTML = `<div class="pane"><h3>Result</h3><div class="note-muted">Running…</div></div>`;
+  ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = true);
+  const fd = new FormData(); fd.append("file", file);
+  const t0 = performance.now();
+  try {
+    const result = await (await fetch("/echo/analyze", { method: "POST", body: fd })).json();
+    const ms = performance.now() - t0;
+    const verdict = (await (await fetch("/echo/verdict", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(result) })).json()).verdict;
+    const records = await Promise.all(result.evidence_ids.map(async id => ({ id, ...(await (await fetch("/evidence/" + id)).json()) })));
+    echoState = { result, verdict, records, demo, name: file.name, ms };
+    renderEchoMain(); renderEchoInsp();
+    ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = false);
+  } catch (e) {
+    $("#echoMain").innerHTML = `<div class="empty"><h2>Analysis failed</h2>${esc(e.message)}</div>`;
+  } finally { clearInterval(tick); }
+}
+
+function claimAt(claims, w) { return claims.find(c => w.start >= c.start_s - 0.05 && w.end <= c.end_s + 0.05); }
+
+function renderEchoMain() {
+  const { result, records } = echoState;
+  const tr = result.artifacts.transcript, claims = result.artifacts.claims || [];
+  const audioRec = records.find(r => r.kind === "audio");
+  if (result.errors.length && !tr) {
+    $("#echoMain").innerHTML = `<div class="empty"><h2>Could not analyse this recording</h2>${esc(result.errors.map(e => e.message).join("; "))}</div>`;
+    return;
+  }
+  const dur = Math.max(tr.duration_s || 0, ...tr.segments.map(s => s.end), 1);
+  const pct = s => (100 * s / dur).toFixed(3) + "%";
+  const lines = tr.segments.map(s => {
+    const ws = (s.words && s.words.length ? s.words : [{ text: s.text, start: s.start, end: s.end }]).map((w, i) => {
+      const c = claimAt(claims, w);
+      // Whisper splits "50,000" into "50" + ",000": no space before punctuation-led tokens.
+      const sp = i && !/^[,.!?;:%')]/.test(w.text) ? " " : "";
+      return sp + (c ? `<span class="w c ${c.type}" title="${esc(CLAIM_LABEL[c.type])}: ${esc(c.value)}">${esc(w.text)}</span>` : `<span class="w">${esc(w.text)}</span>`);
+    }).join("");
+    return `<div class="line" data-t="${s.start}" data-end="${s.end}"><span class="ts">${fmtT(s.start)}</span><span>${ws}</span></div>`;
+  }).join("") || `<div class="note-muted" style="padding:10px 18px">No speech recognised.</div>`;
+  $("#echoMain").innerHTML = `
+    <div class="player">
+      <audio id="eAudio" controls preload="auto" src="/evidence/${audioRec.id}/audio"></audio>
+      <div class="tl" id="eTl">
+        ${tr.segments.map(s => `<div class="seg" style="left:${pct(s.start)};width:${pct(s.end - s.start)}"></div>`).join("")}
+        ${claims.map(c => `<div class="mk ${c.type}" title="${esc(CLAIM_LABEL[c.type])}: ${esc(c.value)} (${fmtT(c.start_s)})"
+            style="left:${pct(c.start_s)};width:${pct(Math.max(0.15, c.end_s - c.start_s))}"></div>`).join("")}
+        <div class="head" id="eHead" style="left:0"></div>
+      </div>
+      <div class="tl-l"><span>0:00</span><span>${claims.length} claim${claims.length === 1 ? "" : "s"} marked on the timeline</span><span>${fmtT(dur)}</span></div>
+    </div>
+    <div class="transcript"><h3>Transcript · ${esc(tr.model)} · ${tr.segments.length} segments</h3>${lines}</div>`;
+  const audio = $("#eAudio");
+  $$(".line").forEach(l => l.onclick = () => { audio.currentTime = +l.dataset.t; audio.play(); });
+  $("#eTl").onclick = e => { const r = e.currentTarget.getBoundingClientRect(); audio.currentTime = dur * (e.clientX - r.left) / r.width; audio.play(); };
+  audio.ontimeupdate = () => {
+    $("#eHead").style.left = pct(audio.currentTime);
+    $$(".line").forEach(l => l.classList.toggle("now", audio.currentTime >= +l.dataset.t && audio.currentTime < +l.dataset.end));
+  };
+}
+function echoSeek(t) { const a = $("#eAudio"); if (a) { a.currentTime = t; a.play(); } }
+
+function renderEchoInsp() {
+  const { result, verdict, records, demo, ms } = echoState, V = VERDICT[verdict];
+  const claims = result.artifacts.claims || [];
+  const flagged = result.findings.filter(f => f.outcome === "suspicious");
+  let gt = "";
+  if (demo) {
+    const correct = (verdict === "suspicious") === (demo.truth.label === "suspicious");
+    gt = `<div class="gt"><span>Ground truth: <b>${demo.truth.label === "suspicious" ? "scam" : "genuine"}</b> · ${esc(demo.truth.type)}</span>
+      <span class="grow"></span><span class="${correct ? "ok" : "bad"}">${correct ? "✓ ECHO agrees" : "✗ ECHO missed it"}</span></div>`;
+  }
+  const fhtml = [...result.findings].sort((a, b) => ORDER[a.outcome] - ORDER[b.outcome]).map(f => {
+    const C = CHECKS[f.check] || { name: f.check, icon: "i-help" };
+    const times = f.evidence.filter(e => e.locator.start_s != null).map(e =>
+      `<a href="#" class="pill-check" onclick="echoSeek(${e.locator.start_s});return false">▶ ${fmtT(e.locator.start_s)}</a>`).join(" ");
+    return `<div class="fcard"><div class="h"><div class="ic ${f.outcome}"><svg><use href="#${C.icon}"/></svg></div>
+      <span class="name">${esc(C.name)}</span><span class="grow"></span><span class="tag ${f.outcome === "suspicious" ? "sus" : f.outcome === "benign" ? "ok" : "inc"}">${f.outcome}</span></div>
+      <div class="d">${esc(f.description)}</div>
+      <div class="meta"><span class="conf">confidence <i><b style="width:${100 * f.uncertainty.confidence}%"></b></i>${f.uncertainty.confidence}</span>${times}</div></div>`;
+  }).join("");
+  const chtml = claims.map(c => `<div class="claim ${c.type}" onclick="echoSeek(${c.start_s})">
+      <span class="k">${esc(CLAIM_LABEL[c.type])}</span><span class="v">${esc(c.value)}</span><span class="t">▶ ${fmtT(c.start_s)}</span>
+      <span class="s">${esc(c.supporting_text)}</span></div>`).join("") || `<div class="note-muted">No claims extracted.</div>`;
+  const gtClaims = demo ? `<p class="gtc">Expected claims (ground truth): ${demo.truth.claims.map(c => `${esc(CLAIM_LABEL[c.type])} <b>${esc(c.key)}</b>`).join(" · ") || "none"}</p>` : "";
+  const evhtml = records.map(r => `<div class="ev"><span class="id">${esc(r.id)}</span>
+      <span>${r.integrity_ok ? `<span class="okline"><svg width="13" height="13"><use href="#i-check"/></svg>verified</span>` : `<span class="badline">integrity FAILED</span>`}</span>
+      <span class="k">${esc(r.kind)} · ${esc(r.source)}</span><span class="k">${esc((r.stored_at || "").slice(0, 19).replace("T", " "))}</span>
+      <span class="sha">sha256 ${esc(r.sha256)}</span></div>`).join("");
+  const conf = result.artifacts.transcript ? result.artifacts.transcript.segments.flatMap(s => s.words || []) : [];
+  const asr = conf.length ? conf.reduce((a, w) => a + w.probability, 0) / conf.length : 0;
+  $("#echoInsp").innerHTML = `
+    <div class="verdict ${verdict}"><div class="lbl">ECHO verdict</div>
+      <div class="v"><svg><use href="#${V.icon}"/></svg>${verdict === "suspicious" ? "Likely scam" : verdict === "benign" ? "No scam pattern" : V.t}</div>
+      <p>${verdict === "suspicious" ? "Strong indicators or several pressure tactics were found in this call." : V.p}</p></div>
+    ${gt}
+    <div class="stats">
+      <div><b>${flagged.length}</b><span>flags</span></div><div><b>${claims.length}</b><span>claims</span></div>
+      <div><b>${(ms / 1000).toFixed(1)}s</b><span>runtime</span></div><div><b>${asr ? Math.round(100 * asr) + "%" : "–"}</b><span>ASR conf.</span></div>
+    </div>
+    ${demo && demo.story ? `<p class="story">${esc(demo.story)}</p>` : ""}
+    <div class="tabs" id="eTabs">
+      <button class="on" data-t="f">Findings<span class="n">${result.findings.length}</span></button>
+      <button data-t="c">Claims<span class="n">${claims.length}</span></button>
+      <button data-t="e">Evidence<span class="n">${records.length}</span></button>
+      <button data-t="n">Notes<span class="n">${result.limitations.length}</span></button>
+      <button data-t="j">Raw JSON</button></div>
+    <div class="pane" data-ep="f">${result.errors.map(e => `<div class="fcard"><span class="tag sus">error</span> ${esc(e.message)}</div>`).join("")}${fhtml}</div>
+    <div class="pane hidden" data-ep="c">${chtml}${gtClaims}</div>
+    <div class="pane hidden" data-ep="e"><p class="note-muted" style="margin-top:0">The original audio and the transcript are stored content-addressed and re-verified on read.</p>${evhtml}</div>
+    <div class="pane hidden" data-ep="n"><ul class="notes">${result.limitations.map(l => `<li>${esc(l)}</li>`).join("")}</ul></div>
+    <div class="pane hidden" data-ep="j"><pre class="json">${esc(JSON.stringify(result, null, 2))}</pre></div>`;
+  $$("#eTabs button").forEach(b => b.onclick = () => {
+    $$("#eTabs button").forEach(x => x.classList.toggle("on", x === b));
+    $$("#echoInsp .pane[data-ep]").forEach(p => p.classList.toggle("hidden", p.dataset.ep !== b.dataset.t));
+  });
 }
 
 renderLib();
