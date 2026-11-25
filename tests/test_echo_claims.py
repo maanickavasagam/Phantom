@@ -113,6 +113,37 @@ def test_normalize_text():
     assert normalize_text("Pay 50,000 rupees by five p.m.!") == "pay 50000 rupees by 5 pm"
 
 
+def test_classifier_model_loads_and_explains():
+    from phantom.echo import scam_classifier
+
+    s = scam_classifier.score("I need to verify your social security number, there is a refund "
+                              "of $500 and a processing fee, please buy gift cards.")
+    assert s is not None and 0.0 <= s.probability <= 1.0 and s.suspicious
+    assert s.top_phrases and all(w > 0 for _, w in s.top_phrases)
+    assert scam_classifier.normalize("Suspect: pay $500 now") == "pay <amount> now"
+
+
+@pytest.mark.parametrize("sentences,expected", [
+    # classifier alone, no rule evidence -> review, not accusation
+    (["Your premium is due this month, you can pay online."], "inconclusive"),
+    # classifier + an authority claim from the rules -> suspicious
+    (["This is Officer Rao from the Mumbai Police.", "We need to talk about your account."],
+     "suspicious"),
+])
+def test_classifier_needs_rule_support_to_accuse(tmp_path, monkeypatch, sentences, expected):
+    from phantom.echo import scam_classifier
+
+    monkeypatch.setattr(echo_analyze, "ingest", lambda p: type("A", (), {
+        "path": p, "source_format": ".wav",
+        "quality": type("Q", (), {"issues": [], "duration_s": 1.0})()})())
+    monkeypatch.setattr(echo_analyze, "transcribe", lambda p: make_transcript(*sentences))
+    monkeypatch.setattr(scam_classifier, "score",
+                        lambda text, top_k=6: scam_classifier.Score(0.9, 0.33, [("account", 0.4)]))
+    res = echo_analyze.analyze_audio(_fake_audio(tmp_path), EvidenceStore(tmp_path / "ev"))
+    assert echo_analyze.overall_outcome(res).value == expected
+    assert any(f.check == "ml_scam_classifier" for f in res.findings)
+
+
 def _fake_audio(tmp_path):
     p = tmp_path / "call.wav"
     t = np.linspace(0, 1.0, 16000, endpoint=False)

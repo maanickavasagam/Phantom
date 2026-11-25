@@ -86,6 +86,51 @@ exists to catch.
 Both point to the same next step: add a learned classifier trained on the public train splits
 alongside the explainable rules, and surface single weak indicators as "inconclusive".
 
+## 2b. Learned classifier alongside the rules
+
+`phantom/echo/scam_classifier.py` is a TF-IDF (word 1–2 grams) + logistic regression model,
+trained **only on the public train halves** (2,560 dialogues). Speaker labels are removed, and
+money and digits are masked, so "$" can't become a scam feature. The threshold comes from 5-fold
+cross-validation on the train data, capped at 2% false positives. The model file is
+`phantom/echo/models/scam_clf.joblib`, and every score is explained by the transcript phrases
+that raised it most.
+
+```
+python -m phantom.echo.scam_classifier train --root data/raw/bothbosu --dev-calls ""
+python -m phantom.echo.eval_hybrid --json-out docs/echo_eval_hybrid.json
+```
+
+**Domain shift found before shipping.** On its own, the classifier flagged **half of our genuine
+Indian calls** (bank reminders, a friend asking for UPI money, insurance). It learned "money +
+bank talk = scam" from US data with no ordinary Indian money conversations. Adding our 42 dev
+calls to training (weighted ×20) only "memorised" them: the test-split genuine calls, with new
+wording, were still 50% false alarms. So we didn't train on them. Instead, the **dev calls, unseen
+by the classifier, were used to choose how to combine it with the rules**:
+
+- **Suspicious:** the rules fire, **or** the classifier fires *and* the rules found supporting
+  evidence (a strong indicator, or authority / threat / secrecy / lure / identity request).
+  Dev result: 24/24 scams, 0 false alarms; the classifier alone gave 9/18 false alarms.
+- **Inconclusive (review):** the classifier fires with no supporting rule evidence. A human
+  listens; nobody is accused.
+
+**Final held-out results (single run, nothing here used for training or choosing the rule):**
+
+| Held-out set | Rules only | **Rules + classifier: "suspicious"** | Flagged at least for review | False alarms ("suspicious") |
+|---|---|---|---|---|
+| Single-agent test half (320) | F1 0.89 | **F1 0.95** (R 0.96) | recall 1.00 | 6.9% |
+| Multi-agent test half (320) | F1 0.94 | **F1 0.99** (R 1.00) | recall 1.00 | 2.5% |
+| Scammer-Conversation (1,000) | recall 0.03 | **recall 0.59** | **recall 1.00** | 0% |
+| **Real YouTube scams (20)** | 6 / 20 | **12 / 20** | **20 / 20** | n/a |
+| Our Indian scripted test calls (42) | 24/24, 0 FP | **24/24, 0 FP** | 24/24 | 0% (but 9/18 genuine go to "review") |
+
+What this means:
+- On real scam calls, detection doubled, and every real scam is at least routed to a reviewer.
+- Nothing got worse for our own calls' "suspicious" verdict.
+- Half of genuine Indian money conversations now get a "review" flag. That's the cost of a
+  classifier trained on US data, and labelled Indian call data is the fix.
+- Rules + classifier on the Scammer-Conversation set at 0% false alarms: that set's genuine
+  calls are very different in style, so it says little about false alarms elsewhere.
+
 ## 3. Claims and scam detection: scripted calls
 
 ```

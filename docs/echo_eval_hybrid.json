@@ -1,0 +1,548 @@
+{
+  "single_agent_test": {
+    "n": 320,
+    "rules": {
+      "tp": 136,
+      "fp": 10,
+      "fn": 24,
+      "tn": 150,
+      "precision": 0.932,
+      "recall": 0.85,
+      "f1": 0.889,
+      "false_positive_rate": 0.062
+    },
+    "classifier": {
+      "tp": 160,
+      "fp": 2,
+      "fn": 0,
+      "tn": 158,
+      "precision": 0.988,
+      "recall": 1.0,
+      "f1": 0.994,
+      "false_positive_rate": 0.013
+    },
+    "hybrid": {
+      "tp": 160,
+      "fp": 11,
+      "fn": 0,
+      "tn": 149,
+      "precision": 0.936,
+      "recall": 1.0,
+      "f1": 0.967,
+      "false_positive_rate": 0.069
+    },
+    "corroborated": {
+      "tp": 154,
+      "fp": 11,
+      "fn": 6,
+      "tn": 149,
+      "precision": 0.933,
+      "recall": 0.963,
+      "f1": 0.948,
+      "false_positive_rate": 0.069
+    },
+    "flag_for_review": {
+      "tp": 160,
+      "fp": 11,
+      "fn": 0,
+      "tn": 149,
+      "precision": 0.936,
+      "recall": 1.0,
+      "f1": 0.967,
+      "false_positive_rate": 0.069
+    }
+  },
+  "multi_agent_test": {
+    "n": 320,
+    "rules": {
+      "tp": 144,
+      "fp": 4,
+      "fn": 16,
+      "tn": 156,
+      "precision": 0.973,
+      "recall": 0.9,
+      "f1": 0.935,
+      "false_positive_rate": 0.025
+    },
+    "classifier": {
+      "tp": 160,
+      "fp": 2,
+      "fn": 0,
+      "tn": 158,
+      "precision": 0.988,
+      "recall": 1.0,
+      "f1": 0.994,
+      "false_positive_rate": 0.013
+    },
+    "hybrid": {
+      "tp": 160,
+      "fp": 6,
+      "fn": 0,
+      "tn": 154,
+      "precision": 0.964,
+      "recall": 1.0,
+      "f1": 0.982,
+      "false_positive_rate": 0.037
+    },
+    "corroborated": {
+      "tp": 160,
+      "fp": 4,
+      "fn": 0,
+      "tn": 156,
+      "precision": 0.976,
+      "recall": 1.0,
+      "f1": 0.988,
+      "false_positive_rate": 0.025
+    },
+    "flag_for_review": {
+      "tp": 160,
+      "fp": 6,
+      "fn": 0,
+      "tn": 154,
+      "precision": 0.964,
+      "recall": 1.0,
+      "f1": 0.982,
+      "false_positive_rate": 0.037
+    }
+  },
+  "scammer_conversation": {
+    "n": 1000,
+    "rules": {
+      "tp": 18,
+      "fp": 0,
+      "fn": 506,
+      "tn": 476,
+      "precision": 1.0,
+      "recall": 0.034,
+      "f1": 0.066,
+      "false_positive_rate": 0.0
+    },
+    "classifier": {
+      "tp": 524,
+      "fp": 0,
+      "fn": 0,
+      "tn": 476,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": 0.0
+    },
+    "hybrid": {
+      "tp": 524,
+      "fp": 0,
+      "fn": 0,
+      "tn": 476,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": 0.0
+    },
+    "corroborated": {
+      "tp": 310,
+      "fp": 0,
+      "fn": 214,
+      "tn": 476,
+      "precision": 1.0,
+      "recall": 0.592,
+      "f1": 0.743,
+      "false_positive_rate": 0.0
+    },
+    "flag_for_review": {
+      "tp": 524,
+      "fp": 0,
+      "fn": 0,
+      "tn": 476,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": 0.0
+    }
+  },
+  "youtube_real": {
+    "n": 20,
+    "rules": {
+      "tp": 6,
+      "fp": 0,
+      "fn": 14,
+      "tn": 0,
+      "precision": 1.0,
+      "recall": 0.3,
+      "f1": 0.462,
+      "false_positive_rate": null
+    },
+    "classifier": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": null
+    },
+    "hybrid": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": null
+    },
+    "corroborated": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 8,
+      "tn": 0,
+      "precision": 1.0,
+      "recall": 0.6,
+      "f1": 0.75,
+      "false_positive_rate": null
+    },
+    "flag_for_review": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": null
+    }
+  },
+  "own_scripted_dev": {
+    "n": 42,
+    "rules": {
+      "tp": 24,
+      "fp": 0,
+      "fn": 0,
+      "tn": 18,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": 0.0
+    },
+    "classifier": {
+      "tp": 24,
+      "fp": 9,
+      "fn": 0,
+      "tn": 9,
+      "precision": 0.727,
+      "recall": 1.0,
+      "f1": 0.842,
+      "false_positive_rate": 0.5
+    },
+    "hybrid": {
+      "tp": 24,
+      "fp": 9,
+      "fn": 0,
+      "tn": 9,
+      "precision": 0.727,
+      "recall": 1.0,
+      "f1": 0.842,
+      "false_positive_rate": 0.5
+    },
+    "corroborated": {
+      "tp": 24,
+      "fp": 0,
+      "fn": 0,
+      "tn": 18,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": 0.0
+    },
+    "flag_for_review": {
+      "tp": 24,
+      "fp": 9,
+      "fn": 0,
+      "tn": 9,
+      "precision": 0.727,
+      "recall": 1.0,
+      "f1": 0.842,
+      "false_positive_rate": 0.5
+    },
+    "flagged_by_family": {
+      "digital_arrest (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "bank_kyc (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "gift_card_boss (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "tech_support (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "lottery (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "courier_customs (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "electricity (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "crypto (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "bank_reminder (benign)": {
+        "rules": 0,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 0,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "doctor (benign)": {
+        "rules": 0,
+        "classifier": 0,
+        "hybrid": 0,
+        "corroborated": 0,
+        "flag_for_review": 0,
+        "n": 3
+      },
+      "family (benign)": {
+        "rules": 0,
+        "classifier": 0,
+        "hybrid": 0,
+        "corroborated": 0,
+        "flag_for_review": 0,
+        "n": 3
+      },
+      "delivery (benign)": {
+        "rules": 0,
+        "classifier": 0,
+        "hybrid": 0,
+        "corroborated": 0,
+        "flag_for_review": 0,
+        "n": 3
+      },
+      "friend_upi (benign)": {
+        "rules": 0,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 0,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "insurance (benign)": {
+        "rules": 0,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 0,
+        "flag_for_review": 3,
+        "n": 3
+      }
+    }
+  },
+  "own_scripted_test": {
+    "n": 42,
+    "rules": {
+      "tp": 24,
+      "fp": 0,
+      "fn": 0,
+      "tn": 18,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": 0.0
+    },
+    "classifier": {
+      "tp": 24,
+      "fp": 9,
+      "fn": 0,
+      "tn": 9,
+      "precision": 0.727,
+      "recall": 1.0,
+      "f1": 0.842,
+      "false_positive_rate": 0.5
+    },
+    "hybrid": {
+      "tp": 24,
+      "fp": 9,
+      "fn": 0,
+      "tn": 9,
+      "precision": 0.727,
+      "recall": 1.0,
+      "f1": 0.842,
+      "false_positive_rate": 0.5
+    },
+    "corroborated": {
+      "tp": 24,
+      "fp": 0,
+      "fn": 0,
+      "tn": 18,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": 0.0
+    },
+    "flag_for_review": {
+      "tp": 24,
+      "fp": 9,
+      "fn": 0,
+      "tn": 9,
+      "precision": 0.727,
+      "recall": 1.0,
+      "f1": 0.842,
+      "false_positive_rate": 0.5
+    },
+    "flagged_by_family": {
+      "digital_arrest (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "bank_kyc (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "gift_card_boss (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "tech_support (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "lottery (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "courier_customs (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "electricity (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "crypto (scam)": {
+        "rules": 3,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 3,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "bank_reminder (benign)": {
+        "rules": 0,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 0,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "doctor (benign)": {
+        "rules": 0,
+        "classifier": 0,
+        "hybrid": 0,
+        "corroborated": 0,
+        "flag_for_review": 0,
+        "n": 3
+      },
+      "family (benign)": {
+        "rules": 0,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 0,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "delivery (benign)": {
+        "rules": 0,
+        "classifier": 0,
+        "hybrid": 0,
+        "corroborated": 0,
+        "flag_for_review": 0,
+        "n": 3
+      },
+      "friend_upi (benign)": {
+        "rules": 0,
+        "classifier": 3,
+        "hybrid": 3,
+        "corroborated": 0,
+        "flag_for_review": 3,
+        "n": 3
+      },
+      "insurance (benign)": {
+        "rules": 0,
+        "classifier": 0,
+        "hybrid": 0,
+        "corroborated": 0,
+        "flag_for_review": 0,
+        "n": 3
+      }
+    }
+  }
+}

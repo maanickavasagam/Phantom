@@ -90,6 +90,9 @@ def _scan(tr: Transcript, rx: re.Pattern) -> list[tuple[Evidence, str]]:
 
 MIN_WEAK_FOR_PATTERN = 2
 MANIPULATION = {"authority", "threat", "secrecy", "lure"}
+# Evidence that lets the learned classifier's score count towards "suspicious"
+# (chosen on our dev calls, see docs/ECHO_EVAL.md section 2b).
+CLASSIFIER_SUPPORT = MANIPULATION | {"identity_request"}
 
 
 @dataclass
@@ -101,6 +104,11 @@ class Decision:
     @property
     def suspicious(self) -> bool:
         return bool(self.strong) or self.pattern
+
+    @property
+    def supports_classifier(self) -> bool:
+        """Rule evidence that corroborates a learned-classifier hit."""
+        return bool(self.strong) or any(i.name in CLASSIFIER_SUPPORT for i in self.weak)
 
 
 def decide(indicators: list[Indicator]) -> Decision:

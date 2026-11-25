@@ -54,7 +54,11 @@ every finding links to its timestamp.
 **Public benchmarks.**
 - Scam detection on independent scam-dialogue datasets ([BothBosu](https://huggingface.co/BothBosu),
   official test halves, rules tuned on train halves only): **F1 0.89 and 0.94**.
-- Real scam calls from scam-baiter videos: 6/20. This is the known weak spot.
+- Real scam calls from scam-baiter videos: 6/20 with rules alone.
+- A learned classifier (trained on the public train halves only) can only accuse when rule
+  evidence backs it up; on its own it flags a call for human review. Together they reach
+  F1 0.95 / 0.99 on the test halves, catch 12/20 real scam calls, and flag all 20 for review,
+  with no new false alarms on our own calls. Details: `docs/ECHO_EVAL.md` §2b.
 - Speech recognition: **WER 5.3% on LibriSpeech test-clean and 10.7% on test-other**.
 
 Held-out scripted calls: **claim F1 0.85 on clean audio and 0.80 with noise or over a simulated

@@ -1,0 +1,13 @@
+{
+  "C": 0.3,
+  "threshold": 0.3251,
+  "cv_recall": 1.0,
+  "cv_fpr": 0.02,
+  "cv_fpr_local": null,
+  "n_train": 2560,
+  "n_scam": 1280,
+  "n_local_dev": 0,
+  "trained_on": "BothBosu single-agent + multi-agent official TRAIN halves; no test data",
+  "features": "tfidf word 1-2 grams on normalized text (speakers removed, money/digits masked)",
+  "max_oof_fpr": 0.02
+}

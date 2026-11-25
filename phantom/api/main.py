@@ -39,6 +39,7 @@ EVAL_FILES = {
     "echo_librispeech_other": REPO_ROOT / "docs" / "echo_eval_librispeech_other.json",
     "echo_public": REPO_ROOT / "docs" / "echo_eval_public.json",
     "echo_public_frozen": REPO_ROOT / "docs" / "echo_eval_public_frozen.json",
+    "echo_hybrid": REPO_ROOT / "docs" / "echo_eval_hybrid.json",
 }
 # Real receipts are third-party data (Find it again!): never committed, served only
 # from a local download (data/raw/findit2), listed by docs/findit_demo_cases.json.
