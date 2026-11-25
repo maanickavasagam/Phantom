@@ -62,3 +62,7 @@ def test_bad_file_returns_error_not_crash(tmp_path):
     bad.write_bytes(b"not a real document")
     result = analyze_document(bad, store)
     assert result.errors and result.errors[0].code == "ingest_failed"
+    # An unanalysable file must never be reported as benign.
+    from phantom.mirage.analyze import overall_outcome
+
+    assert overall_outcome(result) == Outcome.INCONCLUSIVE

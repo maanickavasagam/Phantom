@@ -38,7 +38,9 @@ def overall_outcome(result: ToolResult) -> Outcome:
     outcomes = {f.outcome for f in result.findings if f.check not in INPUT_CHECKS}
     if Outcome.SUSPICIOUS in outcomes:
         return Outcome.SUSPICIOUS
-    if Outcome.INCONCLUSIVE in outcomes:
+    # A file that couldn't be analysed (unsupported type, unreadable) has no
+    # basis for "benign": report it as inconclusive.
+    if Outcome.INCONCLUSIVE in outcomes or result.errors:
         return Outcome.INCONCLUSIVE
     return Outcome.BENIGN
 
