@@ -7,12 +7,29 @@ to an exact region of the source page.
 
 from __future__ import annotations
 
+import os
+import shutil
 from dataclasses import dataclass
+from pathlib import Path
 
 import numpy as np
 import pytesseract
 
 MIN_CONFIDENCE = 0  # Tesseract reports -1 for non-text blocks; we drop those
+
+_WINDOWS_DEFAULT = Path(r"C:\Program Files\Tesseract-OCR\tesseract.exe")
+
+
+def _configure_tesseract() -> None:
+    """Use $TESSERACT_CMD, else PATH, else the default Windows install location."""
+    explicit = os.environ.get("TESSERACT_CMD")
+    if explicit:
+        pytesseract.pytesseract.tesseract_cmd = explicit
+    elif not shutil.which("tesseract") and _WINDOWS_DEFAULT.exists():
+        pytesseract.pytesseract.tesseract_cmd = str(_WINDOWS_DEFAULT)
+
+
+_configure_tesseract()
 
 
 @dataclass

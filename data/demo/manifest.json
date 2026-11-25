@@ -1,0 +1,48 @@
+{
+  "note": "Demo cases copied from the held-out hard set (data/holdout_hard, seed 2026). MIRAGE was not tuned on these. 'truth' is the generator's ground truth, in original-image pixels (1240 px wide).",
+  "orig_width": 1240,
+  "cases": [
+    {
+      "file": "01_genuine_invoice.png",
+      "title": "Genuine scanned invoice",
+      "truth": {"label": "benign", "regions": []},
+      "story": "Grey paper, scan noise, skew and JPEG artefacts, but no edits. MIRAGE should find the arithmetic consistent and raise no flags."
+    },
+    {
+      "file": "02_altered_amount.png",
+      "title": "Line item changed",
+      "truth": {"label": "suspicious", "type": "altered_amount", "regions": [{"field": "item_3", "bbox": [960, 454, 146, 38]}]},
+      "story": "A line item was retyped in the same font at the same position. Nothing looks wrong visually; the numbers just don't add up."
+    },
+    {
+      "file": "03_font_swap.png",
+      "title": "Amount in a different font",
+      "truth": {"label": "suspicious", "type": "font_mismatch", "regions": [{"field": "item_2", "bbox": [983, 393, 123, 37]}]},
+      "story": "One amount was replaced using a thinner serif font, then the page was printed and re-scanned. Several independent checks agree."
+    },
+    {
+      "file": "04_shifted_field_totals_fixed.png",
+      "title": "Shifted field, totals also fixed",
+      "truth": {"label": "suspicious", "type": "misaligned_field", "regions": [{"field": "item_2", "bbox": [925, 381, 181, 49]}, {"field": "subtotal", "bbox": [943, 598, 163, 38]}, {"field": "tax", "bbox": [960, 660, 146, 38]}, {"field": "total", "bbox": [933, 730, 173, 41]}]},
+      "story": "The forger also corrected subtotal, GST and total, so the arithmetic passes. The layout gives it away: the new amount is off the column and off the row's baseline."
+    },
+    {
+      "file": "05_whiteout_totals_fixed.png",
+      "title": "Whited-out edit, totals also fixed",
+      "truth": {"label": "suspicious", "type": "consistent_edit", "regions": [{"field": "item_1", "bbox": [1016, 332, 130, 36]}, {"field": "total", "bbox": [983, 856, 163, 38]}]},
+      "story": "Arithmetic passes and the font matches. But the edit was made on the scan, and the patch behind the new digits is cleaner than the scanned paper around it."
+    },
+    {
+      "file": "06_pasted_from_other_invoice.png",
+      "title": "Amount pasted from another invoice",
+      "truth": {"label": "suspicious", "type": "pasted_patch", "regions": [{"field": "item_5", "bbox": [1016, 580, 130, 36]}]},
+      "story": "A patch cut from a different scanned invoice was pasted over a line item."
+    },
+    {
+      "file": "07_known_miss_edit_then_rescan.png",
+      "title": "Known miss: edited, totals fixed, then re-scanned",
+      "truth": {"label": "suspicious", "type": "consistent_edit", "regions": [{"field": "item_4", "bbox": [980, 516, 146, 38]}, {"field": "subtotal", "bbox": [963, 784, 163, 38]}, {"field": "tax", "bbox": [980, 846, 146, 38]}, {"field": "total", "bbox": [945, 915, 181, 42]}]},
+      "story": "The hardest case. The digital original was edited consistently in the same font, then printed and scanned, so the scan erases the traces. MIRAGE reports no flags here. This is the documented limitation (0/5 caught on held-out) and why a human always reviews the result."
+    }
+  ]
+}
