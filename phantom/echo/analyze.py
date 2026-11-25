@@ -25,13 +25,11 @@ from phantom.common.schemas import (
     Uncertainty,
 )
 from phantom.echo.claims import extract_claims
-from phantom.echo.indicators import Indicator, detect_indicators
+from phantom.echo.indicators import Indicator, decide, detect_indicators
 from phantom.echo.ingest import IngestError, ingest
 from phantom.echo.transcribe import TranscriptionError, transcribe
 
 LOW_WORD_PROBABILITY = 0.6  # mean Whisper word probability below this: transcript unreliable
-MIN_WEAK_FOR_PATTERN = 2
-MANIPULATION = {"authority", "threat", "secrecy", "lure"}
 
 LIMITATIONS = [
     "Speech recognition (local Whisper base.en) degrades on noisy audio, overlapping speech and "
@@ -97,9 +95,8 @@ def analyze_audio(path: str | Path, store: EvidenceStore, source: str | None = N
         )
     scale = 1.0 if reliable else 0.6
 
-    indicators = detect_indicators(tr, claims)
-    strong = [i for i in indicators if i.strong]
-    weak = [i for i in indicators if not i.strong]
+    decision = decide(detect_indicators(tr, claims))
+    strong, weak = decision.strong, decision.weak
 
     for ind in strong:
         result.findings.append(Finding(
@@ -108,10 +105,7 @@ def analyze_audio(path: str | Path, store: EvidenceStore, source: str | None = N
             uncertainty=Uncertainty(confidence=round(0.85 * scale, 2),
                                     notes="rule-based indicator over the ASR transcript"),
         ))
-    # Deadline + payment alone describes ordinary commerce (a bill reminder), so a
-    # pattern also needs one manipulation tactic: authority, threat or secrecy.
-    manipulative = any(i.name in MANIPULATION for i in weak)
-    if len(weak) >= MIN_WEAK_FOR_PATTERN and manipulative:
+    if decision.pattern:
         names = ", ".join(i.name for i in weak)
         result.findings.append(Finding(
             check="pressure_pattern",

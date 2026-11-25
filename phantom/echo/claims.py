@@ -148,23 +148,37 @@ _CHANNELS = {
     "wire transfer": r"wire transfer|western union|money\s?gram|swift",
     "bank transfer": r"bank transfer|neft|imps|rtgs|net\s?banking transfer",
     "qr code": r"qr code",
-    "remote access app": r"any\s?desk|team\s?viewer|quick\s?support|remote access",
+    "remote access app": r"any\s?desk|team\s?viewer|quick\s?support|remote access|"
+                         r"remote (?:control|desktop|session)|screen ?shar\w*|"
+                         r"access (?:to )?your (?:computer|device|laptop|pc|screen|system)",
 }
 _UNUSUAL = {"gift card", "crypto", "wire transfer", "qr code", "remote access app"}
 _PAY_VERB = (r"\b(?:pay|paying|transfer|transferring|send|sending|deposit|wire|remit|scan|"
              r"install|download|buy|buying|purchase|recharge|invest)\b")
+# Secrets: things a legitimate caller never asks for. A request for one is a
+# strong indicator on its own.
 _SECRETS = {
     "otp": r"\bo\.?t\.?p\b|one[\s-]time\s+(?:password|pin|code)",
     "pin": r"\b(?:upi\s+|atm\s+|m)?pin\b",
     "cvv": r"\bcvv\b|\bcvc\b|three[\s-]digit code",
     "password": r"\bpass\s?words?\b|\bpasscode\b|net\s?banking (?:id|login)",
     "verification code": r"verification code|security code|confirmation code",
-    "card number": r"card (?:number|details)|(?:debit|credit) card number",
-    "account number": r"account number|bank account details",
+    "card number": r"card (?:number|details|information|info)|(?:debit|credit) card number",
     "aadhaar": r"\baadhaa?r\b",
+    "ssn": r"social security(?: number)?|\bssn\b",
 }
-_ASK = (r"\b(?:read|tell|share|give|send|provide|confirm|say|enter|type|forward|need|"
-        r"what(?:'s| is))\b")
+# Identity data: also asked for by genuine services (a bank checking an account,
+# a courier confirming an address), so a request is only a weak indicator.
+_IDENTITY = {
+    "account number": r"account number|bank account (?:details|information|info)|routing number",
+    "date of birth": r"date of birth|\bdob\b|birth ?date",
+    "personal details": r"personal (?:information|details|info)",
+}
+_ASK = (r"\b(?:read|tell|share|give|send|provide|confirm|say|enter|type|forward|need|verify|"
+        r"update|repeat|what(?:'s| is))\b")
+# "...the last four digits of MY card number?" is the recipient checking the
+# caller, not being asked for a secret.
+_SELF_OR_PARTIAL = re.compile(r"\b(?:my|our)\s+(?:\w+\s+){0,2}$|last (?:four|4) digits", re.I)
 _NEGATION = (r"\b(?:never|don'?t|do not|not to|no one|nobody|will not|won'?t|should not|"
              r"shouldn'?t)\b")
 _TITLE = (r"(?i:officer|inspector|constable|sub-inspector|mr\.?|mrs\.?|ms\.?|dr\.?|agent|"
@@ -248,16 +262,21 @@ def extract_claims(tr: Transcript) -> list[Claim]:
             add("payment_request", m.group(0) + " " + after, "payment", m.start(),
                 m.end() + 1 + len(after), channel=None, unusual_channel=False)
 
-    # credential requests: a secret + an ask nearby, and no negation ("never share your OTP")
-    for secret, pat in _SECRETS.items():
-        for m in re.finditer(pat, text, re.I):
-            before, after = _window(text, m.start(), m.end(), 8, 3)
-            ctx = f"{before} {after}"
-            if re.search(_NEGATION, before, re.I):
-                continue
-            if not re.search(_ASK, ctx, re.I):
-                continue
-            add("credential_request", m.group(0), secret, m.start(), m.end(), secret=secret)
+    # credential requests: a secret / identity item + an ask nearby, no negation
+    # ("never share your OTP"), and not the speaker's own ("my card number")
+    for level, table in (("secret", _SECRETS), ("identity", _IDENTITY)):
+        for secret, pat in table.items():
+            for m in re.finditer(pat, text, re.I):
+                before, after = _window(text, m.start(), m.end(), 8, 3)
+                if re.search(_NEGATION, before, re.I):
+                    continue
+                if not re.search(_ASK, f"{before} {after}", re.I):
+                    continue
+                if _SELF_OR_PARTIAL.search(text[max(0, m.start() - 40):m.start()]) or \
+                        _SELF_OR_PARTIAL.search(before):
+                    continue
+                add("credential_request", m.group(0), secret, m.start(), m.end(),
+                    secret=secret, level=level)
 
     # self-identification and claimed organisation
     for rx in _NAME_RES:

@@ -9,7 +9,7 @@ Decisions resolved from `ECHO_SCOPE.md`:
   and it's reproducible offline.
 - **Tamil: deferred.** English only for v1; Tamil is future work.
 
-## 1. Speech recognition: LibriSpeech test-clean
+## 1. Speech recognition: LibriSpeech test-clean and test-other
 
 ```
 python -m phantom.echo.evaluate librispeech --root data/raw/LibriSpeech/test-clean --n 200
@@ -17,12 +17,76 @@ python -m phantom.echo.evaluate librispeech --root data/raw/LibriSpeech/test-cle
 
 | Utterances | Audio | **WER** | Speed (CPU, int8) | v1 target |
 |---|---|---|---|---|
-| 200 (random, fixed seed) | 27.0 min | **5.3%** | 0.15 × real time (≈ 6.5× faster than real time) | ≤ 15% ✓ |
+| test-clean: 200 (random, fixed seed) | 27.0 min | **5.3%** | 0.13–0.15 × real time (≈ 7× faster than real time) | ≤ 15% ✓ |
+| test-other (harder speakers): 200 | 23.0 min | **10.7%** | 0.14 × real time | ≤ 15% ✓ |
 
 The text is normalised (lowercase, no punctuation, digits for one–ten) before scoring. Raw
 results: `docs/echo_eval_librispeech.json`.
 
-## 2. Claims and scam detection: scripted calls
+## 2. Scam detection on public datasets (independent of our own data)
+
+Our scripted calls (section 3) were written by us, and the rules were tuned on their dev half.
+That can't show whether ECHO generalises, so we also evaluate on public scam-dialogue datasets
+written by other researchers (huggingface.co/BothBosu, Apache-2.0):
+
+| Dataset | Size | What it is |
+|---|---|---|
+| single-agent-scam-conversations | 1,600 (official 1,280 train / 320 test) | Llama-3-70B dialogues: SSN, refund, tech-support and reward scams vs delivery, insurance, appointment and wrong-number calls |
+| multi-agent-scam-conversation | 1,600 (1,280 / 320) | Two AI agents talking, 7 victim personalities |
+| Scammer-Conversation | 1,000 | A different generator (Gretel); scam, scam-baiting and normal calls |
+| youtube-scam-conversations | 20 | **Real** scam calls transcribed from scam-baiter videos (all scams) |
+
+These are text transcripts, so this measures claim extraction, indicators and the verdict
+rule, not speech recognition (section 1 covers that). Both speakers' turns are kept, as in
+a real transcript.
+
+```
+python -m phantom.echo.eval_public --root data/raw/bothbosu --split test
+```
+
+**Protocol.**
+- **Stage A:** ran the frozen pipeline on everything.
+- **Stage B:** fixed rules using only the **train** halves of the two split datasets. The
+  dev scripted calls were re-checked for regressions (unchanged: claim F1 0.97, 24/24).
+- **Final:** ran once on the **test** halves and on the two sets never used for tuning.
+
+| Dataset | Stage A (frozen, on the full dataset) | **Final (on the test half; rules fixed on train only)** | False alarms (final) |
+|---|---|---|---|
+| Single-agent | P 0.89 · R 0.57 · F1 0.69 (1,600) | **P 0.93 · R 0.85 · F1 0.89** (320) | 6.2% |
+| Multi-agent | P 0.89 · R 0.77 · F1 0.82 (1,600) | **P 0.97 · R 0.90 · F1 0.94** (320) | 2.5% |
+| Scammer-Conversation (never tuned on) | R 0.03 | R 0.03 | 0% |
+| **Real YouTube scams** (never tuned on) | 6 / 20 | 6 / 20 | n/a |
+
+**What stage A revealed: the rules had overfit to our own Indian-scam style.** They knew OTP,
+Aadhaar and UPI, but not SSN, date-of-birth, "verify your account", virus/remote-access
+tech-support pretexts or unsolicited refunds. Stage A also found real bugs: "I'm fine"
+matched the threat rule, "you won't" matched the prize lure, and a careful victim asking "what
+are the last four digits of *my* card?" counted as a credential request. Stage B fixed these as
+general rules:
+- **Secrets vs identity data.** Secrets (OTP, PIN, password, CVV, full card number, SSN, Aadhaar)
+  are a strong indicator on their own. Identity data (account number, date of birth) is weak,
+  because genuine services ask for it too.
+- **Remote access** now includes "access to your computer" and screen sharing.
+- **Tech-support threats** (virus, "your computer is hacked") and **refund lures** are recognised.
+- **US authorities** (IRS, SSA, FTC) count as authority claims.
+
+**Remaining false alarms** on the single-agent test half are almost all "wrong number" calls
+labelled genuine, in which the LLM-written caller asks for the person's **social security or
+credit card number**. ECHO flags them on purpose: a stranger asking for those is the red flag it
+exists to catch.
+
+**Where it still fails, and why.**
+- **Scammer-Conversation:** mostly short scam-*baiting* calls where the target refuses after the
+  opening line. The scammer never reaches a credential or payment request, so there is only one
+  weak hint, and ECHO's verdict needs two tactics by design.
+- **Real YouTube calls (6/20):** real scammers are slower and subtler (median 442 words), e.g. a
+  fake "$400 Geek Squad renewal" pretext leading to "are you in front of your computer?". A
+  keyword-rule system has a ceiling here.
+
+Both point to the same next step: add a learned classifier trained on the public train splits
+alongside the explainable rules, and surface single weak indicators as "inconclusive".
+
+## 3. Claims and scam detection: scripted calls
 
 ```
 python -m phantom.echo.make_calls --out data/echo_calls --fills 3

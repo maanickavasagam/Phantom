@@ -11,7 +11,8 @@ Weak indicators (common in genuine calls too, so they only count in combination)
   authority    police, CBI, customs, RBI, court... or a title like "Officer"
   threat       arrest, warrant, legal action, account/SIM blocked, fines
   secrecy      "don't tell anyone", "don't disconnect", "stay on the line"
-  lure         prizes, lotteries, "your money will double", guaranteed returns
+  lure         prizes, lotteries, "your money will double", refunds you didn't ask for
+  identity     asks for account number, date of birth, personal details
   payment      a request to pay or transfer money
 
 Rule: two or more *different* weak indicators, at least one of them a
@@ -31,21 +32,29 @@ from phantom.echo.transcribe import Transcript
 _AUTHORITY_ORG = re.compile(
     r"police|cyber ?crime|\bcbi\b|crime branch|customs|income ?tax|\brbi\b|reserve bank|"
     r"\bcourt\b|\btrai\b|telecom (?:regulatory|department)|enforcement directorate|\bed\b|"
-    r"narcotics|\bncb\b|government|ministry|\bfbi\b|\birs\b|social security", re.I)
+    r"narcotics|\bncb\b|government|ministry|\bfbi\b|\birs\b|social security|internal revenue|"
+    r"federal trade commission|\bftc\b|medicare|department of (?:justice|treasury|homeland)|"
+    r"sheriff", re.I)
 _AUTHORITY_TITLE = re.compile(r"officer|inspector|constable|agent|advocate", re.I)
 _THREAT = re.compile(
     r"\barrest(?:ed)?\b|\bwarrant\b|legal action|\bjail\b|\bfir\b|police case|court case|"
     r"(?:account|card|sim|number|connection)s?\s+(?:will be|is being|has been|is)\s+"
-    r"(?:blocked|suspended|frozen|closed|deactivated|disconnected)|\bpenalty\b|\bfined?\b|"
-    r"money laundering|drug trafficking|illegal (?:parcel|package)", re.I)
+    r"(?:blocked|suspended|frozen|closed|deactivated|disconnected)|"
+    # "fine" only as a penalty: "pay a fine", "fine of", "be fined", not "I'm fine"
+    r"(?:pay|paying|a|heavy|huge)\s+(?:the\s+)?fine\b|\bfine of\b|\bfined\b|penalty of|"
+    r"money laundering|drug trafficking|illegal (?:parcel|package)|"
+    r"(?:computer|device|laptop|system|account)\s+(?:is|has been|was)\s+(?:infected|hacked|"
+    r"compromised)|\b(?:virus|malware|spyware)\b", re.I)
 _SECRECY = re.compile(
     r"(?:don'?t|do not|never)\s+(?:tell|inform|share this with|discuss)|keep (?:this|it) "
     r"(?:secret|confidential|between us)|(?:don'?t|do not)\s+(?:disconnect|hang up|cut the call)|"
     r"stay on the line|(?:don'?t|do not)\s+(?:go to|visit|call)\s+(?:the )?(?:bank|police)", re.I)
 _LURE = re.compile(
-    r"\byou (?:have )?won\b|\bwinner\b|\blottery\b|lucky draw|\bjackpot\b|\bprize\b|"
-    r"cash ?back offer|(?:will |it will )?double in|guaranteed (?:returns?|profit)|"
-    r"\bpercent every day\b|risk[- ]free (?:returns?|investment)", re.I)
+    r"\byou(?:'ve| have)? won\b(?!')|\bwinner\b|\blottery\b|lucky draw|\bjackpot\b|\bprize\b|"
+    r"sweepstakes|cash ?back offer|(?:will |it will )?double in|guaranteed (?:returns?|profit)|"
+    r"\bpercent every day\b|risk[- ]free (?:returns?|investment)|"
+    r"eligible for (?:a |an )?refund|refund of|\boverc?harged\b|you(?:'ve| have) been selected",
+    re.I)
 _URGENCY_WORDS = re.compile(r"\burgent(?:ly)?\b|last chance|final (?:notice|warning)|"
                             r"(?:don'?t|do not) delay", re.I)
 
@@ -79,18 +88,53 @@ def _scan(tr: Transcript, rx: re.Pattern) -> list[tuple[Evidence, str]]:
     return out
 
 
+MIN_WEAK_FOR_PATTERN = 2
+MANIPULATION = {"authority", "threat", "secrecy", "lure"}
+
+
+@dataclass
+class Decision:
+    strong: list[Indicator]
+    weak: list[Indicator]
+    pattern: bool  # weak indicators combine into a suspicious pressure pattern
+
+    @property
+    def suspicious(self) -> bool:
+        return bool(self.strong) or self.pattern
+
+
+def decide(indicators: list[Indicator]) -> Decision:
+    """The single verdict rule, shared by the live pipeline and the evaluators.
+    Deadline + payment alone describes ordinary commerce (a bill reminder), so a
+    pattern also needs one manipulation tactic."""
+    strong = [i for i in indicators if i.strong]
+    weak = [i for i in indicators if not i.strong]
+    pattern = (len(weak) >= MIN_WEAK_FOR_PATTERN
+               and any(i.name in MANIPULATION for i in weak))
+    return Decision(strong, weak, pattern)
+
+
 def detect_indicators(tr: Transcript, claims: list[Claim]) -> list[Indicator]:
     by = {t: [c for c in claims if c.type == t] for t in
           ("amount", "deadline", "payment_request", "name", "credential_request")}
     found: list[Indicator] = []
 
-    if by["credential_request"]:
-        secrets = sorted({c.key for c in by["credential_request"]})
+    asks = by["credential_request"]
+    secret_asks = [c for c in asks if c.attrs.get("level", "secret") == "secret"]
+    identity_asks = [c for c in asks if c.attrs.get("level") == "identity"]
+    if secret_asks:
+        secrets = sorted({c.key for c in secret_asks})
         found.append(Indicator(
             "credential_request", True,
             f"Caller asks for {', '.join(s.upper() if len(s) <= 4 else s for s in secrets)}. "
             "Legitimate banks and agencies never ask for these over the phone.",
-            [_ev_from_claim(c) for c in by["credential_request"]]))
+            [_ev_from_claim(c) for c in secret_asks]))
+    if identity_asks:
+        found.append(Indicator(
+            "identity_request", False,
+            "Asks for identity details (" + ", ".join(sorted({c.key for c in identity_asks}))
+            + "); genuine services ask too, so this only counts alongside other tactics.",
+            [_ev_from_claim(c) for c in identity_asks]))
     unusual = [c for c in by["payment_request"] if c.attrs.get("unusual_channel")]
     if unusual:
         chans = sorted({c.attrs["channel"] for c in unusual})

@@ -618,6 +618,30 @@ $("#btnJson").onclick = () => {
 $("#btnPrint").onclick = () => (activeView === "echo" ? echoState : state) && window.print();
 
 // ------------------------------------------------------------ evaluation
+function echoPublicCard(ev) {
+  const fin = ev.echo_public, before = ev.echo_public_frozen;
+  if (!fin) return "";
+  const name = { single_agent: "Single-agent dialogues · test half", multi_agent: "Multi-agent dialogues · test half",
+    scammer_conversation: "Scammer-Conversation (never tuned on)", youtube_real: "Real YouTube scam calls (never tuned on)" };
+  const prev = n => (before || []).find(d => d.dataset === n);
+  const rows = fin.map(d => { const b = prev(d.dataset);
+    return `<tr class="${d.dataset === "youtube_real" ? "hero" : ""}"><td>${esc(name[d.dataset] || d.dataset)}</td><td class="num">${d.n}</td>
+      <td class="num">${b ? f2(b.f1) : "–"}</td><td class="num"><b>${f2(d.f1)}</b></td><td class="num">${f2(d.precision)}</td><td class="num">${f2(d.recall)}</td>
+      <td class="num">${d.false_positive_rate == null ? "–" : f2(d.false_positive_rate)}</td></tr>`; }).join("");
+  const ls2 = ev.echo_librispeech_other, ls1 = ev.echo_librispeech;
+  return `<div class="card"><div class="ch"><h2>ECHO · public datasets (written by other researchers)</h2><span class="grow"></span>
+      <span class="tag neutral">BothBosu · Apache-2.0 · LibriSpeech</span></div>
+    <div class="cb" style="padding-top:14px">
+      <div class="callout warn" style="margin-bottom:14px">Our own scripted calls showed 24/24 scams caught, but those were written by us. On independent
+      datasets the first, frozen run exposed overfitting to our Indian-scam wording. Rules were then fixed using the <b>train halves only</b> and
+      scored once on the test halves; the two other sets were never used for tuning.</div>
+      <table><tr><th>Dataset</th><th class="num">Dialogues</th><th class="num">F1 before*</th><th class="num">F1 after</th>
+        <th class="num">Precision</th><th class="num">Recall</th><th class="num">FP rate</th></tr>${rows}</table>
+      <p class="note-muted" style="margin:10px 0 0">*Before = first frozen run, measured on each full dataset (train + test).
+      Speech recognition WER: LibriSpeech test-clean ${ls1 ? (100 * ls1.wer).toFixed(1) + "%" : "–"},
+      test-other (harder speakers) ${ls2 ? (100 * ls2.wer).toFixed(1) + "%" : "–"}. Real scam calls remain the weak spot: real scammers build up slowly
+      without the keywords a rule system relies on. A trained classifier alongside the rules is the next step.</p></div></div>`;
+}
 function echoEvalCard(ev) {
   const t = ev.echo_calls_test, ls = ev.echo_librispeech;
   if (!t) return "";
@@ -677,6 +701,7 @@ async function loadEval() {
         </table></div></div>
     ${checks ? `<div class="card"><div class="ch"><h2>Which checks fired on the real test split</h2><p>A useful check fires on forged receipts and stays quiet on genuine ones.</p></div>
       <div class="cb"><table><tr><th>Check</th><th class="num">On forged</th><th class="num">On genuine</th><th>Share of forgeries caught</th></tr>${checks}</table></div></div>` : ""}
+    ${echoPublicCard(ev)}
     ${echoEvalCard(ev)}
     <div class="grid2">
       <div class="card"><div class="ch"><h2>Synthetic invoices</h2></div><div class="cb"><table>

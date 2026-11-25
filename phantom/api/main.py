@@ -36,6 +36,9 @@ EVAL_FILES = {
     "echo_calls_dev": REPO_ROOT / "docs" / "echo_eval_calls_dev.json",
     "echo_calls_test": REPO_ROOT / "docs" / "echo_eval_calls_test.json",
     "echo_librispeech": REPO_ROOT / "docs" / "echo_eval_librispeech.json",
+    "echo_librispeech_other": REPO_ROOT / "docs" / "echo_eval_librispeech_other.json",
+    "echo_public": REPO_ROOT / "docs" / "echo_eval_public.json",
+    "echo_public_frozen": REPO_ROOT / "docs" / "echo_eval_public_frozen.json",
 }
 # Real receipts are third-party data (Find it again!): never committed, served only
 # from a local download (data/raw/findit2), listed by docs/findit_demo_cases.json.
@@ -94,7 +97,11 @@ def mirage_eval() -> dict:
     for name, path in EVAL_FILES.items():
         if path.exists():
             data = json.loads(path.read_text(encoding="utf-8"))
-            out[name] = {k: v for k, v in data.items() if k != "rows"}
+            if isinstance(data, list):  # e.g. one entry per public dataset
+                out[name] = [{k: v for k, v in d.items() if k not in ("rows", "examples")}
+                             for d in data]
+            else:
+                out[name] = {k: v for k, v in data.items() if k != "rows"}
     return out
 
 

@@ -51,6 +51,12 @@ be. It then flags strong indicators (credential requests, gift cards / crypto / 
 apps) and combinations of pressure tactics. Claims are marked on the audio timeline, and
 every finding links to its timestamp.
 
+**Public benchmarks.**
+- Scam detection on independent scam-dialogue datasets ([BothBosu](https://huggingface.co/BothBosu),
+  official test halves, rules tuned on train halves only): **F1 0.89 and 0.94**.
+- Real scam calls from scam-baiter videos: 6/20. This is the known weak spot.
+- Speech recognition: **WER 5.3% on LibriSpeech test-clean and 10.7% on test-other**.
+
 Held-out scripted calls: **claim F1 0.85 on clean audio and 0.80 with noise or over a simulated
 phone line; all scam calls caught with 0 false alarms in every condition**. Speech recognition:
 **WER 5.3% on LibriSpeech test-clean** (target ≤ 15%). The phone-line result comes from a

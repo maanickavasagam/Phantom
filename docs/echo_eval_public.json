@@ -1,0 +1,289 @@
+[
+  {
+    "dataset": "single_agent",
+    "split": "test",
+    "n": 320,
+    "tp": 136,
+    "fp": 10,
+    "fn": 24,
+    "tn": 150,
+    "precision": 0.932,
+    "recall": 0.85,
+    "f1": 0.889,
+    "false_positive_rate": 0.062,
+    "flagged_rate_by_type": {
+      "appointment (genuine)": 0.0,
+      "delivery (genuine)": 0.0,
+      "insurance (genuine)": 0.0,
+      "refund (scam)": 0.775,
+      "reward (scam)": 0.875,
+      "ssn (scam)": 1.0,
+      "support (scam)": 0.75,
+      "wrong (genuine)": 0.25
+    },
+    "indicators_fired": {
+      "scam": {
+        "pressure_pattern": 110,
+        "credential_request": 79,
+        "unusual_payment_channel": 37
+      },
+      "genuine": {
+        "credential_request": 8,
+        "pressure_pattern": 3,
+        "unusual_payment_channel": 1
+      }
+    },
+    "examples": {
+      "missed_scams": [
+        {
+          "type": "refund",
+          "text": "Suspect: Hello, my name is David and I'm calling from the Microsoft Refund Department. We've been trying to reach you about a refund you're owed for a previous purchase. Innocent: Oh, really? I didn't know I was due for a refund. What's the amount? Suspect: Let me check on that. Ah yes, it says here you're eligible for a $500 refund.  Innocent: That sounds great! How did you determine I was eligib"
+        },
+        {
+          "type": "refund",
+          "text": "Suspect: Hello, this is John from the Refund Department of Amazon. We've been trying to reach you about a refund for an unauthorized transaction on your account.  Innocent: Oh, I didn't know anything about that. Can you tell me more about it?  Suspect: Yes, of course. It seems someone made a purchase on your account without your permission. We're going to issue a refund, but I need to verify some "
+        },
+        {
+          "type": "refund",
+          "text": "Suspect: Hello, this is John from Amazon customer service. We've been trying to reach you about a refund for an unauthorized transaction on your account.  Innocent: Oh, really? I didn't know anything about it. What's the transaction for?  Suspect: It was for a purchase of $500 worth of electronics. We're willing to refund you the full amount, but we need to verify some information first.  Innocent"
+        },
+        {
+          "type": "refund",
+          "text": "Suspect: Hello, my name is John and I'm calling from the customer service department of XYZ Bank. We've noticed that there's been a fraudulent transaction on your account and we need to issue a refund.  Innocent: Oh, really? What kind of transaction was it?  Suspect: It appears that someone has charged $500 to your account without your authorization. We're going to need to verify some information "
+        },
+        {
+          "type": "refund",
+          "text": "Suspect: Hello, this is Rachel from Amazon customer service. We've noticed that there was an unauthorized transaction on your account and we'd like to refund you the amount of $500. Innocent: Oh, really? I didn't know about any unauthorized transactions. Can you tell me more about it? Suspect: Yes, of course. It seems that someone used your account to make a purchase in California. We're going to "
+        }
+      ],
+      "false_alarms": [
+        {
+          "type": "wrong",
+          "fired": [
+            "credential_request"
+          ],
+          "text": "Suspect: Hi, is this the tech support for Microsoft? Innocent: Yeah, how can I help you? Suspect: My computer has been running really slow lately and a friend told me to call this number for help. Innocent: Okay, let me just check on that for you. Can you tell me what kind of computer you have? Suspect: It's a Dell laptop. Innocent: Alright, and when did you start noticing the slowness? Suspect: A"
+        },
+        {
+          "type": "wrong",
+          "fired": [
+            "credential_request"
+          ],
+          "text": "Suspect: Hello, is this the customer service for Bank of America? Innocent: Yeah, this is... uh... Dave from the fraud department. What seems to be the issue? Suspect: Oh, I got a letter saying my account was compromised and I need to call this number to verify some information. Innocent: Okay, can you tell me more about the letter? What's the reference number on it? Suspect: Let me check... okay,"
+        },
+        {
+          "type": "wrong",
+          "fired": [
+            "credential_request"
+          ],
+          "text": "Suspect: Hi, is this the technical support for my bank? Innocent: Yeah, this is them. What seems to be the issue with your account? Suspect: I got an email saying that my account has been compromised and I need to verify my information. Innocent: Okay, let me check on that for you. Can you please provide me with your social security number and account password so I can look into it? Suspect: Wait,"
+        },
+        {
+          "type": "wrong",
+          "fired": [
+            "credential_request",
+            "pressure_pattern"
+          ],
+          "text": "Suspect: Hi, is this the customer service for XYZ Bank? Innocent: Yeah, who's calling? Suspect: My name is John, I'm having some issues with my account. Innocent: Okay John, can you please provide me with your account number so I can assist you better? Suspect: Uh, let me check... Ah, I think it's 1234567890. Innocent: Okay, thank you John. Can you tell me what seems to be the problem with your ac"
+        },
+        {
+          "type": "wrong",
+          "fired": [
+            "pressure_pattern"
+          ],
+          "text": "Suspect: Hi, is this the customer service for Bank of America? Innocent: Yeah, this is them. What can I help you with today? Suspect: Okay, I'm having some issues with my account and I need to speak to someone about it. Innocent: Sorry to hear that. Can you tell me a little bit more about the issue you're experiencing? Suspect: Well, I got an email saying that my account has been compromised and I"
+        }
+      ]
+    }
+  },
+  {
+    "dataset": "multi_agent",
+    "split": "test",
+    "n": 320,
+    "tp": 144,
+    "fp": 4,
+    "fn": 16,
+    "tn": 156,
+    "precision": 0.973,
+    "recall": 0.9,
+    "f1": 0.935,
+    "false_positive_rate": 0.025,
+    "flagged_rate_by_type": {
+      "appointment (genuine)": 0.0,
+      "delivery (genuine)": 0.0,
+      "insurance (genuine)": 0.1,
+      "refund (scam)": 0.8,
+      "reward (scam)": 0.9,
+      "ssn (scam)": 1.0,
+      "support (scam)": 0.9,
+      "wrong (genuine)": 0.0
+    },
+    "indicators_fired": {
+      "scam": {
+        "pressure_pattern": 141,
+        "credential_request": 94,
+        "unusual_payment_channel": 33
+      },
+      "genuine": {
+        "pressure_pattern": 2,
+        "credential_request": 1,
+        "unusual_payment_channel": 1
+      }
+    },
+    "examples": {
+      "missed_scams": [
+        {
+          "type": "refund",
+          "text": "Innocent: Hello.  Suspect: Hi there, is this Emily Wilson? My name is David Lee and I'm calling from National Billing Services. How are you today? Innocent: Who's asking and what do you want? Suspect: Emily, I'm calling to inform you that our system has detected an overpayment on your account. You're eligible for a refund of $472. Would you like to proceed with the refund process? Innocent: How di"
+        },
+        {
+          "type": "refund",
+          "text": "Innocent: Hello.  Suspect: Hello! My name is Karen Thompson and I'm calling from the Customer Service Department of United Billing Solutions. How are you today, Mrs. Johnson? Innocent: I didn't give you permission to call me. What do you want? Suspect: I apologize if I've caught you at a bad time, Mrs. Johnson. I'm calling to inform you that our system has flagged your account for a refund of $427"
+        },
+        {
+          "type": "refund",
+          "text": "Innocent: Hello.  Suspect: Hello! My name is Karen Thompson and I'm calling from United Consumer Services. How are you today, Mr. Johnson? Innocent: I-I'm doing okay, I guess. What's this about? Is everything okay? Suspect: Everything is fine, Mr. Johnson. The reason I'm calling is that our system has flagged your account for a refund. It appears you've overpaid on a recent transaction, and we owe"
+        },
+        {
+          "type": "refund",
+          "text": "Innocent: Hello.  Suspect: Hello, this is Rachel from Account Services Inc. How are you today? I'm calling to inform you that our system has detected an overpayment on your account, and you're eligible for a refund of $427.92. Is this a good time to discuss the details? Innocent: Hello Rachel, thank you for reaching out. I'm doing well, thank you for asking. That sounds like a pleasant surprise. Y"
+        },
+        {
+          "type": "refund",
+          "text": "Innocent: Hello.  Suspect: Hello! My name is Karen Thompson and I'm calling from Federal Claims Agency. How are you today, Mr. Johnson? Innocent: Who gave you my name and number? Suspect: Don't worry about that, Mr. Johnson. We've been trying to reach you about a refund you're owed from a recent overpayment on your utility bill. Our system shows that you're eligible for a refund of $427. Would you"
+        }
+      ],
+      "false_alarms": [
+        {
+          "type": "insurance",
+          "fired": [
+            "pressure_pattern"
+          ],
+          "text": "Innocent: Hello.  Suspect: Hi there! My name is Rachel and I'm an insurance sales representative. How are you today? Innocent: I'm, uh, I'm a little nervous, to be honest. I'm not really sure why you're calling. Is everything okay? Did something happen to my policy? Suspect: Don't worry, everything is fine. This is just a routine call to introduce myself and see if you're adequately protected with"
+        },
+        {
+          "type": "insurance",
+          "fired": [
+            "pressure_pattern"
+          ],
+          "text": "Innocent: Hello.  Suspect: Hi there! My name is John and I'm an insurance representative with XYZ Insurance Company. How are you today? Innocent: I'm doing great, John. Thanks for asking. What can you do for me today? Do you have any special deals or promotions that can benefit me financially? Suspect: We do have some promotions going on right now. But before I get into those, can you tell me a li"
+        },
+        {
+          "type": "insurance",
+          "fired": [
+            "credential_request"
+          ],
+          "text": "Innocent: Hello.  Suspect: Hi there! My name is Alex and I'm a licensed insurance representative. How are you doing today? I'm calling to see if you have a minute to discuss your insurance options. Do you currently have any insurance policies in place? Innocent: Alex, nice to talk to you. I'm doing great, thanks for asking. Yeah, I do have some policies, but to be honest, I'm not entirely satisfie"
+        },
+        {
+          "type": "insurance",
+          "fired": [
+            "unusual_payment_channel"
+          ],
+          "text": "Innocent: Hello.  Suspect: Hi there! My name is Alex, and I'm an insurance representative with XYZ Insurance Company. How are you today? Innocent: I'm doing great, thanks for asking Alex. What can you do for me? Got any deals that can put some extra cash in my pocket? Suspect: I'm glad to hear that! Actually, I'm not calling about a deal that will put extra cash in your pocket, but rather to help "
+        }
+      ]
+    }
+  },
+  {
+    "dataset": "scammer_conversation",
+    "split": "all",
+    "n": 1000,
+    "tp": 18,
+    "fp": 0,
+    "fn": 506,
+    "tn": 476,
+    "precision": 1.0,
+    "recall": 0.034,
+    "f1": 0.066,
+    "false_positive_rate": 0.0,
+    "flagged_rate_by_type": {
+      "unknown (genuine)": 0.0,
+      "unknown (scam)": 0.034
+    },
+    "indicators_fired": {
+      "scam": {
+        "pressure_pattern": 16,
+        "credential_request": 2
+      },
+      "genuine": {}
+    },
+    "examples": {
+      "missed_scams": [
+        {
+          "type": "unknown",
+          "text": "Person A: Hello, I'm calling from the bank and need to verify your account details. Person B: I wasn't expecting this call. Can you specify the reason for this verification? Person A: We noticed some unusual activities and need to secure your account. Person B: I understand the concern. Can you provide your employee ID for verification? Person A: Due to security protocols, I cannot share personal "
+        },
+        {
+          "type": "unknown",
+          "text": "Person A: Good day, I'm calling from a lottery company to inform you that you've won a substantial prize. Person B: Oh, really? Can you provide details on how I won this prize? Person A: You were randomly selected as a winner through our automated system. Person B: I see. Can you confirm the name of the lottery company and your position there? Person A: I'm unable to disclose that information due "
+        },
+        {
+          "type": "unknown",
+          "text": "Person A: Hello, I'm calling from the tax department and need to verify your tax information. Person B: I wasn't expecting this call. Can you specify the reason for this verification? Person A: We noticed some discrepancies in your recent filings and need to update your information. Person B: I understand the concern. Can you provide your employee ID for verification? Person A: Due to security pro"
+        },
+        {
+          "type": "unknown",
+          "text": "Person A: Hello, this is John from the insurance department. We noticed some discrepancies in your policy and need to update your information. Person B: I wasn't aware of any issues. Can you elaborate on the discrepancies? Person A: Yes, we detected some errors in your recent premium payments. Person B: I see. Can you confirm your position at the insurance department and provide a direct line to y"
+        },
+        {
+          "type": "unknown",
+          "text": "Person A: Good day, I'm calling from a tech support company to assist with your computer issues. Person B: Oh, really? What specific issues are you referring to? Person A: Your computer is infected with malware and needs immediate attention. Person B: I see. Can you provide the name of the company you're calling from and your employee ID? Person A: I'm unable to disclose that information due to pr"
+        }
+      ],
+      "false_alarms": []
+    }
+  },
+  {
+    "dataset": "youtube_real",
+    "split": "all",
+    "n": 20,
+    "tp": 6,
+    "fp": 0,
+    "fn": 14,
+    "tn": 0,
+    "precision": 1.0,
+    "recall": 0.3,
+    "f1": 0.462,
+    "false_positive_rate": null,
+    "flagged_rate_by_type": {
+      "refund (scam)": 0.25,
+      "reward (scam)": 0.286,
+      "ssn (scam)": 0.5,
+      "support (scam)": 0.2
+    },
+    "indicators_fired": {
+      "scam": {
+        "credential_request": 3,
+        "unusual_payment_channel": 2,
+        "pressure_pattern": 2
+      },
+      "genuine": {}
+    },
+    "examples": {
+      "missed_scams": [
+        {
+          "type": "support",
+          "text": "Innocent: Yes, hello.\nSuspect: Yes ma'am, are you there?\nInnocent: Is Kelvin there?\nSuspect: Yes ma'am, this is Kevin, the computer guy. You remember me?\nInnocent: Um, I think so. I maybe had talked to you the other day.\nSuspect: Yes ma'am. So first of all, I want you to join this call. This is in regards to your computer. As I already told you, the IP address of your computer has been compromised"
+        },
+        {
+          "type": "support",
+          "text": "Suspect: Your Geek Squad subscription is upgraded to the premium version. That is why you have been charged for it, ma'am.\n\nInnocent: Is there any way to cancel that and get back down to the original?\n\nSuspect: Yes, ma'am, we have options. Also, you can activate a $20 plan.\n\nInnocent: Oh, a $20 plan sounds good. I wouldn't mind that. I don't need the premium. Suspect: So, you want it to be cancele"
+        },
+        {
+          "type": "support",
+          "text": "Suspect: Cancellation department, how may I help you? Oh yeah, this call is about your computer service that just expired, that's why your account has been charged $400. So do you want to cancel it or do you want to renew it?\n\nInnocent: Uh, no, I want to cancel it.\n\nSuspect: Okay, not a problem. So if you want to cancel the service and stop the statement, what you need to do is follow the corporat"
+        },
+        {
+          "type": "refund",
+          "text": "Suspect: My name is Brad Williams. You called the cancellation department of Norton. Norton is an antivirus software that protects your computer. When you bought your computer, we provided the subscription and software. This software on your computer has expired, and today is the auto-renewal date. That\u2019s why you received the email and your account has been charged. Now, it\u2019s up to you whether you"
+        },
+        {
+          "type": "refund",
+          "text": "Innocent: I don't want to renew it.\n\nSuspect: Okay, you just tell me your order ID number, sir.\n\nInnocent: There's an invoice number and the customer number. Which one do you need? And then there's another extra ID number.\n\nSuspect: The invoice number, sir.\n\nInnocent: Norton 115243853CX.\n\nSuspect: Okay, hold on a moment. I just need to check my records. Just give me a moment.\n\nInnocent: Yeah, hell"
+        }
+      ],
+      "false_alarms": []
+    }
+  }
+]

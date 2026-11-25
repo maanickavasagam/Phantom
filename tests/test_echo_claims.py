@@ -82,6 +82,27 @@ def test_indicators_need_manipulation_for_pattern():
     assert "authority" not in names and "threat" not in names
 
 
+def test_identity_details_are_weak_and_own_card_is_not_a_request():
+    tr = make_transcript("Can you give me your account number so I can look into it?",
+                         "Sure, but what are the last four digits of my credit card number?")
+    asks = [c for c in extract_claims(tr) if c.type == "credential_request"]
+    assert [(c.key, c.attrs["level"]) for c in asks] == [("account number", "identity")]
+    assert "credential_request" not in {i.name for i in detect_indicators(tr, asks)}
+
+
+def test_im_fine_is_not_a_threat_and_wont_is_not_a_prize():
+    tr = make_transcript("I'm fine, thanks.", "You won't be charged anything for the delivery.")
+    names = {i.name for i in detect_indicators(tr, extract_claims(tr))}
+    assert "threat" not in names and "lure" not in names
+
+
+def test_us_tech_support_scam_is_suspicious():
+    from phantom.echo.indicators import decide
+    tr = make_transcript("This is Microsoft support, your computer has been hacked by a virus.",
+                         "I need access to your computer right now to fix it.")
+    assert decide(detect_indicators(tr, extract_claims(tr))).suspicious
+
+
 def test_match_claims_lenient_names_only():
     tp, fp, fn = match_claims([("name", "varma"), ("amount", "500")],
                               [("name", "verma"), ("amount", "5000")])
