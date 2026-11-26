@@ -1,0 +1,363 @@
+{
+  "dnstwist": {
+    "addition": {
+      "n": 468,
+      "flagged": 0.868,
+      "likely_fake_right_brand": 0.868,
+      "example_misses": [
+        "sbil.co.in",
+        "sbic.co.in",
+        "sbio.co.in",
+        "sbik.co.in",
+        "sbit.co.in",
+        "sbij.co.in"
+      ]
+    },
+    "bitsquatting": {
+      "n": 390,
+      "flagged": 0.964,
+      "likely_fake_right_brand": 0.964,
+      "example_misses": [
+        "3bi.co.in",
+        "sci.co.in",
+        "sbh.co.in",
+        "wbi.co.in",
+        "sby.co.in",
+        "sbm.co.in"
+      ]
+    },
+    "cyrillic": {
+      "n": 3,
+      "flagged": 0.333,
+      "likely_fake_right_brand": 0.333,
+      "example_misses": [
+        "xn--80aykje.com",
+        "xn--11are.co.in"
+      ]
+    },
+    "homoglyph": {
+      "n": 36300,
+      "flagged": 0.951,
+      "likely_fake_right_brand": 0.951,
+      "example_misses": [
+        "xn--mazom-zjc.in",
+        "xn--annazn-fxa.in",
+        "xn--nnazon-ota.in",
+        "xn--nnazon-vc8b.in",
+        "xn--nnazon-voc.in",
+        "xn--nnazon-2za.in"
+      ]
+    },
+    "hyphenation": {
+      "n": 74,
+      "flagged": 0.541,
+      "likely_fake_right_brand": 0.541,
+      "example_misses": [
+        "am-azon.in",
+        "amaz-on.in",
+        "ama-zon.in",
+        "amaz-on.com",
+        "am-azon.com",
+        "ama-zon.com"
+      ]
+    },
+    "insertion": {
+      "n": 823,
+      "flagged": 0.964,
+      "likely_fake_right_brand": 0.964,
+      "example_misses": [
+        "sybi.co.in",
+        "swbi.co.in",
+        "xsbi.co.in",
+        "sabi.co.in",
+        "qsbi.co.in",
+        "sgbi.co.in"
+      ]
+    },
+    "omission": {
+      "n": 86,
+      "flagged": 0.965,
+      "likely_fake_right_brand": 0.942,
+      "example_misses": [
+        "sb.co.in",
+        "si.co.in",
+        "bi.co.in"
+      ]
+    },
+    "plural": {
+      "n": 19,
+      "flagged": 0.842,
+      "likely_fake_right_brand": 0.842,
+      "example_misses": [
+        "amazeson.in",
+        "amazeson.com",
+        "meesesho.com"
+      ]
+    },
+    "repetition": {
+      "n": 41,
+      "flagged": 0.927,
+      "likely_fake_right_brand": 0.927,
+      "example_misses": [
+        "sbbi.co.in",
+        "ssbi.co.in",
+        "iindiapost.gov.in"
+      ]
+    },
+    "replacement": {
+      "n": 408,
+      "flagged": 0.963,
+      "likely_fake_right_brand": 0.963,
+      "example_misses": [
+        "sbj.co.in",
+        "xbi.co.in",
+        "svi.co.in",
+        "sbo.co.in",
+        "shi.co.in",
+        "ebi.co.in"
+      ]
+    },
+    "subdomain": {
+      "n": 61,
+      "flagged": 0.443,
+      "likely_fake_right_brand": 0.426,
+      "example_misses": [
+        "amaz.on.in",
+        "ama.zon.in",
+        "am.azon.in",
+        "amaz.on.com",
+        "am.azon.com",
+        "ama.zon.com"
+      ]
+    },
+    "transposition": {
+      "n": 71,
+      "flagged": 0.972,
+      "likely_fake_right_brand": 0.972,
+      "example_misses": [
+        "bsi.co.in",
+        "sib.co.in"
+      ]
+    },
+    "various": {
+      "n": 18,
+      "flagged": 0.944,
+      "likely_fake_right_brand": 0.778,
+      "example_misses": [
+        "sbico.in"
+      ]
+    },
+    "vowel-swap": {
+      "n": 58,
+      "flagged": 0.983,
+      "likely_fake_right_brand": 0.983,
+      "example_misses": [
+        "sbe.co.in"
+      ]
+    },
+    "ALL": {
+      "n": 38820,
+      "flagged": 0.949,
+      "likely_fake_right_brand": 0.949
+    },
+    "seconds": 27.7
+  },
+  "tranco": {
+    "n": 100000,
+    "verdicts": {
+      "official": 74,
+      "no_brand_link": 99697,
+      "likely_fake": 135,
+      "suspicious": 94
+    },
+    "likely_fake_rate": 0.0014,
+    "flagged_rate": 0.0023,
+    "official_by_brand": {
+      "gpay": 6,
+      "amazon": 38,
+      "flipkart": 3,
+      "myntra": 2,
+      "meesho": 1,
+      "irctc": 4,
+      "indiapost": 2,
+      "icici": 4,
+      "phonepe": 1,
+      "paytm": 3,
+      "sbi": 6,
+      "hdfc": 4
+    },
+    "likely_fake_examples": [
+      "#78 amazonvideo.com -> amazon: no_https; brand_in_domain",
+      "#900 amazonalexa.com -> amazon: no_https; brand_in_domain",
+      "#2060 amazonaws.com.cn -> amazon: no_https; brand_in_domain",
+      "#2329 larazon.es -> amazon: no_https; typosquat",
+      "#3793 teacherspayteachers.com -> paytm: no_https; typosquat",
+      "#4331 amazonsilk.com -> amazon: no_https; brand_in_domain",
+      "#4679 apartments.com -> paytm: no_https; typosquat",
+      "#6217 amazonses.com -> amazon: no_https; brand_in_domain",
+      "#6330 amazoncognito.com -> amazon: no_https; brand_in_domain",
+      "#7009 amazon-dss.com -> amazon: no_https; brand_in_domain",
+      "#7511 manoramaonline.com -> amazon: no_https; typosquat",
+      "#7595 googlepages.com -> gpay: no_https; typosquat",
+      "#8625 apartmenttherapy.com -> paytm: no_https; typosquat",
+      "#10695 firstcry.com -> irctc: no_https; typosquat",
+      "#11238 images-amazon.com -> amazon: no_https; brand_in_domain",
+      "#12465 amazon-ads-attestation.com -> amazon: no_https; brand_in_domain; many_hyphens",
+      "#12872 citibank.com -> icici: no_https; typosquat",
+      "#13020 meeshoapi.com -> meesho: no_https; brand_in_domain",
+      "#13280 onlinepbx.ru -> sbi: no_https; typosquat",
+      "#13393 onlinehomeshop.com -> meesho: no_https; typosquat",
+      "#13698 appleiphonecell.com -> phonepe: no_https; typosquat",
+      "#14629 siege-amazon.com -> amazon: no_https; brand_in_domain",
+      "#15457 artificialintelligenceact.eu -> icici: no_https; typosquat",
+      "#15505 mediapost.com -> indiapost: no_https; typosquat",
+      "#15909 civicscience.com -> icici: no_https; typosquat",
+      "#16502 artificialanalysis.ai -> icici: no_https; typosquat",
+      "#16504 amazonaws.eu -> amazon: no_https; brand_in_domain",
+      "#16718 icj-cij.org -> icici: no_https; typosquat",
+      "#17084 amazonworkspaces.com -> amazon: no_https; brand_in_domain",
+      "#17122 apartmentguide.com -> paytm: no_https; typosquat",
+      "#17373 amazoncrl.com -> amazon: no_https; brand_in_domain",
+      "#18396 amazonlightsail.com -> amazon: no_https; brand_in_domain",
+      "#19718 jobsatamazon.co.uk -> amazon: no_https; brand_in_domain",
+      "#20150 assoc-amazon.com -> amazon: no_https; brand_in_domain",
+      "#20494 amazonfiretvapp.com -> amazon: no_https; brand_in_domain",
+      "#21435 amazonlogistics.eu -> amazon: no_https; brand_in_domain",
+      "#21707 domainnameshop.com -> meesho: no_https; typosquat",
+      "#21802 amazonaws.cn -> amazon: no_https; brand_in_domain",
+      "#22676 firstcitizens.com -> irctc: no_https; typosquat",
+      "#22776 payments-amazon.com -> amazon: no_https; brand_in_domain"
+    ],
+    "suspicious_examples": [
+      "#115 bit.ly: no_https; link_shortener",
+      "#118 amazon.dev: no_https; brand_on_unofficial_ending",
+      "#252 t.co: no_https; link_shortener",
+      "#307 tinyurl.com: no_https; link_shortener",
+      "#1334 amazon.co.za: no_https; brand_on_unofficial_ending",
+      "#2351 shorturl.at: no_https; link_shortener",
+      "#2938 cutt.ly: no_https; link_shortener",
+      "#4301 amazon.ie: no_https; brand_on_unofficial_ending",
+      "#4337 is.gd: no_https; link_shortener",
+      "#4915 ow.ly: no_https; link_shortener",
+      "#6893 tiny.cc: no_https; link_shortener",
+      "#7661 t.ly: no_https; link_shortener",
+      "#8686 rebrand.ly: no_https; link_shortener",
+      "#9211 amazon.eu: no_https; brand_on_unofficial_ending",
+      "#9433 rb.gy: no_https; link_shortener"
+    ],
+    "seconds": 58.7
+  },
+  "phiusiil": {
+    "brand_titled_phishing": {
+      "n": 256,
+      "official": 0.262,
+      "likely_fake": 0.578,
+      "suspicious": 0.07,
+      "no_brand_link": 0.09,
+      "flagged": 0.648
+    },
+    "brand_titled_legitimate": {
+      "n": 25,
+      "official": 0.32,
+      "likely_fake": 0.6,
+      "suspicious": 0.08,
+      "no_brand_link": 0.0,
+      "flagged": 0.68
+    },
+    "all_phishing": {
+      "n": 100945,
+      "official": 0.011,
+      "likely_fake": 0.007,
+      "suspicious": 0.033,
+      "no_brand_link": 0.949,
+      "flagged": 0.04
+    },
+    "all_legitimate": {
+      "n": 134850,
+      "official": 0.0,
+      "likely_fake": 0.002,
+      "suspicious": 0.0,
+      "no_brand_link": 0.998,
+      "flagged": 0.002
+    },
+    "by_brand": {
+      "amazon:legit": {
+        "n": 16,
+        "flagged": 13,
+        "official": 3
+      },
+      "amazon:phish": {
+        "n": 162,
+        "flagged": 95,
+        "official": 67
+      },
+      "gpay:phish": {
+        "n": 8,
+        "flagged": 0,
+        "official": 0
+      },
+      "hdfc:legit": {
+        "n": 1,
+        "flagged": 0,
+        "official": 1
+      },
+      "hdfc:phish": {
+        "n": 39,
+        "flagged": 24,
+        "official": 0
+      },
+      "icici:legit": {
+        "n": 7,
+        "flagged": 3,
+        "official": 4
+      },
+      "sbi:legit": {
+        "n": 1,
+        "flagged": 1,
+        "official": 0
+      },
+      "sbi:phish": {
+        "n": 47,
+        "flagged": 47,
+        "official": 0
+      }
+    },
+    "examples": {
+      "missed_phish": [
+        "https://s3.amazonaws.com/appforest_uf/f1676990663351x712738893962862700/docusignpymt.html  [title: s3amazonawsappforest_uff1676990663351x712738893962862700docu] -> official",
+        "https://hdfcpagekyc-08.web.app/  [title: hdfcpagekyc-08web] -> no_brand_link",
+        "http://ec2-50-18-236-143.us-west-1.compute.amazonaws.com/nb/?vghbjgkfhvfjdkdfuvyfiujnbtmrjkj3eruyfr89ubrnmewjduvy89euihjjrkdiuycdghbjieufyghebnjewducyhbhucdywghbnjfviuyeghbejfiuyvg&  [title: ec2-50-18-236-143us-west-1puteamazonawsnb?vghbjgkfhvfjdkdfuv] -> official",
+        "https://s3.amazonaws.com/appforest_uf/f1676550116387x690857273958953600/docusignus.com.html  [title: s3amazonawsappforest_uff1676550116387x690857273958953600docu] -> official",
+        "https://s3.amazonaws.com/appforest_uf/f1676468741681x140140754959872320/docusign.us.html  [title: s3amazonawsappforest_uff1676468741681x140140754959872320docu] -> official",
+        "https://arekar.in/vystarcureviewpendingpayment/  [title: arekarvystarcureviewpendgpayment] -> no_brand_link",
+        "http://ec2-3-108-252-198.ap-south-1.compute.amazonaws.com/  [title: ec2-3-108-252-198ap-south-1puteamazonaws] -> official",
+        "https://hdfckycpage-09.web.app/  [title: hdfckycpage-09web] -> no_brand_link",
+        "https://s3.amazonaws.com/appforest_uf/f1672759453899x336560066180168200/indexcp.html#reports@antiphishing.ch  [title: s3amazonawsappforest_uff1672759453899x336560066180168200inde] -> official",
+        "http://www.amazon.eg/a/c/r/nivycxnx7wnzdkv9e8rz38t15/  [title: amazonacrnivycxnx7wnzdkv9e8rz38t15] -> official",
+        "https://s3.amazonaws.com/appforest_uf/f1674598715504x779829565225131800/alldomains.html  [title: s3amazonawsappforest_uff1674598715504x779829565225131800alld] -> official",
+        "https://s3.amazonaws.com/appforest_uf/f1679541543778x150258942439582820/ps5.html  [title: s3amazonawsappforest_uff1679541543778x150258942439582820ps5h] -> official",
+        "https://s3.amazonaws.com/appforest_uf/f1675148005127x184258298000627100/wedownloads.html?id=3mail@b.c  [title: s3amazonawsappforest_uff1675148005127x184258298000627100wedo] -> official",
+        "https://arekar.in/vystarcureviewpendingpayment/  [title: arekarvystarcureviewpendgpayment] -> no_brand_link",
+        "https://s3.amazonaws.com/appforest_uf/f1677020010151x142784338842345540/siupprrp.html  [title: s3amazonawsappforest_uff1677020010151x142784338842345540siup] -> official"
+      ],
+      "false_alarm_legit": [
+        "https://www.wp-amazon-plugin.com  [title: wp-amazon-plugin]",
+        "https://www.teleamazonas.com  [title: teleamazonas]",
+        "https://www.bicicicoty.com  [title: bicicity]",
+        "https://www.amazonaws.cn  [title: amazonaws]",
+        "https://www.amazonregistry.com  [title: amazonregistry]",
+        "https://www.amazonwindows.co.uk  [title: amazonwindowsco]",
+        "https://www.icicisecurities.com  [title: icicisecurities]",
+        "https://www.amazonias.net  [title: amazonias]",
+        "https://www.amazonia.bo  [title: amazonia]",
+        "https://www.amazonadventures.com  [title: amazonadventures]",
+        "https://www.glamazonia.it  [title: glamazona]",
+        "https://www.icicihfc.com  [title: icicihfc]",
+        "https://www.aboutamazon.co.uk  [title: abotamazonco]",
+        "https://www.acessoamazonas.com.br  [title: acessoamazonascom]",
+        "https://www.amazona.de  [title: amazona]"
+      ]
+    },
+    "seconds": 265.3
+  }
+}

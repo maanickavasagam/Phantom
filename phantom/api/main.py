@@ -14,6 +14,7 @@ from fastapi.responses import FileResponse, HTMLResponse, Response
 from pydantic import BaseModel, Field
 
 from phantom.blackbox.investigate import SCENARIOS, evaluate, investigate, scenario_html
+from phantom.blackbox.urltool import check_url_tool
 from phantom.common.evidence_store import EvidenceStore
 from phantom.common.schemas import ModuleName, ToolResult
 from phantom.coordinator.engine import coordinate
@@ -219,6 +220,26 @@ def blackbox_investigate(options: BlackboxRequest, request: Request) -> ToolResu
         raise HTTPException(503, str(error)) from error
 
 
+class UrlCheckRequest(BaseModel):
+    url: str = Field(min_length=1, max_length=2048)
+    lookups: bool = False  # DNS + RDAP registration date; never opens the page
+
+
+@app.post("/blackbox/check-url", response_model=ToolResult)
+def blackbox_check_url(options: UrlCheckRequest) -> ToolResult:
+    """Is this the real brand (Amazon, Flipkart, SBI...) or a lookalike? Judged from the
+    URL and optional safe lookups only; the page is never opened."""
+    return check_url_tool(options.url, store, lookups=options.lookups)
+
+
+@app.get("/blackbox/brands")
+def blackbox_brands() -> dict:
+    from phantom.blackbox.brands import BRANDS
+
+    return {"brands": [{"key": b.key, "name": b.name, "official": sorted(b.official),
+                        "restricted": list(b.restricted)} for b in BRANDS.values()]}
+
+
 @app.get("/blackbox/eval")
 def blackbox_eval(request: Request) -> dict:
     url = str(request.base_url).rstrip("/")
@@ -230,6 +251,8 @@ class CoordinatorRequest(BaseModel):
     document_evidence_id: str | None = None
     audio_evidence_id: str | None = None
     scenario: str | None = None
+    website_url: str | None = Field(default=None, max_length=2048)
+    url_lookups: bool = False
     max_calls: int = Field(default=3, ge=1, le=3)
 
 
@@ -243,7 +266,8 @@ def coordinator_investigate(options: CoordinatorRequest, request: Request) -> di
     )
     return coordinate(
         options.goal, store, options.document_evidence_id,
-        options.audio_evidence_id, url, options.max_calls
+        options.audio_evidence_id, url, options.max_calls,
+        website_url=options.website_url, url_lookups=options.url_lookups,
     )
 
 

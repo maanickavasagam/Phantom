@@ -1,7 +1,7 @@
 # PHANTOM AI
 
 Multimodal investigation prototype: **MIRAGE** (document forensics), **ECHO** (voice incident
-intelligence), **BLACKBOX** (controlled browser investigation with a learned action ranker), joined by
+intelligence), **BLACKBOX** (fake-website / brand-lookalike link checker), joined by
 a bounded agentic coordinator. Outputs are evidence-linked and always flagged for human review.
 
 ## Quick start
@@ -12,8 +12,8 @@ System dependencies:
 - ffmpeg for ECHO. Put it on PATH or set `FFMPEG_BINARY`.
 - ECHO downloads the Whisper `base.en` model (~145 MB) on first use. Set `ECHO_MODEL_DIR` to
   choose where it's cached, and `ECHO_WHISPER_MODEL` to pick another model (e.g. `small.en`).
-- BLACKBOX uses Playwright Chromium (or installed Microsoft Edge). Install a browser with
-  `python -m playwright install chromium` if neither is available.
+- BLACKBOX's link checker needs no browser. Only the optional legacy synthetic-site prototype
+  uses Playwright Chromium (`python -m playwright install chromium`).
 
 ```bash
 pip install -r requirements.txt
@@ -22,23 +22,30 @@ pytest -q
 uvicorn phantom.api.main:app --reload        # demo UI: http://127.0.0.1:8000/  · API docs: /docs
 ```
 
-## BLACKBOX and coordinator
+## BLACKBOX: is this link real?
 
-BLACKBOX explores only the six synthetic sites served at `/synthetic/{scenario}/start`.
-It records screenshots, a bounded action trace, and evidence-linked planted behaviours.
-The action ranker is a small scikit-learn MLP trained from the synthetic action catalogue;
-retrain it with `python -c "from phantom.blackbox.investigate import train_ranker; print(train_ranker())"`.
-Use the BLACKBOX and Coordinator tabs in the demo, or the
-`/blackbox/investigate` and `/coordinator/investigate` API endpoints.
-The coordinator accepts evidence IDs produced by document/audio analysis and a
-synthetic website scenario. Results remain subject to human review.
+BLACKBOX checks whether a website address belongs to one of 12 Indian brands (Amazon,
+Flipkart, Myntra, Meesho, Paytm, PhonePe, Google Pay, SBI, HDFC, ICICI, IRCTC, India Post)
+or imitates one: brand name on an unofficial domain, typos (`flipkarrt`), look-alike
+letters (`amaz0n`, Cyrillic `а`), brand in a subdomain or before an `@`, brand split by a
+hyphen or dot, user content on brand hosting (`s3.amazonaws.com`), plus risky endings and
+link shorteners. **The page is never opened.** The optional *safe lookups* ask DNS whether
+the domain exists and the public RDAP registry when it was registered (only the domain name
+is sent).
 
-The browser comparison endpoint `/blackbox/eval` runs fixed, random and learned
-policies on held-out synthetic scenarios under equal action budgets. These
-small synthetic scenarios establish a reproducible prototype, not a claim
-of effectiveness on live websites.
-See `docs/BLACKBOX_EVAL.md` for the comparison and `docs/COORDINATOR.md` for
-the routing smoke check and current limitations.
+Use the BLACKBOX tab (*Is this link real?*), `POST /blackbox/check-url` with
+`{"url": "...", "lookups": false}`, or `GET /blackbox/brands`. Reproduce the evaluation
+(dnstwist lookalikes, Tranco top sites, PhiUSIIL phishing) with
+`python -m phantom.blackbox.eval_urls --data data/raw/urls`; see `docs/BLACKBOX_EVAL.md`.
+
+The teammate's synthetic-site explorer (`/blackbox/investigate`, `/blackbox/eval`) is kept
+as a legacy prototype.
+
+## Coordinator
+
+`/coordinator/investigate` routes a goal to MIRAGE (document evidence ID), ECHO (audio
+evidence ID) and BLACKBOX (`website_url`) under call and time budgets, with a trace of
+every step. See `docs/COORDINATOR.md`. Results remain subject to human review.
 
 ## MIRAGE demo
 Open http://127.0.0.1:8000/ after starting the API. The case library has six real receipts
@@ -105,10 +112,10 @@ phantom/echo/    ingestion, Whisper transcription, claim extraction, indicators,
 phantom/api/static/  single-page demo UI for MIRAGE + ECHO + evaluation (served at /)
 data/demo/       7 synthetic invoice demo cases + manifest with ground truth
 data/demo_echo/  7 scripted demo calls + manifest with ground truth
-phantom/blackbox/ synthetic scenarios, browser exploration, trained action ranker
+phantom/blackbox/ brand registry, URL lookalike checker + eval (legacy: synthetic explorer)
 phantom/coordinator/ bounded routing and unified evidence-backed report
 phantom/api/     FastAPI app: /health, /mirage/analyze, /echo/analyze,
-                 /blackbox/investigate, /coordinator/investigate, /evidence/{id}
+                 /blackbox/check-url, /coordinator/investigate, /evidence/{id}
 tests/           pytest suite
 ```
 

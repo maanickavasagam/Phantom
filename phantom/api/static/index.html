@@ -367,16 +367,29 @@
 
     <!-- ===================== EVALUATION ===================== -->
     <section class="view hidden" id="v-blackbox"><div class="evalv"><div class="wrap">
-      <div class="card"><div class="ch"><h2>BLACKBOX · local synthetic websites</h2></div>
-        <div style="padding:20px">
-          <p>Explore a controlled scenario with a fixed, random, or trained action policy. Only local synthetic pages are allowed.</p>
+      <div class="ph"><div><h1>Is this link real?</h1>
+        <p>Checks whether a website address belongs to the real brand (Amazon, Flipkart, SBI, IRCTC…) or is a lookalike.
+        The page itself is never opened.</p></div></div>
+      <div class="card"><div class="cb" style="padding:18px">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <input id="urlInput" placeholder="Paste a link, e.g. https://flipkart-bigbillion-sale.xyz/claim"
+            style="flex:1;min-width:280px;font:inherit;font-size:15px;padding:10px 12px;border:1px solid var(--border-2);border-radius:8px">
+          <label class="tgl" title="Ask DNS whether the domain exists and the public registry when it was registered. Sends only the domain name, never opens the page.">
+            <input type="checkbox" id="urlLookups"> Safe lookups (domain age)</label>
+          <button class="btn primary" id="urlRun">Check link</button>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap" id="urlExamples"></div>
+      </div></div>
+      <div id="urlResult"></div>
+      <div class="card"><div class="ch"><h2>Brands we can verify</h2><p>Official domains are listed only when we are sure the brand controls them.</p></div>
+        <div class="cb" id="urlBrands" style="padding-top:10px"></div></div>
+      <details class="card" style="padding:14px 18px"><summary>Legacy: synthetic exploration scenarios (teammate prototype)</summary>
+        <div style="padding-top:12px">
           <label>Scenario <select id="bbScenario"></select></label>
           <label>Strategy <select id="bbStrategy"><option>learned</option><option>fixed</option><option>random</option></select></label>
-          <button class="btn primary" id="bbRun">Investigate</button>
-          <button class="btn" id="bbEval">Compare strategies</button>
-          <pre class="json" id="bbOutput">Choose a scenario to start.</pre>
-        </div>
-      </div>
+          <button class="btn" id="bbRun">Run</button>
+          <pre class="json" id="bbOutput">Optional prototype; the URL checker above is the BLACKBOX module.</pre>
+        </div></details>
     </div></div></section>
     <section class="view hidden" id="v-coordinator"><div class="evalv"><div class="wrap">
       <div class="card"><div class="ch"><h2>Bounded coordinator</h2></div>
@@ -430,7 +443,7 @@ $$(".nav[data-view]").forEach(b => b.onclick = () => {
   const v = activeView = b.dataset.view;
   ["investigate", "echo", "blackbox", "coordinator", "eval"].forEach(k => $("#v-" + k).classList.toggle("hidden", v !== k));
   $("#crumbs").innerHTML = `${CRUMBS[v][0]} <span style="margin:0 6px">/</span> <b>${CRUMBS[v][1]}</b>`;
-  const st = v === "echo" ? echoState : v === "investigate" ? state : v === "blackbox" ? bbState : v === "coordinator" ? coordState : null;
+  const st = v === "echo" ? echoState : v === "investigate" ? state : v === "blackbox" ? urlState : v === "coordinator" ? coordState : null;
   ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = !st);
   if (v === "eval") loadEval();
   if (v === "echo") renderEchoLib();
@@ -634,7 +647,7 @@ function renderInspector() {
 
 // ------------------------------------------------------------ export
 $("#btnJson").onclick = () => {
-  const st = activeView === "echo" ? echoState : activeView === "blackbox" ? bbState : activeView === "coordinator" ? coordState : state;
+  const st = activeView === "echo" ? echoState : activeView === "blackbox" ? urlState : activeView === "coordinator" ? coordState : state;
   if (!st) return;
   const mod = activeView === "investigate" ? "mirage" : activeView;
   const payload = st.result ? { verdict: st.verdict, input: st.name, result: st.result } : st;
@@ -643,7 +656,7 @@ $("#btnJson").onclick = () => {
   a.click(); URL.revokeObjectURL(a.href);
 };
 $("#btnPrint").onclick = () => {
-  const st = activeView === "echo" ? echoState : activeView === "blackbox" ? bbState : activeView === "coordinator" ? coordState : state;
+  const st = activeView === "echo" ? echoState : activeView === "blackbox" ? urlState : activeView === "coordinator" ? coordState : state;
   if (st) window.print();
 };
 
@@ -925,11 +938,66 @@ $("#bbRun").onclick = async () => {
     $("#btnJson").disabled = $("#btnPrint").disabled = !response.ok;
   } catch (error) { $("#bbOutput").textContent = String(error); }
 };
-$("#bbEval").onclick = async () => {
-  $("#bbOutput").textContent = "Comparing strategies…";
-  const response = await fetch("/blackbox/eval");
-  $("#bbOutput").textContent = JSON.stringify(await response.json(), null, 2);
-};
+
+// ============================================================ BLACKBOX: URL checker
+let urlState = null;
+const URL_EXAMPLES = [
+  ["https://www.flipkart.com/offers", "official"], ["https://onlinesbi.sbi", "official"],
+  ["https://flipkart-bigbillion-sale.xyz/claim", "fake"], ["http://amaz0n-offers.shop/login", "fake"],
+  ["https://www.amazon.in@evil-site.ru/login", "fake"], ["https://sbi-kyc-update.online/", "fake"],
+  ["https://xn--mazon-3ve.com", "fake"], ["https://myntra.shop", "suspicious"], ["https://www.wikipedia.org", "unrelated"]];
+const URL_VERDICT = {
+  official: { cls: "benign", icon: "i-check", t: "Official website", p: "This domain belongs to the brand." },
+  likely_fake: { cls: "suspicious", icon: "i-alert", t: "Likely FAKE", p: "It imitates a brand but is not one of the brand's domains. Do not enter details or pay." },
+  suspicious: { cls: "inconclusive", icon: "i-help", t: "Suspicious", p: "Warning signs, but not clearly impersonating a brand. Verify before trusting it." },
+  no_brand_link: { cls: "benign", icon: "i-help", t: "No brand link", p: "Not linked to any brand we track and no lookalike signs. That is not a guarantee it is safe." } };
+const STRENGTH_TAG = { strong: "sus", medium: "inc", weak: "neutral" };
+$("#urlExamples").innerHTML = URL_EXAMPLES.map(([u, k]) =>
+  `<button class="tag ${k === "official" ? "ok" : k === "fake" ? "sus" : k === "suspicious" ? "inc" : "neutral"}" style="cursor:pointer;font-weight:500;text-transform:none" data-u="${esc(u)}">${esc(u.replace(/^https?:\/\//, ""))}</button>`).join("");
+$$("#urlExamples button").forEach(b => b.onclick = () => { $("#urlInput").value = b.dataset.u; runUrlCheck(); });
+$("#urlRun").onclick = () => runUrlCheck();
+$("#urlInput").onkeydown = e => { if (e.key === "Enter") runUrlCheck(); };
+fetch("/blackbox/brands").then(r => r.json()).then(d => {
+  $("#urlBrands").innerHTML = `<table><tr><th>Brand</th><th>Official domains</th></tr>${(d.brands || []).map(b =>
+    `<tr><td><b>${esc(b.name)}</b></td><td class="note-muted" style="font-family:var(--mono);font-size:12px">${b.official.map(esc).join(" · ")}${b.restricted.length ? ` · any verified *.${b.restricted.map(esc).join(" / *.")}` : ""}</td></tr>`).join("")}</table>`;
+}).catch(() => {});
+async function runUrlCheck() {
+  const url = $("#urlInput").value.trim();
+  if (!url) return;
+  $("#urlResult").innerHTML = `<div class="card"><div class="cb" style="padding:22px"><div class="spin"></div></div></div>`;
+  const r = await fetch("/blackbox/check-url", { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url, lookups: $("#urlLookups").checked }) });
+  const result = await r.json();
+  urlState = { result, name: url, verdict: (result.artifacts && result.artifacts.url_check || {}).verdict };
+  ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = false);
+  if (!r.ok || result.errors && result.errors.length) {
+    $("#urlResult").innerHTML = `<div class="card"><div class="cb" style="padding:18px"><span class="tag sus">error</span> ${esc((result.errors && result.errors[0] || {}).message || result.detail || "Could not check this link")}</div></div>`;
+    return;
+  }
+  const c = result.artifacts.url_check, V = URL_VERDICT[c.verdict], brands = await (await fetch("/blackbox/brands")).json();
+  const brand = (brands.brands || []).find(b => b.key === c.brand);
+  const sigs = (c.signals || []).map(s => `<div class="fcard"><div class="h"><span class="tag ${STRENGTH_TAG[s.strength]}">${esc(s.strength)}</span>
+      <span class="name">${esc(s.name.replace(/_/g, " "))}</span></div><div class="d">${esc(s.detail)}</div></div>`).join("")
+    || `<p class="note-muted">No warning signs.</p>`;
+  const lk = c.lookups || {};
+  const look = Object.keys(lk).length ? `<div class="stats" style="margin:12px 0 0">
+      <div><b>${lk.resolves === false ? "No" : lk.resolves ? "Yes" : "–"}</b><span>exists in DNS</span></div>
+      <div><b>${esc(lk.registered || "–")}</b><span>registered</span></div>
+      <div><b>${lk.age_days != null ? lk.age_days + " d" : "–"}</b><span>domain age</span></div>
+      <div><b>${esc(lk.rdap_error || "OK")}</b><span>registry lookup</span></div></div>` : "";
+  $("#urlResult").innerHTML = `
+    <div class="card"><div class="cb" style="padding:18px">
+      <div class="verdict ${V.cls}" style="margin:0"><div class="lbl">BLACKBOX verdict${brand ? " · " + esc(brand.name) : ""}</div>
+        <div class="v"><svg><use href="#${V.icon}"/></svg>${V.t}${brand && c.verdict !== "official" ? ` (imitating ${esc(brand.name)})` : ""}</div><p>${esc(c.summary)} ${V.p}</p></div>
+      <div class="gt"><span>This link really goes to: <b style="font-family:var(--mono)">${esc(c.registrable)}</b></span><span class="grow"></span>
+        ${brand ? `<span class="note-muted">${esc(brand.name)}'s real sites: <span style="font-family:var(--mono)">${brand.official.slice(0, 4).map(esc).join(", ")}</span></span>` : ""}</div>
+      ${look}
+      <h3 style="margin:16px 0 8px;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3)">Why (${(c.signals || []).length} signal${(c.signals || []).length === 1 ? "" : "s"})</h3>${sigs}
+      <ul class="notes" style="margin-top:10px">${result.limitations.map(l => `<li>${esc(l)}</li>`).join("")}</ul>
+      <p class="note-muted" style="margin:8px 0 0">Evidence: <span class="pill-check">${esc(result.evidence_ids[0])}</span> · run ${esc(result.run_id)}</p>
+    </div></div>`;
+}
+
 $("#coordRun").onclick = async () => {
   $("#coordOutput").textContent = "Investigating…";
   try {

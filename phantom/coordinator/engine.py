@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 
 from phantom.blackbox.investigate import investigate
+from phantom.blackbox.urltool import check_url_tool
 from phantom.common.evidence_store import EvidenceStore
 from phantom.common.schemas import ToolResult
 from phantom.echo.analyze import analyze_audio
@@ -21,6 +22,8 @@ def coordinate(
     target_url: str | None = None,
     max_calls: int = 3,
     max_seconds: float = 120,
+    website_url: str | None = None,
+    url_lookups: bool = False,
 ) -> dict:
     if not 1 <= max_calls <= 3 or not 1 <= max_seconds <= 600:
         raise ValueError("invalid coordinator budget")
@@ -33,7 +36,8 @@ def coordinate(
     requested = [
         ("mirage", document_id, ("document", "invoice", "receipt", "image", "pdf")),
         ("echo", audio_id, ("audio", "voice", "call", "speech")),
-        ("blackbox", target_url, ("web", "website", "browser", "site")),
+        ("blackbox", website_url or target_url,
+         ("web", "website", "browser", "site", "url", "link", "domain")),
     ]
     for name, supplied, keywords in requested:
         relevant = any(word in goal_text for word in keywords) or goal_text.strip() in {
@@ -49,7 +53,9 @@ def coordinate(
             break
         attempts += 1
         try:
-            if name == "blackbox":
+            if name == "blackbox" and website_url:
+                result = check_url_tool(website_url, store, lookups=url_lookups)
+            elif name == "blackbox":
                 result = investigate(str(supplied), store, action_budget=2)
             else:
                 blob, record = store.get(str(supplied))

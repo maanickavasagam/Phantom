@@ -1,0 +1,322 @@
+{
+  "dnstwist": {
+    "addition": {
+      "n": 468,
+      "flagged": 0.859,
+      "likely_fake_right_brand": 0.859,
+      "example_misses": [
+        "amazone.in",
+        "amazona.in",
+        "amazona.com",
+        "amazone.com",
+        "sbiy.co.in",
+        "sbio.co.in"
+      ]
+    },
+    "bitsquatting": {
+      "n": 390,
+      "flagged": 0.964,
+      "likely_fake_right_brand": 0.964,
+      "example_misses": [
+        "sbh.co.in",
+        "sfi.co.in",
+        "sby.co.in",
+        "rbi.co.in",
+        "wbi.co.in",
+        "cbi.co.in"
+      ]
+    },
+    "cyrillic": {
+      "n": 3,
+      "flagged": 0.667,
+      "likely_fake_right_brand": 0.667,
+      "example_misses": [
+        "xn--11are.co.in"
+      ]
+    },
+    "homoglyph": {
+      "n": 36300,
+      "flagged": 0.981,
+      "likely_fake_right_brand": 0.981,
+      "example_misses": [
+        "annazon.in",
+        "xn--nnazon-vyc.in",
+        "xn--annazo-1fb.in",
+        "annazor.in",
+        "xn--nnazon-9wc.in",
+        "xn--annzon-yyc.in"
+      ]
+    },
+    "hyphenation": {
+      "n": 74,
+      "flagged": 0.973,
+      "likely_fake_right_brand": 0.973,
+      "example_misses": [
+        "s-bi.co.in",
+        "sb-i.co.in"
+      ]
+    },
+    "insertion": {
+      "n": 823,
+      "flagged": 0.964,
+      "likely_fake_right_brand": 0.964,
+      "example_misses": [
+        "sabi.co.in",
+        "xsbi.co.in",
+        "sgbi.co.in",
+        "shbi.co.in",
+        "wsbi.co.in",
+        "svbi.co.in"
+      ]
+    },
+    "omission": {
+      "n": 86,
+      "flagged": 0.965,
+      "likely_fake_right_brand": 0.942,
+      "example_misses": [
+        "si.co.in",
+        "sb.co.in",
+        "bi.co.in"
+      ]
+    },
+    "plural": {
+      "n": 19,
+      "flagged": 0.789,
+      "likely_fake_right_brand": 0.789,
+      "example_misses": [
+        "amazeson.in",
+        "amazeson.com",
+        "meesesho.com",
+        "onlinesesbi.com"
+      ]
+    },
+    "repetition": {
+      "n": 41,
+      "flagged": 0.927,
+      "likely_fake_right_brand": 0.927,
+      "example_misses": [
+        "sbbi.co.in",
+        "ssbi.co.in",
+        "iindiapost.gov.in"
+      ]
+    },
+    "replacement": {
+      "n": 408,
+      "flagged": 0.961,
+      "likely_fake_right_brand": 0.961,
+      "example_misses": [
+        "clipkart.com",
+        "sb9.co.in",
+        "sbo.co.in",
+        "xbi.co.in",
+        "sbj.co.in",
+        "ebi.co.in"
+      ]
+    },
+    "subdomain": {
+      "n": 61,
+      "flagged": 0.984,
+      "likely_fake_right_brand": 0.967,
+      "example_misses": [
+        "s.bi.co.in"
+      ]
+    },
+    "transposition": {
+      "n": 71,
+      "flagged": 0.972,
+      "likely_fake_right_brand": 0.972,
+      "example_misses": [
+        "bsi.co.in",
+        "sib.co.in"
+      ]
+    },
+    "various": {
+      "n": 18,
+      "flagged": 0.944,
+      "likely_fake_right_brand": 0.778,
+      "example_misses": [
+        "sbico.in"
+      ]
+    },
+    "vowel-swap": {
+      "n": 58,
+      "flagged": 0.983,
+      "likely_fake_right_brand": 0.983,
+      "example_misses": [
+        "sbe.co.in"
+      ]
+    },
+    "ALL": {
+      "n": 38820,
+      "flagged": 0.978,
+      "likely_fake_right_brand": 0.978
+    },
+    "seconds": 69.4
+  },
+  "tranco": {
+    "n": 100000,
+    "verdicts": {
+      "no_brand_link": 99845,
+      "suspicious": 123,
+      "likely_fake": 29,
+      "official": 3
+    },
+    "likely_fake_rate": 0.0003,
+    "flagged_rate": 0.0015,
+    "official_by_brand": {
+      "sbi": 2,
+      "amazon": 1
+    },
+    "likely_fake_examples": [
+      "#203786 amazonstudios.com -> amazon: no_https; brand_in_domain",
+      "#204656 shengyitongpay.cn -> gpay: no_https; brand_in_domain",
+      "#213264 fmhdfc.click -> hdfc: no_https; brand_in_domain; risky_tld",
+      "#216760 hdfcbankapps.com -> hdfc: no_https; brand_in_domain",
+      "#216893 icicihfc.com -> icici: no_https; brand_in_domain",
+      "#219483 speedposttrack.io -> indiapost: no_https; brand_in_domain",
+      "#225702 paytmdgt.io -> paytm: no_https; brand_in_domain",
+      "#226375 assoc-amazon.jp -> amazon: no_https; brand_in_domain",
+      "#229141 meeshosupply.com -> meesho: no_https; brand_in_domain",
+      "#229874 assoc-amazon.de -> amazon: no_https; brand_in_domain",
+      "#231362 tagpay.com -> gpay: no_https; brand_in_domain",
+      "#231648 ws-amazon.com -> amazon: no_https; brand_in_domain",
+      "#232066 baystatebanner.com -> sbi: no_https; typosquat",
+      "#235674 igpayment.com -> gpay: no_https; brand_in_domain",
+      "#239331 usamazon18.click -> amazon: no_https; brand_in_domain; risky_tld",
+      "#239442 amazongamestudios.com -> amazon: no_https; brand_in_domain",
+      "#240880 mypaytm.com -> paytm: no_https; brand_in_domain",
+      "#241877 amazondelivers.jobs -> amazon: no_https; brand_in_domain",
+      "#248707 assoc-amazon.co.uk -> amazon: no_https; brand_in_domain",
+      "#251852 firstinterstatebank.com -> sbi: no_https; typosquat",
+      "#254677 amaz0ns.com -> amazon: no_https; homoglyph",
+      "#262329 ictc.cn -> irctc: no_https; typosquat",
+      "#263389 indiahost.co -> indiapost: no_https; typosquat",
+      "#274011 aboutamazon.jp -> amazon: no_https; brand_in_domain",
+      "#274529 amazon-presse.de -> amazon: no_https; brand_in_domain",
+      "#288551 icicisecurities.com -> icici: no_https; brand_in_domain",
+      "#289774 amazonlogistics.com -> amazon: no_https; brand_in_domain",
+      "#293399 amzndns-cn.biz -> amazon: no_https; brand_in_domain",
+      "#298717 amazonslotscasino.org -> amazon: no_https; brand_in_domain"
+    ],
+    "suspicious_examples": [
+      "#201416 xn--djrq4gl4hvoi.top: no_https; punycode; risky_tld",
+      "#201599 xn--generator-datenschutzerklrung-pqc.de: no_https; punycode; many_hyphens",
+      "#202218 freexh.live: no_https; risky_tld; phishing_words",
+      "#202589 xn--72c9ab1ec1bc6q.online: no_https; punycode; risky_tld",
+      "#203230 pinggy-free.link: no_https; risky_tld; phishing_words",
+      "#203555 hpupdate.info: no_https; risky_tld; phishing_words",
+      "#203845 freecdn4.top: no_https; risky_tld; phishing_words",
+      "#204175 gaz-v-polas.site: no_https; risky_tld; many_hyphens",
+      "#204911 freedrivemovie.cyou: no_https; risky_tld; phishing_words",
+      "#207232 freex2line.online: no_https; risky_tld; phishing_words",
+      "#208631 xn----dtbhwmiammff3b.xn--p1ai: no_https; punycode; many_hyphens",
+      "#209751 secured-igaming-usa.com: no_https; many_hyphens; phishing_words",
+      "#211012 amazon.me: no_https; brand_on_unofficial_ending",
+      "#212956 freeltc.online: no_https; risky_tld; phishing_words",
+      "#214775 adult-tv-channels.click: no_https; risky_tld; many_hyphens"
+    ],
+    "seconds": 72.9
+  },
+  "phiusiil": {
+    "brand_titled_phishing": {
+      "n": 256,
+      "official": 0.004,
+      "likely_fake": 0.605,
+      "suspicious": 0.34,
+      "no_brand_link": 0.051,
+      "flagged": 0.945
+    },
+    "brand_titled_legitimate": {
+      "n": 25,
+      "official": 0.44,
+      "likely_fake": 0.2,
+      "suspicious": 0.08,
+      "no_brand_link": 0.28,
+      "flagged": 0.28
+    },
+    "all_phishing": {
+      "n": 100945,
+      "official": 0.001,
+      "likely_fake": 0.004,
+      "suspicious": 0.042,
+      "no_brand_link": 0.953,
+      "flagged": 0.046
+    },
+    "all_legitimate": {
+      "n": 134850,
+      "official": 0.0,
+      "likely_fake": 0.0,
+      "suspicious": 0.0,
+      "no_brand_link": 1.0,
+      "flagged": 0.0
+    },
+    "by_brand": {
+      "amazon:legit": {
+        "n": 16,
+        "flagged": 3,
+        "official": 6
+      },
+      "amazon:phish": {
+        "n": 162,
+        "flagged": 155,
+        "official": 1
+      },
+      "gpay:phish": {
+        "n": 8,
+        "flagged": 7,
+        "official": 0
+      },
+      "hdfc:legit": {
+        "n": 1,
+        "flagged": 0,
+        "official": 1
+      },
+      "hdfc:phish": {
+        "n": 39,
+        "flagged": 33,
+        "official": 0
+      },
+      "icici:legit": {
+        "n": 7,
+        "flagged": 3,
+        "official": 4
+      },
+      "sbi:legit": {
+        "n": 1,
+        "flagged": 1,
+        "official": 0
+      },
+      "sbi:phish": {
+        "n": 47,
+        "flagged": 47,
+        "official": 0
+      }
+    },
+    "examples": {
+      "missed_phish": [
+        "http://www.amazon.eg/a/c/r/nivycxnx7wnzdkv9e8rz38t15/  [title: amazonacrnivycxnx7wnzdkv9e8rz38t15] -> official",
+        "https://slawosz.marshhdf.com.pl/aliegro/email@example.com  [title: slawoszmarshhdfcomaliegroemail@examecom] -> no_brand_link",
+        "https://henryk.marshhdf.com.pl/aliegro/email@example.com  [title: henrykmarshhdfcomaliegroemail@examecom] -> no_brand_link",
+        "https://klemens.marshhdf.com.pl/aliegro/email@example.com  [title: klemensmarshhdfcomaliegroemail@examecom] -> no_brand_link",
+        "http://ww2.etc-meisai.jp.1amazonas.life  [title: ww2etc-meisaijp1amazonas] -> no_brand_link",
+        "http://www.glamazona.com  [title: glamazona] -> no_brand_link",
+        "http://kpecdbsauu.medicinadaamazonia.com.br/vnafvra97w/?q=3717065149&id=100  [title: kpecdbsauumedicinadaamazoniacomvnafvra97w?q=3717065149&id=10] -> no_brand_link",
+        "https://bafybeibwkkknnhzghwy5mfvqcacrtrag7mpejfzxbteify35n636ck6fem.ipfs.dweb.link/koomxx.html?a=abuse@amazonaws.com  [title: bafybeibwkkknnhzghwy5mfvqcacrtrag7mpejfzxbteify35n636ck6femi] -> no_brand_link",
+        "https://amadeusz.marshhdf.com.pl/aliegro  [title: amadeuszmarshhdfcomaliegro] -> no_brand_link",
+        "https://ww2.etc-meisai.jp.1amazonas.life/  [title: ww2etc-meisaijp1amazonas] -> no_brand_link",
+        "http://jtvltdgtfl.medicinadaamazonia.com.br/vnafvra97w/?q=3717065149&id=100  [title: jtvltdgtflmedicinadaamazoniacomvnafvra97w?q=3717065149&id=10] -> no_brand_link",
+        "https://svetovid.marshhdf.com.pl/aliegro/email@example.com  [title: svetovidmarshhdfcomaliegroemail@examecom] -> no_brand_link",
+        "http://ldhvbzvdug.pay04wuk.club/vnafvra97w/?q=3717065149&id=100  [title: ldhvbzvdugpay04wukvnafvra97w?q=3717065149&id=100] -> no_brand_link",
+        "https://byelobog.marshhdf.com.pl/aliegro/email@example.com  [title: byelobogmarshhdfcomaliegroemail@examecom] -> no_brand_link"
+      ],
+      "false_alarm_legit": [
+        "https://www.wp-amazon-plugin.com  [title: wp-amazon-plugin]",
+        "https://www.bicicicoty.com  [title: bicicity]",
+        "https://www.amazonwindows.co.uk  [title: amazonwindowsco]",
+        "https://www.icicisecurities.com  [title: icicisecurities]",
+        "https://www.icicihfc.com  [title: icicihfc]"
+      ]
+    },
+    "seconds": 534.6
+  }
+}

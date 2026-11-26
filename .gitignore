@@ -43,3 +43,4 @@ data/holdout_hard/
 data/echo_calls/
 data/echo_calls_devphone/
 .echo_*.json
+data/blackbox_sites/

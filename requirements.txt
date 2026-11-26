@@ -14,3 +14,5 @@ faster-whisper>=1.1
 jiwer>=3.0
 scikit-learn>=1.4
 playwright>=1.56
+tldextract>=5.1
+truststore>=0.9
