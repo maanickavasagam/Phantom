@@ -40,3 +40,6 @@ data/holdout_hard/
 .eval_ev/
 .dev_hard.json
 .findit_*.json
+data/echo_calls/
+data/echo_calls_devphone/
+.echo_*.json
