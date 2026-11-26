@@ -37,10 +37,12 @@ events.
 | `status` | `completed` · `partial` (some tools failed) · `failed` · `nothing_to_do` |
 | `stop_reason` | `completed`, `completed_with_errors`, `call_budget`, `time_budget`, `repeated_failures`, `all_failed`, `nothing_to_do`, `stopped_by_user` |
 | `plan` | modules chosen **before** any tool ran (from the goal and supplied inputs only) |
+| `routing` | `keywords`, `all_requested` ("investigate"/"all"), or `no_evidence_named` (fallback: every supplied input) |
+| `ignored_inputs` | supplied evidence the goal did not ask about (listed, not analysed) |
 | `verdicts` | each module's headline verdict by its own rule (MIRAGE/ECHO `suspicious`/`inconclusive`/`benign`, BLACKBOX `official`/`likely_fake`/...) |
 | `trace` | per module: `completed` / `failed` / `timed_out` / `skipped` (with reason), time taken |
 | `errors` | `invalid_input`, `tool_failed`, `tool_timeout`, `malformed_result` and module errors |
-| `warnings` | `instructions_in_content`, `duplicate_input` |
+| `warnings` | `instructions_in_content`, `duplicate_input`, `goal_names_no_evidence` |
 | `budget`, `tool_calls`, `elapsed_s` | limits used and consumed |
 
 ## Safeguards (Day 33)
@@ -72,5 +74,9 @@ completes with a `likely_fake` finding.
   the defence: the defence is that tool output never controls the coordinator. Paraphrased or
   non-English instructions will not be flagged (and still cannot change anything).
 - Routing uses whole-word keywords in the goal, not a language model. (Fixed 26 Nov: plain
-  substring matching made "invoice" trigger the call check, because it contains "voice".) A goal that names no module
-  keyword, and is not "investigate"/"all", runs nothing and says so (`nothing_to_do`).
+  substring matching made "invoice" trigger the call check, because it contains "voice".)
+  If the goal names **no** kind of evidence ("Was the person who rang me trying to trick
+  me?"), all supplied evidence is checked and the report says so (`routing:
+  no_evidence_named`). Before this fallback such goals ran nothing (found in
+  docs/E2E_EVAL.md). A goal that uses a keyword for the wrong evidence is still routed
+  literally.

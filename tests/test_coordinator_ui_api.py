@@ -140,3 +140,25 @@ def test_stream_rejects_bad_input_before_starting(client):
     c, _ = client
     assert c.post("/coordinator/stream", json={"goal": ""}).status_code == 422
     assert c.post("/coordinator/stream", json={"goal": "x", "max_seconds": 0}).status_code == 422
+
+
+@pytest.mark.parametrize("goal", ["Was the person who rang me trying to trick me?",
+                                  "Has anyone changed the amounts on this?",
+                                  "Should I trust this?"])
+def test_goal_naming_no_evidence_checks_everything_supplied(store, ids, goal):
+    r = coordinate(goal, store, document_id=ids[0], audio_id=ids[1])
+    assert r["routing"] == "no_evidence_named" and r["plan"] == ["mirage", "echo"]
+    assert r["warnings"][0]["code"] == "goal_names_no_evidence"
+    assert r["ignored_inputs"] == [] and r["missing_inputs"] == []
+
+
+def test_keyword_goal_still_routes_narrowly(store, ids):
+    r = coordinate("check this invoice", store, document_id=ids[0], audio_id=ids[1])
+    assert r["routing"] == "keywords" and r["plan"] == ["mirage"]
+    assert r["ignored_inputs"] == ["echo"]
+    assert not any(w["code"] == "goal_names_no_evidence" for w in r["warnings"])
+
+
+def test_goal_naming_no_evidence_with_nothing_supplied(store):
+    r = coordinate("help me please", store)
+    assert r["status"] == "nothing_to_do" and r["warnings"] == []

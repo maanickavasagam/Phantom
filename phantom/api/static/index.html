@@ -1299,11 +1299,15 @@ function coSupplied() {
     blackbox: $("#coUrl").value.trim() || ($("#coordScenario").value ? "scenario" : "") };
 }
 function coPlanPreview() {
-  const g = $("#coGoal").value.toLowerCase().trim(), sup = coSupplied(), all = CO_ALL.includes(g);
+  const g = $("#coGoal").value.toLowerCase().trim(), sup = coSupplied();
+  const named = Object.keys(CO_MODS).filter(m => CO_KEYWORDS[m].some(w => new RegExp("\\b" + w).test(g)));
+  const fallback = !!g && !CO_ALL.includes(g) && !named.length;  // no evidence named: check everything supplied
+  const all = CO_ALL.includes(g) || fallback;
   const rows = Object.keys(CO_MODS).map(m => {
-    const asked = all || CO_KEYWORDS[m].some(w => new RegExp("\\b" + w).test(g));
-    const st = asked && sup[m] ? "run" : asked ? "missing" : sup[m] ? "unasked" : "off";
-    const say = { run: "will run", missing: "goal asks for it, but no evidence given", unasked: "evidence given, but the goal does not ask for it", off: "not needed" }[st];
+    const asked = all || named.includes(m);
+    const st = asked && sup[m] ? "run" : named.includes(m) ? "missing" : sup[m] ? "unasked" : "off";
+    const say = { run: fallback ? "will run (goal names no evidence type, so everything supplied is checked)" : "will run",
+      missing: "goal asks for it, but no evidence given", unasked: "evidence given, but the goal does not ask for it", off: "not needed" }[st];
     return `<span class="co-pl ${st}"><svg><use href="#${CO_MODS[m].icon}"/></svg>${CO_MODS[m].name}: ${say}</span>`;
   }).join("");
   $("#coPlan").innerHTML = `<span class="note-muted" style="margin-right:4px">Plan:</span>${rows}`;
@@ -1422,7 +1426,7 @@ function coFinish(report, error) {
       <span class="tag ${vc === "benign" ? "ok" : vc === "suspicious" ? "sus" : "inc"}">${esc(vt)}</span></div>
       <div class="note-muted" style="font-size:12px;margin-top:4px">${res.findings.length} finding${res.findings.length === 1 ? "" : "s"} · ${res.evidence_ids.length} evidence item${res.evidence_ids.length === 1 ? "" : "s"}</div></div>`;
   }).join("");
-  const warn = (report.warnings || []).map(w => `<div class="callout warn" style="margin:0 0 8px"><b>${w.code === "instructions_in_content" ? "Hidden instructions found in the evidence" : "Check the inputs"}.</b> ${esc(w.message)}</div>`).join("");
+  const warn = (report.warnings || []).map(w => `<div class="callout warn" style="margin:0 0 8px"><b>${w.code === "instructions_in_content" ? "Hidden instructions found in the evidence" : w.code === "goal_names_no_evidence" ? "Goal did not name the evidence" : "Check the inputs"}.</b> ${esc(w.message)}</div>`).join("");
   const errs = (report.errors || []).map(e => `<li><span class="tag sus">${esc(e.code)}</span> <b>${esc((CO_MODS[e.module] || {}).name || e.module)}</b>: ${esc(e.message)}</li>`).join("");
   const miss = (report.missing_inputs || []).map(m => `<li>${esc(m === "no relevant supplied input" ? m : `${CO_MODS[m] ? CO_MODS[m].what : m}: the goal mentions it but no evidence was given`)}</li>`).join("");
   const order = { suspicious: 0, inconclusive: 1, benign: 2 };

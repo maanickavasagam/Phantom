@@ -248,9 +248,24 @@ def coordinate(
 
     # ---- 2. the plan is fixed here, from the user's goal and inputs only
     supplied = {"mirage": document_id, "echo": audio_id, "blackbox": website_url or target_url}
-    run_all = goal_text in ALL_GOALS
+    named = [name for name in ("mirage", "echo", "blackbox") if _asks_for(goal_text, name)]
+    if goal_text in ALL_GOALS:
+        routing = "all_requested"
+    elif named:
+        routing = "keywords"
+    else:
+        # The goal names no kind of evidence ("Was the person who rang me trying to
+        # trick me?"). Keyword routing cannot tell what is meant, so check everything
+        # the user supplied rather than nothing (found in the end-to-end evaluation:
+        # these goals ran no tool at all). Still bounded by the same budgets.
+        routing = "no_evidence_named"
+    run_all = routing != "keywords"
     plan = [name for name in ("mirage", "echo", "blackbox")
-            if supplied[name] and (run_all or _asks_for(goal_text, name))]
+            if supplied[name] and (run_all or name in named)]
+    if routing == "no_evidence_named" and plan:
+        warnings.append({"code": "goal_names_no_evidence",
+                         "message": "The goal does not say which evidence to check, so all "
+                                    "supplied evidence was checked."})
     if document_id and audio_id and document_id == audio_id:
         # one item cannot be both; the kind check below rejects the wrong one
         warnings.append({"code": "duplicate_input",
@@ -357,6 +372,7 @@ def coordinate(
                   "partial" if results else "failed" if plan else "nothing_to_do",
         "stop_reason": stop_reason,
         "plan": plan,
+        "routing": routing,
         "needs_human_review": True,
         "verdicts": [module_verdict(result) for result in results],
         "findings": findings,

@@ -10,7 +10,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.941,
+     "seconds": 1.764,
      "ran": [
       "mirage"
      ],
@@ -37,7 +37,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.763,
+     "seconds": 1.246,
      "ran": [
       "mirage"
      ],
@@ -62,8 +62,8 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_4a2f89d27c18",
-       "seconds": 1.757,
+       "run_id": "run_80c2fa1a068a",
+       "seconds": 1.242,
        "findings": 1
       }
      ],
@@ -77,7 +77,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.971,
+     "seconds": 1.533,
      "ran": [
       "mirage"
      ],
@@ -104,7 +104,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.717,
+     "seconds": 1.517,
      "ran": [
       "mirage"
      ],
@@ -129,8 +129,8 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_883df7ea94f4",
-       "seconds": 1.715,
+       "run_id": "run_a28c5025bd56",
+       "seconds": 1.515,
        "findings": 2
       }
      ],
@@ -144,7 +144,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.142,
+     "seconds": 1.084,
      "ran": [
       "mirage"
      ],
@@ -171,7 +171,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.145,
+     "seconds": 1.066,
      "ran": [
       "mirage"
      ],
@@ -196,8 +196,8 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_7ed4994f6ce1",
-       "seconds": 1.137,
+       "run_id": "run_40a0c99169cc",
+       "seconds": 1.061,
        "findings": 1
       }
      ],
@@ -211,7 +211,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.101,
+     "seconds": 0.933,
      "ran": [
       "mirage"
      ],
@@ -238,7 +238,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.967,
+     "seconds": 0.899,
      "ran": [
       "mirage"
      ],
@@ -263,8 +263,8 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_a1728c4fb438",
-       "seconds": 0.966,
+       "run_id": "run_3178a0db61e4",
+       "seconds": 0.898,
        "findings": 1
       }
      ],
@@ -278,7 +278,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.047,
+     "seconds": 0.883,
      "ran": [
       "mirage"
      ],
@@ -305,7 +305,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.111,
+     "seconds": 0.887,
      "ran": [
       "mirage"
      ],
@@ -330,8 +330,8 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_148a29510d59",
-       "seconds": 1.108,
+       "run_id": "run_2243435ce9f2",
+       "seconds": 0.884,
        "findings": 1
       }
      ],
@@ -345,7 +345,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.18,
+     "seconds": 1.449,
      "ran": [
       "mirage"
      ],
@@ -372,7 +372,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.153,
+     "seconds": 0.986,
      "ran": [
       "mirage"
      ],
@@ -397,8 +397,8 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_0dad1f8a0a70",
-       "seconds": 1.15,
+       "run_id": "run_d50e163fd4f8",
+       "seconds": 0.983,
        "findings": 1
       }
      ],
@@ -412,7 +412,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 6.734,
+     "seconds": 6.105,
      "ran": [
       "mirage",
       "echo"
@@ -445,7 +445,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.642,
+     "seconds": 1.4,
      "ran": [
       "mirage"
      ],
@@ -471,8 +471,8 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_501a813d03cf",
-       "seconds": 1.637,
+       "run_id": "run_d08b198baa54",
+       "seconds": 1.396,
        "findings": 1
       }
      ],
@@ -486,7 +486,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.623,
+     "seconds": 1.008,
      "ran": [
       "mirage",
       "blackbox"
@@ -520,7 +520,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.107,
+     "seconds": 0.879,
      "ran": [
       "mirage"
      ],
@@ -546,8 +546,8 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_fa5251c3f714",
-       "seconds": 1.103,
+       "run_id": "run_3b52f1bcd5aa",
+       "seconds": 0.877,
        "findings": 2
       }
      ],
@@ -561,7 +561,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.45,
+     "seconds": 1.361,
      "ran": [
       "mirage"
      ],
@@ -588,24 +588,37 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.001,
-     "ran": [],
-     "tool_calls": 0,
-     "flagged": false,
-     "verdicts": [],
-     "routing_exact": false,
-     "unrequested_calls": 0,
-     "missed_modules": [
+     "seconds": 1.365,
+     "ran": [
       "mirage"
      ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "mirage",
+       "verdict": "suspicious"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
      "completeness": {
       "findings_linked_to_stored_evidence": true,
       "human_review_flag": true,
       "step_trace_for_every_run": true,
       "limitations_shown": true
      },
-     "trace": [],
-     "stop_reason": "nothing_to_do"
+     "trace": [
+      {
+       "module": "mirage",
+       "status": "completed",
+       "run_id": "run_0ac0ffd0841c",
+       "seconds": 1.361,
+       "findings": 1
+      }
+     ],
+     "stop_reason": "completed"
     }
    },
    {
@@ -615,7 +628,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.685,
+     "seconds": 1.587,
      "ran": [
       "mirage"
      ],
@@ -642,24 +655,37 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.001,
-     "ran": [],
-     "tool_calls": 0,
-     "flagged": false,
-     "verdicts": [],
-     "routing_exact": false,
-     "unrequested_calls": 0,
-     "missed_modules": [
+     "seconds": 1.628,
+     "ran": [
       "mirage"
      ],
+     "tool_calls": 1,
+     "flagged": false,
+     "verdicts": [
+      {
+       "module": "mirage",
+       "verdict": "benign"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
      "completeness": {
       "findings_linked_to_stored_evidence": true,
       "human_review_flag": true,
       "step_trace_for_every_run": true,
       "limitations_shown": true
      },
-     "trace": [],
-     "stop_reason": "nothing_to_do"
+     "trace": [
+      {
+       "module": "mirage",
+       "status": "completed",
+       "run_id": "run_def3694eed2f",
+       "seconds": 1.625,
+       "findings": 1
+      }
+     ],
+     "stop_reason": "completed"
     }
    },
    {
@@ -669,7 +695,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.566,
+     "seconds": 1.059,
      "ran": [
       "echo"
      ],
@@ -696,7 +722,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.905,
+     "seconds": 1.187,
      "ran": [
       "echo"
      ],
@@ -721,8 +747,8 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_b82a0e6e5be3",
-       "seconds": 1.901,
+       "run_id": "run_039458f25647",
+       "seconds": 1.184,
        "findings": 3
       }
      ],
@@ -736,7 +762,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 4.302,
+     "seconds": 3.181,
      "ran": [
       "echo"
      ],
@@ -763,7 +789,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 3.384,
+     "seconds": 3.453,
      "ran": [
       "echo"
      ],
@@ -788,8 +814,8 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_e9b385ff769c",
-       "seconds": 3.381,
+       "run_id": "run_826f02c7adb3",
+       "seconds": 3.45,
        "findings": 1
       }
      ],
@@ -803,7 +829,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.249,
+     "seconds": 1.36,
      "ran": [
       "echo"
      ],
@@ -830,7 +856,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.335,
+     "seconds": 1.324,
      "ran": [
       "echo"
      ],
@@ -855,8 +881,8 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_58b7b88399f7",
-       "seconds": 1.331,
+       "run_id": "run_76d6fec691fa",
+       "seconds": 1.32,
        "findings": 2
       }
      ],
@@ -870,7 +896,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 8.285,
+     "seconds": 7.233,
      "ran": [
       "echo"
      ],
@@ -897,7 +923,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 6.482,
+     "seconds": 7.041,
      "ran": [
       "echo"
      ],
@@ -922,8 +948,8 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_830f5d93523b",
-       "seconds": 6.477,
+       "run_id": "run_60c77ec77405",
+       "seconds": 7.038,
        "findings": 1
       }
      ],
@@ -937,7 +963,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.097,
+     "seconds": 1.477,
      "ran": [
       "echo"
      ],
@@ -964,7 +990,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.146,
+     "seconds": 1.12,
      "ran": [
       "echo"
      ],
@@ -989,8 +1015,8 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_ee08b5ceb406",
-       "seconds": 1.143,
+       "run_id": "run_df1432c8fef4",
+       "seconds": 1.116,
        "findings": 2
       }
      ],
@@ -1004,7 +1030,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.082,
+     "seconds": 1.165,
      "ran": [
       "echo"
      ],
@@ -1031,7 +1057,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.07,
+     "seconds": 1.17,
      "ran": [
       "echo"
      ],
@@ -1056,8 +1082,8 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_10c852731912",
-       "seconds": 1.066,
+       "run_id": "run_a0a500e1ac3a",
+       "seconds": 1.167,
        "findings": 1
       }
      ],
@@ -1071,7 +1097,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 2.495,
+     "seconds": 2.627,
      "ran": [
       "mirage",
       "echo"
@@ -1104,7 +1130,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.186,
+     "seconds": 1.213,
      "ran": [
       "echo"
      ],
@@ -1130,8 +1156,8 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_1954b8e90f57",
-       "seconds": 1.183,
+       "run_id": "run_07062196a4e8",
+       "seconds": 1.21,
        "findings": 3
       }
      ],
@@ -1145,7 +1171,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.068,
+     "seconds": 1.111,
      "ran": [
       "echo",
       "blackbox"
@@ -1179,7 +1205,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.093,
+     "seconds": 1.111,
      "ran": [
       "echo"
      ],
@@ -1205,8 +1231,8 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_a84ea0de12a5",
-       "seconds": 1.09,
+       "run_id": "run_fb3cdddb8847",
+       "seconds": 1.108,
        "findings": 1
       }
      ],
@@ -1220,7 +1246,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.193,
+     "seconds": 1.235,
      "ran": [
       "echo"
      ],
@@ -1247,24 +1273,37 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.001,
-     "ran": [],
-     "tool_calls": 0,
-     "flagged": false,
-     "verdicts": [],
-     "routing_exact": false,
-     "unrequested_calls": 0,
-     "missed_modules": [
+     "seconds": 1.226,
+     "ran": [
       "echo"
      ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "echo",
+       "verdict": "suspicious"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
      "completeness": {
       "findings_linked_to_stored_evidence": true,
       "human_review_flag": true,
       "step_trace_for_every_run": true,
       "limitations_shown": true
      },
-     "trace": [],
-     "stop_reason": "nothing_to_do"
+     "trace": [
+      {
+       "module": "echo",
+       "status": "completed",
+       "run_id": "run_e46587a2eb92",
+       "seconds": 1.223,
+       "findings": 3
+      }
+     ],
+     "stop_reason": "completed"
     }
    },
    {
@@ -1274,7 +1313,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.051,
+     "seconds": 1.149,
      "ran": [
       "echo"
      ],
@@ -1301,24 +1340,37 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.001,
-     "ran": [],
-     "tool_calls": 0,
-     "flagged": false,
-     "verdicts": [],
-     "routing_exact": false,
-     "unrequested_calls": 0,
-     "missed_modules": [
+     "seconds": 1.067,
+     "ran": [
       "echo"
      ],
+     "tool_calls": 1,
+     "flagged": false,
+     "verdicts": [
+      {
+       "module": "echo",
+       "verdict": "benign"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
      "completeness": {
       "findings_linked_to_stored_evidence": true,
       "human_review_flag": true,
       "step_trace_for_every_run": true,
       "limitations_shown": true
      },
-     "trace": [],
-     "stop_reason": "nothing_to_do"
+     "trace": [
+      {
+       "module": "echo",
+       "status": "completed",
+       "run_id": "run_6c7849cf7a8c",
+       "seconds": 1.064,
+       "findings": 1
+      }
+     ],
+     "stop_reason": "completed"
     }
    },
    {
@@ -1328,7 +1380,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 0.005,
+     "seconds": 0.007,
      "ran": [
       "blackbox"
      ],
@@ -1382,7 +1434,7 @@
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_dfb51a52eab0",
+       "run_id": "run_7b6c856d4544",
        "seconds": 0.003,
        "findings": 2
       }
@@ -1397,6 +1449,34 @@
     "baseline": {
      "status": "ok",
      "error": "",
+     "seconds": 0.004,
+     "ran": [
+      "blackbox"
+     ],
+     "tool_calls": 1,
+     "flagged": false,
+     "verdicts": [
+      {
+       "module": "blackbox",
+       "verdict": "no_brand_link",
+       "brand": null
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": false,
+      "limitations_shown": false
+     },
+     "trace": null,
+     "stop_reason": null
+    },
+    "coordinator": {
+     "status": "ok",
+     "error": "",
      "seconds": 0.005,
      "ran": [
       "blackbox"
@@ -1416,34 +1496,6 @@
      "completeness": {
       "findings_linked_to_stored_evidence": true,
       "human_review_flag": true,
-      "step_trace_for_every_run": false,
-      "limitations_shown": false
-     },
-     "trace": null,
-     "stop_reason": null
-    },
-    "coordinator": {
-     "status": "ok",
-     "error": "",
-     "seconds": 0.004,
-     "ran": [
-      "blackbox"
-     ],
-     "tool_calls": 1,
-     "flagged": false,
-     "verdicts": [
-      {
-       "module": "blackbox",
-       "verdict": "no_brand_link",
-       "brand": null
-      }
-     ],
-     "routing_exact": true,
-     "unrequested_calls": 0,
-     "missed_modules": [],
-     "completeness": {
-      "findings_linked_to_stored_evidence": true,
-      "human_review_flag": true,
       "step_trace_for_every_run": true,
       "limitations_shown": true
      },
@@ -1451,8 +1503,8 @@
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_da3e6d70cc4b",
-       "seconds": 0.003,
+       "run_id": "run_950e18ff8d8e",
+       "seconds": 0.004,
        "findings": 1
       }
      ],
@@ -1466,7 +1518,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 0.006,
+     "seconds": 0.005,
      "ran": [
       "blackbox"
      ],
@@ -1520,7 +1572,7 @@
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_c366bce2f761",
+       "run_id": "run_7d855b258194",
        "seconds": 0.003,
        "findings": 2
       }
@@ -1535,7 +1587,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 0.006,
+     "seconds": 0.004,
      "ran": [
       "blackbox"
      ],
@@ -1563,7 +1615,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.004,
+     "seconds": 0.003,
      "ran": [
       "blackbox"
      ],
@@ -1589,7 +1641,7 @@
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_68adc0c98934",
+       "run_id": "run_576812ab0935",
        "seconds": 0.002,
        "findings": 1
       }
@@ -1604,7 +1656,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 0.005,
+     "seconds": 0.004,
      "ran": [
       "blackbox"
      ],
@@ -1658,7 +1710,7 @@
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_17f019cd0055",
+       "run_id": "run_c0527fe628b4",
        "seconds": 0.003,
        "findings": 2
       }
@@ -1701,7 +1753,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.004,
+     "seconds": 0.003,
      "ran": [
       "blackbox"
      ],
@@ -1727,7 +1779,7 @@
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_b44c89be9b8d",
+       "run_id": "run_89a0fd748228",
        "seconds": 0.002,
        "findings": 1
       }
@@ -1742,7 +1794,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.333,
+     "seconds": 1.174,
      "ran": [
       "mirage",
       "blackbox"
@@ -1776,7 +1828,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.004,
+     "seconds": 0.003,
      "ran": [
       "blackbox"
      ],
@@ -1803,8 +1855,8 @@
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_842dd7bd890c",
-       "seconds": 0.003,
+       "run_id": "run_76f299d3772a",
+       "seconds": 0.002,
        "findings": 3
       }
      ],
@@ -1818,7 +1870,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.333,
+     "seconds": 0.99,
      "ran": [
       "echo",
       "blackbox"
@@ -1852,7 +1904,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.005,
+     "seconds": 0.004,
      "ran": [
       "blackbox"
      ],
@@ -1879,8 +1931,8 @@
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_a744b22b3321",
-       "seconds": 0.004,
+       "run_id": "run_f2f7faec622a",
+       "seconds": 0.003,
        "findings": 1
       }
      ],
@@ -1894,7 +1946,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 0.009,
+     "seconds": 0.007,
      "ran": [
       "blackbox"
      ],
@@ -1922,24 +1974,38 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.002,
-     "ran": [],
-     "tool_calls": 0,
-     "flagged": false,
-     "verdicts": [],
-     "routing_exact": false,
-     "unrequested_calls": 0,
-     "missed_modules": [
+     "seconds": 0.004,
+     "ran": [
       "blackbox"
      ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "blackbox",
+       "verdict": "likely_fake",
+       "brand": "sbi"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
      "completeness": {
       "findings_linked_to_stored_evidence": true,
       "human_review_flag": true,
       "step_trace_for_every_run": true,
       "limitations_shown": true
      },
-     "trace": [],
-     "stop_reason": "nothing_to_do"
+     "trace": [
+      {
+       "module": "blackbox",
+       "status": "completed",
+       "run_id": "run_7d907a34bd6b",
+       "seconds": 0.003,
+       "findings": 2
+      }
+     ],
+     "stop_reason": "completed"
     }
    },
    {
@@ -1949,7 +2015,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 0.005,
+     "seconds": 0.004,
      "ran": [
       "blackbox"
      ],
@@ -1977,24 +2043,38 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.002,
-     "ran": [],
-     "tool_calls": 0,
-     "flagged": false,
-     "verdicts": [],
-     "routing_exact": false,
-     "unrequested_calls": 0,
-     "missed_modules": [
+     "seconds": 0.004,
+     "ran": [
       "blackbox"
      ],
+     "tool_calls": 1,
+     "flagged": false,
+     "verdicts": [
+      {
+       "module": "blackbox",
+       "verdict": "no_brand_link",
+       "brand": null
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
      "completeness": {
       "findings_linked_to_stored_evidence": true,
       "human_review_flag": true,
       "step_trace_for_every_run": true,
       "limitations_shown": true
      },
-     "trace": [],
-     "stop_reason": "nothing_to_do"
+     "trace": [
+      {
+       "module": "blackbox",
+       "status": "completed",
+       "run_id": "run_65467d558687",
+       "seconds": 0.003,
+       "findings": 1
+      }
+     ],
+     "stop_reason": "completed"
     }
    },
    {
@@ -2004,7 +2084,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 3.537,
+     "seconds": 2.985,
      "ran": [
       "mirage",
       "echo"
@@ -2036,7 +2116,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 2.917,
+     "seconds": 3.027,
      "ran": [
       "mirage",
       "echo"
@@ -2066,15 +2146,15 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_da3b90cabb95",
-       "seconds": 0.95,
+       "run_id": "run_b3b932087fb9",
+       "seconds": 0.946,
        "findings": 1
       },
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_cd4e8b9af959",
-       "seconds": 1.959,
+       "run_id": "run_faacb7168491",
+       "seconds": 2.076,
        "findings": 2
       }
      ],
@@ -2088,7 +2168,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 2.709,
+     "seconds": 2.666,
      "ran": [
       "mirage",
       "echo"
@@ -2120,7 +2200,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 2.624,
+     "seconds": 2.684,
      "ran": [
       "mirage",
       "echo"
@@ -2150,15 +2230,15 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_4ff0cc161e43",
-       "seconds": 1.749,
+       "run_id": "run_9de311af614e",
+       "seconds": 1.765,
        "findings": 1
       },
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_8bf8831cc38d",
-       "seconds": 0.869,
+       "run_id": "run_adaff3efcdbe",
+       "seconds": 0.913,
        "findings": 1
       }
      ],
@@ -2172,7 +2252,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.663,
+     "seconds": 1.721,
      "ran": [
       "mirage",
       "echo"
@@ -2204,7 +2284,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.691,
+     "seconds": 1.696,
      "ran": [
       "mirage",
       "echo"
@@ -2234,15 +2314,15 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_412ea526e966",
-       "seconds": 0.74,
+       "run_id": "run_3112434e5a51",
+       "seconds": 0.734,
        "findings": 1
       },
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_6e2bd9d31e36",
-       "seconds": 0.947,
+       "run_id": "run_398275abd5d4",
+       "seconds": 0.957,
        "findings": 1
       }
      ],
@@ -2256,7 +2336,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 2.378,
+     "seconds": 2.52,
      "ran": [
       "mirage",
       "echo"
@@ -2288,7 +2368,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 2.345,
+     "seconds": 2.595,
      "ran": [
       "mirage",
       "echo"
@@ -2318,15 +2398,15 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_a722966336a5",
-       "seconds": 1.429,
+       "run_id": "run_b6b120f061c1",
+       "seconds": 1.512,
        "findings": 2
       },
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_f30df569f76d",
-       "seconds": 0.91,
+       "run_id": "run_a79bbe34bfdb",
+       "seconds": 1.077,
        "findings": 1
       }
      ],
@@ -2340,7 +2420,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.313,
+     "seconds": 1.294,
      "ran": [
       "mirage"
      ],
@@ -2368,7 +2448,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.278,
+     "seconds": 1.226,
      "ran": [
       "mirage"
      ],
@@ -2394,8 +2474,8 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_093463708d09",
-       "seconds": 1.276,
+       "run_id": "run_4b8783b9634a",
+       "seconds": 1.222,
        "findings": 1
       }
      ],
@@ -2409,7 +2489,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 0.877,
+     "seconds": 0.884,
      "ran": [
       "echo",
       "blackbox"
@@ -2442,7 +2522,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.988,
+     "seconds": 1.036,
      "ran": [
       "echo",
       "blackbox"
@@ -2473,14 +2553,14 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_ffca34fb6a31",
-       "seconds": 0.982,
+       "run_id": "run_b211a7bd81a8",
+       "seconds": 1.03,
        "findings": 1
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_68ae0c5a3e4d",
+       "run_id": "run_779ec6be4def",
        "seconds": 0.003,
        "findings": 1
       }
@@ -2495,7 +2575,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.045,
+     "seconds": 1.07,
      "ran": [
       "echo",
       "blackbox"
@@ -2528,7 +2608,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.066,
+     "seconds": 1.119,
      "ran": [
       "echo",
       "blackbox"
@@ -2559,15 +2639,15 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_f6676b432cdd",
-       "seconds": 1.054,
+       "run_id": "run_becc617b9834",
+       "seconds": 1.111,
        "findings": 1
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_471d6e6f14bb",
-       "seconds": 0.008,
+       "run_id": "run_ce30229a9cbb",
+       "seconds": 0.004,
        "findings": 4
       }
      ],
@@ -2581,7 +2661,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.08,
+     "seconds": 1.258,
      "ran": [
       "echo",
       "blackbox"
@@ -2614,7 +2694,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.058,
+     "seconds": 1.289,
      "ran": [
       "echo",
       "blackbox"
@@ -2645,15 +2725,15 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_458b28572257",
-       "seconds": 1.052,
+       "run_id": "run_1a62311c4c89",
+       "seconds": 1.28,
        "findings": 1
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_02b8202be17d",
-       "seconds": 0.003,
+       "run_id": "run_d4326ee1e827",
+       "seconds": 0.004,
        "findings": 1
       }
      ],
@@ -2667,7 +2747,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 2.254,
+     "seconds": 2.209,
      "ran": [
       "echo",
       "blackbox"
@@ -2700,7 +2780,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 2.237,
+     "seconds": 2.179,
      "ran": [
       "echo",
       "blackbox"
@@ -2731,15 +2811,15 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_5aea6501f525",
-       "seconds": 2.228,
+       "run_id": "run_3dfa47e3ab09",
+       "seconds": 2.169,
        "findings": 2
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_1eed408373c5",
-       "seconds": 0.003,
+       "run_id": "run_27ab001a8cef",
+       "seconds": 0.004,
        "findings": 1
       }
      ],
@@ -2753,7 +2833,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.054,
+     "seconds": 1.177,
      "ran": [
       "echo"
      ],
@@ -2781,7 +2861,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.071,
+     "seconds": 1.085,
      "ran": [
       "echo"
      ],
@@ -2807,8 +2887,8 @@
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_51eed0b000c1",
-       "seconds": 1.068,
+       "run_id": "run_6035ffa6c562",
+       "seconds": 1.083,
        "findings": 1
       }
      ],
@@ -2822,7 +2902,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.126,
+     "seconds": 1.154,
      "ran": [
       "mirage",
       "blackbox"
@@ -2855,7 +2935,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.034,
+     "seconds": 1.02,
      "ran": [
       "mirage",
       "blackbox"
@@ -2886,15 +2966,15 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_75a7dc57e9d2",
-       "seconds": 1.026,
+       "run_id": "run_f0e31f3b68e1",
+       "seconds": 1.012,
        "findings": 2
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_2702a9cc07f8",
-       "seconds": 0.005,
+       "run_id": "run_4720913c3c16",
+       "seconds": 0.004,
        "findings": 3
       }
      ],
@@ -2908,7 +2988,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 2.184,
+     "seconds": 1.384,
      "ran": [
       "mirage",
       "blackbox"
@@ -2941,7 +3021,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.275,
+     "seconds": 1.328,
      "ran": [
       "mirage",
       "blackbox"
@@ -2972,14 +3052,14 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_b660b62e9304",
-       "seconds": 1.268,
+       "run_id": "run_ce62925ada30",
+       "seconds": 1.322,
        "findings": 2
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_042f33e6c620",
+       "run_id": "run_33e80fd1f000",
        "seconds": 0.004,
        "findings": 1
       }
@@ -2994,7 +3074,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 0.781,
+     "seconds": 0.774,
      "ran": [
       "mirage",
       "blackbox"
@@ -3027,7 +3107,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 0.754,
+     "seconds": 0.789,
      "ran": [
       "mirage",
       "blackbox"
@@ -3058,15 +3138,15 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_11b4c718ba24",
-       "seconds": 0.749,
+       "run_id": "run_49012ae84d91",
+       "seconds": 0.783,
        "findings": 1
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_d91285736e82",
-       "seconds": 0.003,
+       "run_id": "run_78dedb895f39",
+       "seconds": 0.004,
        "findings": 2
       }
      ],
@@ -3080,7 +3160,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.215,
+     "seconds": 1.276,
      "ran": [
       "mirage",
       "blackbox"
@@ -3113,7 +3193,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.246,
+     "seconds": 1.229,
      "ran": [
       "mirage",
       "blackbox"
@@ -3144,15 +3224,15 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_31a889a09179",
-       "seconds": 1.238,
+       "run_id": "run_48b6c0faee5d",
+       "seconds": 1.22,
        "findings": 1
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_3d8473de6861",
-       "seconds": 0.004,
+       "run_id": "run_5fedf2ad57b3",
+       "seconds": 0.005,
        "findings": 1
       }
      ],
@@ -3166,7 +3246,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.625,
+     "seconds": 1.537,
      "ran": [
       "mirage"
      ],
@@ -3194,7 +3274,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.592,
+     "seconds": 1.552,
      "ran": [
       "mirage"
      ],
@@ -3220,8 +3300,8 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_7cb9a64e6e5b",
-       "seconds": 1.586,
+       "run_id": "run_37e0b5fdd303",
+       "seconds": 1.545,
        "findings": 1
       }
      ],
@@ -3235,7 +3315,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 2.179,
+     "seconds": 2.586,
      "ran": [
       "mirage",
       "echo",
@@ -3273,7 +3353,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 2.309,
+     "seconds": 2.357,
      "ran": [
       "mirage",
       "echo",
@@ -3309,22 +3389,22 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_1c63fad5230e",
-       "seconds": 1.331,
+       "run_id": "run_e7e9e5c80471",
+       "seconds": 1.327,
        "findings": 1
       },
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_032837d74232",
-       "seconds": 0.97,
+       "run_id": "run_286dc30d1bdb",
+       "seconds": 1.022,
        "findings": 1
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_5cc6320409bf",
-       "seconds": 0.003,
+       "run_id": "run_70063df4b3be",
+       "seconds": 0.004,
        "findings": 1
       }
      ],
@@ -3338,7 +3418,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 1.833,
+     "seconds": 1.878,
      "ran": [
       "mirage",
       "echo",
@@ -3376,7 +3456,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 1.82,
+     "seconds": 2.03,
      "ran": [
       "mirage",
       "echo",
@@ -3412,21 +3492,21 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_146990fd9345",
-       "seconds": 0.64,
+       "run_id": "run_4e1e1739a106",
+       "seconds": 0.642,
        "findings": 1
       },
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_16bca60497b3",
-       "seconds": 1.172,
+       "run_id": "run_734991d2909d",
+       "seconds": 1.38,
        "findings": 2
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_c2061580a916",
+       "run_id": "run_732e62c41e1a",
        "seconds": 0.003,
        "findings": 1
       }
@@ -3441,7 +3521,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 2.401,
+     "seconds": 2.444,
      "ran": [
       "mirage",
       "echo",
@@ -3479,7 +3559,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 2.393,
+     "seconds": 2.365,
      "ran": [
       "mirage",
       "echo",
@@ -3515,21 +3595,21 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_d91cd8c5b97e",
-       "seconds": 1.512,
+       "run_id": "run_3063a09788a6",
+       "seconds": 1.435,
        "findings": 2
       },
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_812a55dbbfbc",
-       "seconds": 0.871,
+       "run_id": "run_27cec94bac7d",
+       "seconds": 0.922,
        "findings": 1
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_9f7fed16c355",
+       "run_id": "run_5acb143f5195",
        "seconds": 0.003,
        "findings": 1
       }
@@ -3544,7 +3624,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 2.1,
+     "seconds": 2.192,
      "ran": [
       "mirage",
       "echo",
@@ -3582,7 +3662,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 2.121,
+     "seconds": 2.139,
      "ran": [
       "mirage",
       "echo",
@@ -3618,21 +3698,21 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_81408e4ad6d1",
-       "seconds": 1.077,
+       "run_id": "run_1a08ee05657e",
+       "seconds": 1.046,
        "findings": 2
       },
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_8fa86edd64d9",
-       "seconds": 1.036,
+       "run_id": "run_960f14e10a5f",
+       "seconds": 1.085,
        "findings": 3
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_60f51805b510",
+       "run_id": "run_e876d3948952",
        "seconds": 0.003,
        "findings": 1
       }
@@ -3647,7 +3727,7 @@
     "baseline": {
      "status": "ok",
      "error": "",
-     "seconds": 2.514,
+     "seconds": 2.388,
      "ran": [
       "mirage",
       "echo",
@@ -3685,7 +3765,7 @@
     "coordinator": {
      "status": "ok",
      "error": "",
-     "seconds": 2.399,
+     "seconds": 2.431,
      "ran": [
       "mirage",
       "echo",
@@ -3721,23 +3801,632 @@
       {
        "module": "mirage",
        "status": "completed",
-       "run_id": "run_c4df40955ee4",
-       "seconds": 1.468,
+       "run_id": "run_663fccef8cbf",
+       "seconds": 1.458,
        "findings": 1
       },
       {
        "module": "echo",
        "status": "completed",
-       "run_id": "run_7506c15e3107",
-       "seconds": 0.923,
+       "run_id": "run_a27544fd405f",
+       "seconds": 0.964,
        "findings": 1
       },
       {
        "module": "blackbox",
        "status": "completed",
-       "run_id": "run_6a7f57ede001",
+       "run_id": "run_0459dd171bf5",
        "seconds": 0.003,
        "findings": 1
+      }
+     ],
+     "stop_reason": "completed"
+    }
+   },
+   {
+    "id": "heldout_mirage_2",
+    "label": "fraud",
+    "goal_style": "paraphrase_heldout",
+    "baseline": {
+     "status": "ok",
+     "error": "",
+     "seconds": 1.446,
+     "ran": [
+      "mirage"
+     ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "mirage",
+       "verdict": "suspicious"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": false,
+      "limitations_shown": false
+     },
+     "trace": null,
+     "stop_reason": null
+    },
+    "coordinator": {
+     "status": "ok",
+     "error": "",
+     "seconds": 1.376,
+     "ran": [
+      "mirage"
+     ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "mirage",
+       "verdict": "suspicious"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": true,
+      "limitations_shown": true
+     },
+     "trace": [
+      {
+       "module": "mirage",
+       "status": "completed",
+       "run_id": "run_243abce8705d",
+       "seconds": 1.371,
+       "findings": 2
+      }
+     ],
+     "stop_reason": "completed"
+    }
+   },
+   {
+    "id": "heldout_echo_2",
+    "label": "fraud",
+    "goal_style": "paraphrase_heldout",
+    "baseline": {
+     "status": "ok",
+     "error": "",
+     "seconds": 1.073,
+     "ran": [
+      "echo"
+     ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "echo",
+       "verdict": "suspicious"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": false,
+      "limitations_shown": false
+     },
+     "trace": null,
+     "stop_reason": null
+    },
+    "coordinator": {
+     "status": "ok",
+     "error": "",
+     "seconds": 1.141,
+     "ran": [
+      "echo"
+     ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "echo",
+       "verdict": "suspicious"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": true,
+      "limitations_shown": true
+     },
+     "trace": [
+      {
+       "module": "echo",
+       "status": "completed",
+       "run_id": "run_84d541879e31",
+       "seconds": 1.138,
+       "findings": 2
+      }
+     ],
+     "stop_reason": "completed"
+    }
+   },
+   {
+    "id": "heldout_blackbox_0",
+    "label": "genuine",
+    "goal_style": "paraphrase_heldout",
+    "baseline": {
+     "status": "ok",
+     "error": "",
+     "seconds": 0.006,
+     "ran": [
+      "blackbox"
+     ],
+     "tool_calls": 1,
+     "flagged": false,
+     "verdicts": [
+      {
+       "module": "blackbox",
+       "verdict": "no_brand_link",
+       "brand": null
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": false,
+      "limitations_shown": false
+     },
+     "trace": null,
+     "stop_reason": null
+    },
+    "coordinator": {
+     "status": "ok",
+     "error": "",
+     "seconds": 0.004,
+     "ran": [
+      "blackbox"
+     ],
+     "tool_calls": 1,
+     "flagged": false,
+     "verdicts": [
+      {
+       "module": "blackbox",
+       "verdict": "no_brand_link",
+       "brand": null
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": true,
+      "limitations_shown": true
+     },
+     "trace": [
+      {
+       "module": "blackbox",
+       "status": "completed",
+       "run_id": "run_026c9b39505a",
+       "seconds": 0.003,
+       "findings": 1
+      }
+     ],
+     "stop_reason": "completed"
+    }
+   },
+   {
+    "id": "heldout_blackbox_1",
+    "label": "fraud",
+    "goal_style": "paraphrase_heldout",
+    "baseline": {
+     "status": "ok",
+     "error": "",
+     "seconds": 0.008,
+     "ran": [
+      "blackbox"
+     ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "blackbox",
+       "verdict": "likely_fake",
+       "brand": "amazon"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": false,
+      "limitations_shown": false
+     },
+     "trace": null,
+     "stop_reason": null
+    },
+    "coordinator": {
+     "status": "ok",
+     "error": "",
+     "seconds": 0.004,
+     "ran": [
+      "blackbox"
+     ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "blackbox",
+       "verdict": "likely_fake",
+       "brand": "amazon"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": true,
+      "limitations_shown": true
+     },
+     "trace": [
+      {
+       "module": "blackbox",
+       "status": "completed",
+       "run_id": "run_f91f8e9d0865",
+       "seconds": 0.003,
+       "findings": 4
+      }
+     ],
+     "stop_reason": "completed"
+    }
+   },
+   {
+    "id": "heldout_mirage_1",
+    "label": "genuine",
+    "goal_style": "paraphrase_heldout",
+    "baseline": {
+     "status": "ok",
+     "error": "",
+     "seconds": 1.61,
+     "ran": [
+      "mirage"
+     ],
+     "tool_calls": 1,
+     "flagged": false,
+     "verdicts": [
+      {
+       "module": "mirage",
+       "verdict": "benign"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": false,
+      "limitations_shown": false
+     },
+     "trace": null,
+     "stop_reason": null
+    },
+    "coordinator": {
+     "status": "ok",
+     "error": "",
+     "seconds": 1.534,
+     "ran": [
+      "mirage"
+     ],
+     "tool_calls": 1,
+     "flagged": false,
+     "verdicts": [
+      {
+       "module": "mirage",
+       "verdict": "benign"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": true,
+      "limitations_shown": true
+     },
+     "trace": [
+      {
+       "module": "mirage",
+       "status": "completed",
+       "run_id": "run_1f72147bc361",
+       "seconds": 1.526,
+       "findings": 1
+      }
+     ],
+     "stop_reason": "completed"
+    }
+   },
+   {
+    "id": "heldout_mirage_0",
+    "label": "fraud",
+    "goal_style": "paraphrase_heldout",
+    "baseline": {
+     "status": "ok",
+     "error": "",
+     "seconds": 1.293,
+     "ran": [
+      "mirage"
+     ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "mirage",
+       "verdict": "suspicious"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": false,
+      "limitations_shown": false
+     },
+     "trace": null,
+     "stop_reason": null
+    },
+    "coordinator": {
+     "status": "ok",
+     "error": "",
+     "seconds": 1.076,
+     "ran": [
+      "mirage"
+     ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "mirage",
+       "verdict": "suspicious"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": true,
+      "limitations_shown": true
+     },
+     "trace": [
+      {
+       "module": "mirage",
+       "status": "completed",
+       "run_id": "run_8c4f0db353d5",
+       "seconds": 1.071,
+       "findings": 1
+      }
+     ],
+     "stop_reason": "completed"
+    }
+   },
+   {
+    "id": "heldout_blackbox_2",
+    "label": "genuine",
+    "goal_style": "paraphrase_heldout",
+    "baseline": {
+     "status": "ok",
+     "error": "",
+     "seconds": 0.004,
+     "ran": [
+      "blackbox"
+     ],
+     "tool_calls": 1,
+     "flagged": false,
+     "verdicts": [
+      {
+       "module": "blackbox",
+       "verdict": "no_brand_link",
+       "brand": null
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": false,
+      "limitations_shown": false
+     },
+     "trace": null,
+     "stop_reason": null
+    },
+    "coordinator": {
+     "status": "ok",
+     "error": "",
+     "seconds": 0.003,
+     "ran": [
+      "blackbox"
+     ],
+     "tool_calls": 1,
+     "flagged": false,
+     "verdicts": [
+      {
+       "module": "blackbox",
+       "verdict": "no_brand_link",
+       "brand": null
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": true,
+      "limitations_shown": true
+     },
+     "trace": [
+      {
+       "module": "blackbox",
+       "status": "completed",
+       "run_id": "run_7f77a8a9fadc",
+       "seconds": 0.002,
+       "findings": 1
+      }
+     ],
+     "stop_reason": "completed"
+    }
+   },
+   {
+    "id": "heldout_echo_1",
+    "label": "genuine",
+    "goal_style": "paraphrase_heldout",
+    "baseline": {
+     "status": "ok",
+     "error": "",
+     "seconds": 0.984,
+     "ran": [
+      "echo"
+     ],
+     "tool_calls": 1,
+     "flagged": false,
+     "verdicts": [
+      {
+       "module": "echo",
+       "verdict": "benign"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": false,
+      "limitations_shown": false
+     },
+     "trace": null,
+     "stop_reason": null
+    },
+    "coordinator": {
+     "status": "ok",
+     "error": "",
+     "seconds": 1.063,
+     "ran": [
+      "echo"
+     ],
+     "tool_calls": 1,
+     "flagged": false,
+     "verdicts": [
+      {
+       "module": "echo",
+       "verdict": "benign"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": true,
+      "limitations_shown": true
+     },
+     "trace": [
+      {
+       "module": "echo",
+       "status": "completed",
+       "run_id": "run_31f9e82fe3b9",
+       "seconds": 1.059,
+       "findings": 1
+      }
+     ],
+     "stop_reason": "completed"
+    }
+   },
+   {
+    "id": "heldout_echo_0",
+    "label": "fraud",
+    "goal_style": "paraphrase_heldout",
+    "baseline": {
+     "status": "ok",
+     "error": "",
+     "seconds": 1.268,
+     "ran": [
+      "echo"
+     ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "echo",
+       "verdict": "suspicious"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": false,
+      "limitations_shown": false
+     },
+     "trace": null,
+     "stop_reason": null
+    },
+    "coordinator": {
+     "status": "ok",
+     "error": "",
+     "seconds": 1.39,
+     "ran": [
+      "echo"
+     ],
+     "tool_calls": 1,
+     "flagged": true,
+     "verdicts": [
+      {
+       "module": "echo",
+       "verdict": "suspicious"
+      }
+     ],
+     "routing_exact": true,
+     "unrequested_calls": 0,
+     "missed_modules": [],
+     "completeness": {
+      "findings_linked_to_stored_evidence": true,
+      "human_review_flag": true,
+      "step_trace_for_every_run": true,
+      "limitations_shown": true
+     },
+     "trace": [
+      {
+       "module": "echo",
+       "status": "completed",
+       "run_id": "run_6d91c3386905",
+       "seconds": 1.387,
+       "findings": 3
       }
      ],
      "stop_reason": "completed"
@@ -3778,6 +4467,18 @@
      "fp": 0,
      "fn": 0,
      "tn": 3,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "false_positive_rate": 0.0,
+     "accuracy": 1.0
+    },
+    "case_detection_heldout_paraphrases": {
+     "n": 9,
+     "tp": 5,
+     "fp": 0,
+     "fn": 0,
+     "tn": 4,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3832,10 +4533,10 @@
     "tool_calls_total": 78,
     "tool_calls_mean": 1.56,
     "latency": {
-     "mean_s": 1.64,
-     "median_s": 1.28,
-     "p95_s": 4.3,
-     "total_s": 81.8
+     "mean_s": 1.54,
+     "median_s": 1.27,
+     "p95_s": 3.18,
+     "total_s": 76.9
     },
     "report_completeness": {
      "findings_linked_to_stored_evidence": "50/50",
@@ -3852,15 +4553,15 @@
     "completed_without_crash": 50,
     "case_detection_all": {
      "n": 50,
-     "tp": 20,
+     "tp": 23,
      "fp": 0,
-     "fn": 5,
+     "fn": 2,
      "tn": 25,
      "precision": 1.0,
-     "recall": 0.8,
-     "f1": 0.889,
+     "recall": 0.92,
+     "f1": 0.958,
      "false_positive_rate": 0.0,
-     "accuracy": 0.9
+     "accuracy": 0.96
     },
     "case_detection_keyword_goals": {
      "n": 44,
@@ -3876,35 +4577,47 @@
     },
     "case_detection_paraphrased_goals": {
      "n": 6,
-     "tp": 0,
+     "tp": 3,
      "fp": 0,
-     "fn": 3,
+     "fn": 0,
      "tn": 3,
-     "precision": null,
-     "recall": 0.0,
-     "f1": 0.0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
      "false_positive_rate": 0.0,
-     "accuracy": 0.5
+     "accuracy": 1.0
+    },
+    "case_detection_heldout_paraphrases": {
+     "n": 9,
+     "tp": 5,
+     "fp": 0,
+     "fn": 0,
+     "tn": 4,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "false_positive_rate": 0.0,
+     "accuracy": 1.0
     },
     "item_detection_by_module": {
      "mirage": {
-      "n": 23,
-      "tp": 5,
+      "n": 25,
+      "tp": 6,
       "fp": 0,
       "fn": 2,
-      "tn": 16,
+      "tn": 17,
       "precision": 1.0,
-      "recall": 0.714,
-      "f1": 0.833,
+      "recall": 0.75,
+      "f1": 0.857,
       "false_positive_rate": 0.0,
-      "accuracy": 0.913
+      "accuracy": 0.92
      },
      "echo": {
-      "n": 22,
-      "tp": 8,
+      "n": 24,
+      "tp": 9,
       "fp": 0,
       "fn": 0,
-      "tn": 14,
+      "tn": 15,
       "precision": 1.0,
       "recall": 1.0,
       "f1": 1.0,
@@ -3912,11 +4625,11 @@
       "accuracy": 1.0
      },
      "blackbox": {
-      "n": 21,
-      "tp": 7,
+      "n": 23,
+      "tp": 8,
       "fp": 0,
       "fn": 0,
-      "tn": 14,
+      "tn": 15,
       "precision": 1.0,
       "recall": 1.0,
       "f1": 1.0,
@@ -3924,20 +4637,20 @@
       "accuracy": 1.0
      }
     },
-    "routing_exact_match": 0.88,
+    "routing_exact_match": 1.0,
     "routing_exact_match_keyword_goals": 1.0,
     "unrequested_tool_calls": 0,
     "cases_with_unrequested_evidence": 6,
     "unrequested_fraud_flagged": 0,
     "unrequested_fraud_cases": 2,
-    "missed_expected_modules": 6,
-    "tool_calls_total": 66,
-    "tool_calls_mean": 1.32,
+    "missed_expected_modules": 0,
+    "tool_calls_total": 72,
+    "tool_calls_mean": 1.44,
     "latency": {
-     "mean_s": 1.25,
-     "median_s": 1.13,
-     "p95_s": 2.92,
-     "total_s": 62.5
+     "mean_s": 1.34,
+     "median_s": 1.2,
+     "p95_s": 3.03,
+     "total_s": 67.0
     },
     "report_completeness": {
      "findings_linked_to_stored_evidence": "50/50",
@@ -4712,5 +5425,212 @@
   "verdicts_identical_to_instruction_strip": 6,
   "items": 6,
   "mirage_check_that_fires": "copy_move (repeated identical typed glyphs)"
- }
+ },
+ "clean_previous": {
+  "baseline": {
+   "cases": 50,
+   "completed_without_crash": 50,
+   "case_detection_all": {
+    "n": 50,
+    "tp": 23,
+    "fp": 1,
+    "fn": 2,
+    "tn": 24,
+    "precision": 0.958,
+    "recall": 0.92,
+    "f1": 0.939,
+    "false_positive_rate": 0.04,
+    "accuracy": 0.94
+   },
+   "case_detection_keyword_goals": {
+    "n": 44,
+    "tp": 20,
+    "fp": 1,
+    "fn": 2,
+    "tn": 21,
+    "precision": 0.952,
+    "recall": 0.909,
+    "f1": 0.93,
+    "false_positive_rate": 0.045,
+    "accuracy": 0.932
+   },
+   "case_detection_paraphrased_goals": {
+    "n": 6,
+    "tp": 3,
+    "fp": 0,
+    "fn": 0,
+    "tn": 3,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "false_positive_rate": 0.0,
+    "accuracy": 1.0
+   },
+   "item_detection_by_module": {
+    "mirage": {
+     "n": 27,
+     "tp": 7,
+     "fp": 0,
+     "fn": 2,
+     "tn": 18,
+     "precision": 1.0,
+     "recall": 0.778,
+     "f1": 0.875,
+     "false_positive_rate": 0.0,
+     "accuracy": 0.926
+    },
+    "echo": {
+     "n": 26,
+     "tp": 9,
+     "fp": 0,
+     "fn": 0,
+     "tn": 17,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "false_positive_rate": 0.0,
+     "accuracy": 1.0
+    },
+    "blackbox": {
+     "n": 25,
+     "tp": 9,
+     "fp": 0,
+     "fn": 0,
+     "tn": 16,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "false_positive_rate": 0.0,
+     "accuracy": 1.0
+    }
+   },
+   "routing_exact_match": 0.88,
+   "routing_exact_match_keyword_goals": 0.864,
+   "unrequested_tool_calls": 6,
+   "cases_with_unrequested_evidence": 6,
+   "unrequested_fraud_flagged": 2,
+   "unrequested_fraud_cases": 2,
+   "missed_expected_modules": 0,
+   "tool_calls_total": 78,
+   "tool_calls_mean": 1.56,
+   "latency": {
+    "mean_s": 1.64,
+    "median_s": 1.28,
+    "p95_s": 4.3,
+    "total_s": 81.8
+   },
+   "report_completeness": {
+    "findings_linked_to_stored_evidence": "50/50",
+    "human_review_flag": "50/50",
+    "step_trace_for_every_run": "0/50",
+    "limitations_shown": "0/50",
+    "unrequested_evidence_listed": "0/6",
+    "missing_evidence_reported": "0/3"
+   },
+   "report_completeness_rate": 0.478
+  },
+  "coordinator": {
+   "cases": 50,
+   "completed_without_crash": 50,
+   "case_detection_all": {
+    "n": 50,
+    "tp": 20,
+    "fp": 0,
+    "fn": 5,
+    "tn": 25,
+    "precision": 1.0,
+    "recall": 0.8,
+    "f1": 0.889,
+    "false_positive_rate": 0.0,
+    "accuracy": 0.9
+   },
+   "case_detection_keyword_goals": {
+    "n": 44,
+    "tp": 20,
+    "fp": 0,
+    "fn": 2,
+    "tn": 22,
+    "precision": 1.0,
+    "recall": 0.909,
+    "f1": 0.952,
+    "false_positive_rate": 0.0,
+    "accuracy": 0.955
+   },
+   "case_detection_paraphrased_goals": {
+    "n": 6,
+    "tp": 0,
+    "fp": 0,
+    "fn": 3,
+    "tn": 3,
+    "precision": null,
+    "recall": 0.0,
+    "f1": 0.0,
+    "false_positive_rate": 0.0,
+    "accuracy": 0.5
+   },
+   "item_detection_by_module": {
+    "mirage": {
+     "n": 23,
+     "tp": 5,
+     "fp": 0,
+     "fn": 2,
+     "tn": 16,
+     "precision": 1.0,
+     "recall": 0.714,
+     "f1": 0.833,
+     "false_positive_rate": 0.0,
+     "accuracy": 0.913
+    },
+    "echo": {
+     "n": 22,
+     "tp": 8,
+     "fp": 0,
+     "fn": 0,
+     "tn": 14,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "false_positive_rate": 0.0,
+     "accuracy": 1.0
+    },
+    "blackbox": {
+     "n": 21,
+     "tp": 7,
+     "fp": 0,
+     "fn": 0,
+     "tn": 14,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "false_positive_rate": 0.0,
+     "accuracy": 1.0
+    }
+   },
+   "routing_exact_match": 0.88,
+   "routing_exact_match_keyword_goals": 1.0,
+   "unrequested_tool_calls": 0,
+   "cases_with_unrequested_evidence": 6,
+   "unrequested_fraud_flagged": 0,
+   "unrequested_fraud_cases": 2,
+   "missed_expected_modules": 6,
+   "tool_calls_total": 66,
+   "tool_calls_mean": 1.32,
+   "latency": {
+    "mean_s": 1.25,
+    "median_s": 1.13,
+    "p95_s": 2.92,
+    "total_s": 62.5
+   },
+   "report_completeness": {
+    "findings_linked_to_stored_evidence": "50/50",
+    "human_review_flag": "50/50",
+    "step_trace_for_every_run": "50/50",
+    "limitations_shown": "50/50",
+    "unrequested_evidence_listed": "6/6",
+    "missing_evidence_reported": "3/3"
+   },
+   "report_completeness_rate": 1.0
+  }
+ },
+ "heldout_paraphrase_cases": 9
 }

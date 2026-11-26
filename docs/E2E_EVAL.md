@@ -42,20 +42,34 @@ that ran says suspicious, or likely fake for a link.
 
 ## Day 41 results: clean runs (50 cases)
 
-| Measure | Baseline | Coordinator |
-|---|---:|---:|
-| Accuracy, all 50 cases | **0.94** | 0.90 |
-| Precision / recall / F1, all cases | 0.96 / 0.92 / 0.94 | **1.00** / 0.80 / 0.89 |
-| False-positive rate | 0.04 (1 case) | **0.00** |
-| Accuracy, 44 keyword-goal cases | 0.93 | **0.95** |
-| Precision / recall / F1, keyword goals | 0.95 / 0.91 / 0.93 | **1.00 / 0.91 / 0.95** |
-| Accuracy, 6 paraphrased-goal cases | **1.00** | 0.50 (ran nothing) |
-| Routing exactly as intended | 0.88 | 0.88 (**1.00** on keyword goals) |
-| Calls on evidence the goal did not ask about | 6 | **0** |
-| Missing evidence reported (3 cases) | 0/3 | **3/3** |
-| Tool calls, total | 78 | **66** (−15%) |
-| Time per case, mean / p95 | 1.64 s / 4.30 s | **1.25 s / 2.92 s** |
-| Report completeness (applicable checks passed) | 48% | **100%** |
+"Coordinator v1" is the first run. **"Coordinator v2"** adds a routing fallback found by
+that run: when the goal names no kind of evidence, it checks everything supplied instead of
+nothing, and says so in the report (`routing: no_evidence_named`). The baseline column is
+from the v2 run; the v1 run gave the same detection numbers.
+
+| Measure | Baseline | Coordinator v1 | **Coordinator v2** |
+|---|---:|---:|---:|
+| Accuracy, all 50 cases | 0.94 | 0.90 | **0.96** |
+| Precision / recall / F1, all cases | 0.96 / 0.92 / 0.94 | 1.00 / 0.80 / 0.89 | **1.00 / 0.92 / 0.96** |
+| False-positive rate | 0.04 (1 case) | 0.00 | **0.00** |
+| Accuracy, 44 keyword-goal cases | 0.93 | 0.95 | **0.95** |
+| Precision / recall / F1, keyword goals | 0.95 / 0.91 / 0.93 | 1.00 / 0.91 / 0.95 | **1.00 / 0.91 / 0.95** |
+| Accuracy, 6 paraphrased-goal cases | 1.00 | 0.50 (ran nothing) | **1.00** |
+| **Accuracy, 9 new held-out paraphrased cases** | 1.00 | – | **1.00** |
+| Routing exactly as intended | 0.88 | 0.88 | **1.00** |
+| Calls on evidence the goal did not ask about | 6 | 0 | **0** |
+| Missing evidence reported (3 cases) | 0/3 | 3/3 | **3/3** |
+| Tool calls, total (50 cases) | 78 | 66 | **72** (−8% vs baseline) |
+| Time per case, mean / p95 | 1.54 s / 3.18 s | 1.25 s / 2.92 s | **1.34 s / 3.03 s** |
+| Report completeness (applicable checks passed) | 48% | 100% | **100%** |
+
+**Held-out check of the fix:**
+- The 6 original paraphrased cases are the ones the fix was designed around.
+- So **9 new cases** were written after v1 failed but before v2 was run. They use new wordings
+  ("Can I enter my card details here?", "My grandmother got this, should she worry?") and
+  evidence not used anywhere else (`PARAPHRASE_HELDOUT` in `phantom/e2e_eval.py`).
+- v2 got all 9 right.
+- Each has one piece of evidence, so they test the fallback, not language understanding.
 
 The report-completeness checks are:
 - every finding links to stored evidence;
@@ -70,10 +84,12 @@ limitations.
 
 **What the differences mean:**
 
-- **Paraphrased goals are the coordinator's clear weakness.** Routing is by keywords, so a
-  goal with no keyword runs nothing and says so (`nothing_to_do`). The baseline ignores the
-  goal, so it still caught all three fraud cases. This accounts for the whole gap in overall
-  recall (0.80 vs 0.92).
+- **Paraphrased goals were v1's clear weakness.** Routing is by keywords, so a goal with no
+  keyword ran nothing. The baseline ignores the goal, so it still caught all three fraud
+  cases. This was the whole recall gap (0.80 vs 0.92). v2's fallback closes it.
+- **Remaining routing limit:** a goal that names one kind of evidence but means another
+  ("check the bill they mentioned on the call" with only a recording) is routed by the
+  keywords it contains. The plan preview in the UI shows this before running.
 - **The baseline's one false positive** is case_017: the user asked only about a genuine
   call, but a fake link was also attached. The baseline flagged the case because of the link.
   The coordinator did not analyse the link, but listed it under `ignored_inputs`. Measured
@@ -153,5 +169,6 @@ synthetic pages, so the result shows the ranker works there, not that it general
 - **The baseline is deliberately plain** (it is the plan's "non-agent baseline"). Adding
   try/except and timeouts to it would close most of the fault-run gap; that is what the
   coordinator is.
-- **Keyword routing misses paraphrased goals.** Possible fixes, not done: run all supplied
-  evidence when no keyword matches, or ask the user which evidence to check.
+- **Routing is still keyword-based.** v2 no longer drops goals that name no evidence, but
+  it does not understand language. A goal that uses a keyword for the wrong evidence is
+  routed literally.

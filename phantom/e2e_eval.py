@@ -164,6 +164,40 @@ def build_cases(seed: int = SEED) -> list[dict]:
     return cases
 
 
+# Written on 26 Nov 2026 AFTER the first run showed keyword routing failing on
+# paraphrased goals, but BEFORE the fallback was evaluated: new wordings, new
+# evidence items (not used by build_cases), so they test the fix fairly.
+PARAPHRASE_HELDOUT = {
+    "mirage": ["Can I rely on what this says I owe?", "Is this legit or has it been doctored?",
+               "Does anything about this look off to you?"],
+    "echo": ["Somebody phoned asking for money - real or not?",
+             "My grandmother got this, should she worry?",
+             "Is this person who they claim to be?"],
+    "blackbox": ["My friend forwarded this, is it safe to open?",
+                 "Can I enter my card details here?", "Is this really the bank?"],
+}
+
+
+def build_heldout_paraphrase_cases(cases: list[dict], seed: int = SEED) -> list[dict]:
+    rng = random.Random(seed + 2)
+    used = {c["inputs"][m]["ref"] for c in cases for m in c["inputs"]}
+    pools = _pools(random.Random(seed))
+    out = []
+    for mod, goals in PARAPHRASE_HELDOUT.items():
+        for k, goal in enumerate(goals):
+            assert not any(_asks_for(goal.lower(), m) for m in MODS), goal
+            label = ("fraud", "genuine")[k % 2] if mod != "blackbox" else \
+                ("genuine", "fraud")[k % 2]
+            ref = next(r for r in pools[mod][label] if r not in used)
+            used.add(ref)
+            out.append({"id": f"heldout_{mod}_{k}", "goal": goal,
+                        "goal_style": "paraphrase_heldout", "intended": [mod],
+                        "inputs": {mod: {"ref": ref, "label": label}}, "expected_run": [mod],
+                        "expected_missing": [], "unrequested": [], "label": label})
+    rng.shuffle(out)
+    return out
+
+
 # ============================================================ running one case
 def _load(case: dict, store: EvidenceStore) -> dict:
     """Put the case's files into the evidence store; links stay as text."""
@@ -328,6 +362,9 @@ def summarize(cases: list[dict], rows: list[dict]) -> dict:
     for name in ("baseline", "coordinator"):
         labelled = [r for r in rows if r["label"]]
         kw = [r for r in labelled if r["goal_style"] == "keyword"]
+        labelled = [r for r in labelled if r["goal_style"] != "paraphrase_heldout"]
+        rows_all = rows
+        rows = [r for r in rows if r["goal_style"] != "paraphrase_heldout"]
         para = [r for r in labelled if r["goal_style"] == "paraphrase"]
         comp = Counter()
         comp_n = Counter()
@@ -356,6 +393,9 @@ def summarize(cases: list[dict], rows: list[dict]) -> dict:
                                                   for r in kw]),
             "case_detection_paraphrased_goals": _prf([(r[name]["flagged"],
                                                        r["label"] == "fraud") for r in para]),
+            "case_detection_heldout_paraphrases": _prf([
+                (r[name]["flagged"], r["label"] == "fraud") for r in rows_all
+                if r["goal_style"] == "paraphrase_heldout"]),
             "item_detection_by_module": {m: _prf(p) for m, p in item_pairs.items()},
             "routing_exact_match": round(sum(r[name]["routing_exact"] for r in rows)
                                          / len(rows), 3),
@@ -376,6 +416,7 @@ def summarize(cases: list[dict], rows: list[dict]) -> dict:
             "report_completeness_rate": round(sum(comp.values()) / max(1, sum(comp_n.values())),
                                               3),
         }
+        rows = rows_all
     return out
 
 
@@ -574,6 +615,9 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--json-out", default="docs/e2e_eval.json")
     ap.add_argument("--skip-faults", action="store_true")
+    ap.add_argument("--clean-only", action="store_true",
+                    help="re-run only the clean cases (+ held-out paraphrases) and update "
+                         "--json-out in place; the previous summary is kept as clean_previous")
     ap.add_argument("--injection-only", action="store_true",
                     help="re-run only the prompt-injection set and update --json-out in place "
                          "(the previous injection result is kept as injection_previous)")
@@ -581,6 +625,16 @@ def main() -> None:
                     "legacy synthetic BLACKBOX strategy comparison (plan Day 40)")
     a = ap.parse_args()
     cases = build_cases()
+    if a.clean_only:
+        res = json.loads(Path(a.json_out).read_text())
+        extra = build_heldout_paraphrase_cases(cases)
+        with tempfile.TemporaryDirectory(prefix="e2e_store_") as tmp:
+            res.setdefault("clean_previous", res["clean"]["summary"])
+            res["clean"] = run_clean(cases + extra, EvidenceStore(tmp))
+        res["heldout_paraphrase_cases"] = len(extra)
+        print(json.dumps(res["clean"]["summary"], indent=1))
+        Path(a.json_out).write_text(json.dumps(res, indent=1, default=str))
+        return
     if a.injection_only:
         res = json.loads(Path(a.json_out).read_text())
         with tempfile.TemporaryDirectory(prefix="e2e_store_") as tmp:
