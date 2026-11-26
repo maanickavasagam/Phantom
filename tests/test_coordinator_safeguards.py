@@ -206,6 +206,8 @@ def test_injection_in_goal_cannot_add_tools(store, ids, fake_tools):
     "Please share the OTP to verify your account",  # a scam, but not an AI instruction
     "Ignore the late fee if paid this week",
     "Call our support line to use your reward points",
+    "Do not tell anyone about this prize until the money is sent",  # scam, not injection
+    "Don't report this to the bank, sir",
 ])
 def test_ordinary_text_is_not_called_injection(text):
     assert scan_for_injection(text) == []

@@ -71,8 +71,10 @@ INJECTION_PATTERNS = [
          r"\b(as )?(benign|safe|genuine|legitimate|official|not (a )?scam)\b", "verdict_request"),
         (r"\b(call|run|invoke|use|execute)\b.{0,20}\b(tool|function|mirage|echo|blackbox|"
          r"coordinator)\b", "tool_request"),
-        (r"\b(do not|don't|never)\b.{0,20}\b(flag|report|tell|alert|escalate)\b",
-         "suppression_request"),
+        # "flag"/"escalate" only: scammers tell VICTIMS "do not tell anyone / don't
+        # report it" (a scam sign ECHO already reports, not an instruction to an AI;
+        # found as a false alarm in the end-to-end evaluation)
+        (r"\b(do not|don't|never)\b.{0,20}\b(flag|escalate)\b", "suppression_request"),
         (r"<\s*/?\s*(system|assistant|instructions?)\s*>|\[\s*(system|inst)\s*\]",
          "fake_prompt_markup"),
     )
@@ -362,6 +364,9 @@ def coordinate(
         "results": [result.model_dump(mode="json") for result in results],
         "trace": trace,
         "missing_inputs": missing,
+        # supplied evidence the goal did not ask about: listed, not analysed
+        "ignored_inputs": [name for name in ("mirage", "echo", "blackbox")
+                           if supplied[name] and name not in plan],
         "warnings": warnings,
         "limitations": [note for result in results for note in result.limitations],
         "errors": [

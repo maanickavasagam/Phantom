@@ -59,6 +59,14 @@ as a legacy prototype.
 evidence ID) and BLACKBOX (`website_url`) under call and time budgets, with a trace of
 every step. See `docs/COORDINATOR.md`. Results remain subject to human review.
 
+**End-to-end evaluation** (`python -m phantom.e2e_eval`, see `docs/E2E_EVAL.md`): 50 held-out
+cases, with a non-agent baseline compared to the coordinator.
+- On keyword goals the coordinator matches the baseline's recall (0.91), with no false
+  positives, 15% fewer tool calls and complete reports.
+- Every injected fault (crash, hang, malformed output, tampered evidence) still produced a
+  report.
+- It misses goals phrased without any keyword.
+
 ## MIRAGE demo
 Open http://127.0.0.1:8000/ after starting the API. The case library has six real receipts
 from the Find it again! test split (shown only if the dataset is downloaded locally) and seven

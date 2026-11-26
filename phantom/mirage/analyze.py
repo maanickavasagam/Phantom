@@ -186,6 +186,10 @@ def analyze_document(
             )
 
         ocr = ocr_page(page.image, page.page_number)
+        # OCR text is returned as data (for the report, and so the coordinator can warn
+        # about instructions hidden in a document). It never changes a check.
+        page_text = " ".join(w.text for w in ocr.words)[:20_000]
+        result.artifacts.setdefault("ocr_text", {})[str(page.page_number)] = page_text
         if ocr.mean_confidence and ocr.mean_confidence < LOW_OCR_CONFIDENCE:
             result.findings.append(
                 Finding(
