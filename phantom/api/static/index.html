@@ -149,6 +149,54 @@
   .tabs button.on { color: var(--brand); border-bottom-color: var(--brand); }
   .tabs .n { font-size: 11px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 99px; padding: 0 6px; margin-left: 4px; color: var(--text-2); }
   .pane { padding: 14px 18px 24px; }
+  /* ---------- BLACKBOX: how it was judged + sandbox preview */
+  .bbh { margin: 18px 0 8px; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); }
+  .judge { border: 1px solid var(--border); border-radius: 9px; background: var(--surface-2); padding: 4px 14px; }
+  .jstep { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px dashed var(--border); }
+  .jstep:last-child { border-bottom: 0; }
+  .jstep > div { flex: 1; min-width: 0; }
+  .jstep .n { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--brand-soft); color: var(--brand-ink); font-weight: 700; font-size: 12px; display: grid; place-items: center; margin-top: 1px; }
+  .addr { display: flex; flex-wrap: wrap; align-items: flex-start; margin-top: 8px; font-family: var(--mono); font-size: 15px; background: var(--surface); border: 1px solid var(--border-2); border-radius: 8px; padding: 10px 12px 6px; overflow-wrap: anywhere; }
+  .seg { display: inline-flex; flex-direction: column; min-width: 0; }
+  .seg .t { padding: 2px 1px; border-bottom: 3px solid var(--border-2); white-space: pre-wrap; word-break: break-all; }
+  .seg .l { font-family: "Segoe UI", system-ui, sans-serif; font-size: 10.5px; color: var(--text-3); padding: 3px 4px 0 1px; white-space: nowrap; }
+  .seg.dim .t { color: var(--text-3); }
+  .seg.strike .t { color: var(--sus); text-decoration: line-through; border-color: var(--sus-line); }
+  .seg.main .t { font-weight: 700; background: var(--brand-soft); border-color: var(--brand); border-radius: 4px 4px 0 0; padding: 2px 4px; }
+  .seg.main.bad .t { background: var(--sus-soft); border-color: var(--sus); color: var(--sus); }
+  .seg.main.warn .t { background: var(--inc-soft); border-color: var(--inc); color: var(--inc); }
+  .seg.main.ok .t { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+  .cmp { margin-top: 8px; }
+  .cmp .row { display: flex; align-items: baseline; gap: 12px; padding: 4px 0; }
+  .cmp .k { width: 110px; flex: none; font-size: 12px; color: var(--text-3); }
+  .cmp .v { font-family: var(--mono); font-size: 19px; letter-spacing: .06em; overflow-wrap: anywhere; }
+  .cmp .dx { background: var(--sus-soft); color: var(--sus); border-bottom: 2px solid var(--sus); font-weight: 700; padding: 0 1px; }
+  .cmp .dr { background: var(--ok-soft); color: var(--ok); border-bottom: 2px solid var(--ok); font-weight: 700; padding: 0 1px; }
+  .cmp .nl { outline: 2px dashed var(--sus); outline-offset: 1px; }
+  .checks { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 4px 16px; }
+  .checks li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 4px 6px; border-radius: 6px; }
+  .checks li.hit { background: var(--sus-soft); }
+  .checks .q { flex: 1; color: var(--text-2); }
+  .checks li.hit .q { color: var(--text); font-weight: 600; }
+  .checks .a { font-size: 11.5px; color: var(--text-3); white-space: nowrap; }
+  .ci { width: 18px; height: 18px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; }
+  .ci.ok { background: var(--ok-soft); color: var(--ok); } .ci.bad { background: var(--sus); color: #fff; } .ci.na { background: var(--surface); color: var(--text-3); border: 1px solid var(--border); }
+  .pv-rules { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .pv-rules li { font-size: 12px; background: var(--ok-soft); color: var(--ok); border: 1px solid var(--ok-line); border-radius: 99px; padding: 2px 10px; }
+  .pv-rules li::before { content: "✓ "; }
+  .pv { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr); gap: 16px; margin-top: 14px; }
+  .frame { border: 1px solid var(--border-2); border-radius: 10px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-lg); align-self: start; }
+  .fbar { display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  .fbar .dots { display: flex; gap: 5px; } .fbar .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--border-2); }
+  .furl { flex: 1; min-width: 0; font-family: var(--mono); font-size: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 99px; padding: 3px 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .furl.bad { color: var(--sus); border-color: var(--sus-line); background: var(--sus-soft); }
+  .ftag { font-size: 10.5px; color: var(--text-3); white-space: nowrap; }
+  .frame img { display: block; width: 100%; height: auto; }
+  .noshot { padding: 60px 20px; text-align: center; color: var(--text-3); }
+  .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-family: var(--mono); font-size: 11.5px; }
+  .chain .hop { background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; overflow-wrap: anywhere; }
+  .chain .arr { color: var(--text-3); }
+  @media (max-width: 900px) { .pv { grid-template-columns: 1fr; } .checks { grid-template-columns: 1fr; } }
   .fcard { border: 1px solid var(--border); border-radius: 9px; padding: 12px; margin-bottom: 10px; background: var(--surface); box-shadow: var(--shadow); transition: border-color .12s, box-shadow .12s; }
   .fcard:hover, .fcard.hl { border-color: #a5b4fc; box-shadow: 0 0 0 3px #e0e7ff; }
   .fcard .h { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
@@ -369,7 +417,7 @@
     <section class="view hidden" id="v-blackbox"><div class="evalv"><div class="wrap">
       <div class="ph"><div><h1>Is this link real?</h1>
         <p>Checks whether a website address belongs to the real brand (Amazon, Flipkart, SBI, IRCTC…) or is a lookalike.
-        The page itself is never opened.</p></div></div>
+        The verdict comes from the address alone; if you want, you can also see a safe picture of the page.</p></div></div>
       <div class="card"><div class="cb" style="padding:18px">
         <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
           <input id="urlInput" placeholder="Paste a link, e.g. https://flipkart-bigbillion-sale.xyz/claim"
@@ -992,10 +1040,102 @@ async function runUrlCheck() {
       <div class="gt"><span>This link really goes to: <b style="font-family:var(--mono)">${esc(c.registrable)}</b></span><span class="grow"></span>
         ${brand ? `<span class="note-muted">${esc(brand.name)}'s real sites: <span style="font-family:var(--mono)">${brand.official.slice(0, 4).map(esc).join(", ")}</span></span>` : ""}</div>
       ${look}
-      <h3 style="margin:16px 0 8px;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3)">Why (${(c.signals || []).length} signal${(c.signals || []).length === 1 ? "" : "s"})</h3>${sigs}
+      ${renderJudged(result.artifacts.explain, c, brand)}
+      <h3 class="bbh">Why (${(c.signals || []).length} signal${(c.signals || []).length === 1 ? "" : "s"})</h3>${sigs}
       <ul class="notes" style="margin-top:10px">${result.limitations.map(l => `<li>${esc(l)}</li>`).join("")}</ul>
       <p class="note-muted" style="margin:8px 0 0">Evidence: <span class="pill-check">${esc(result.evidence_ids[0])}</span> · run ${esc(result.run_id)}</p>
-    </div></div>`;
+    </div></div>
+    <div class="card" id="pvCard"><div class="ch"><h2>See the website safely</h2>
+      <p>Our server opens the page in a locked-down, throwaway browser and sends you a picture. Your own browser never loads it.</p></div>
+      <div class="cb" style="padding-top:8px">
+        <ul class="pv-rules"><li>JavaScript off</li><li>No cookies or saved data</li><li>No downloads</li><li>Nothing typed or clicked</li><li>Private network addresses blocked</li><li>15-second limit</li></ul>
+        <p class="note-muted" style="margin:8px 0 12px">Note: the website's owner can see one visit from this computer's internet address. For a scam link, that can tell the scammer the link was opened.</p>
+        <button class="btn primary" id="pvRun"><svg style="width:15px;height:15px"><use href="#i-shield"/></svg> Preview safely</button>
+        <div id="pvOut"></div></div></div>`;
+  $("#pvRun").onclick = () => runPreview(url);
+}
+
+// ---------- "How it was judged": the address taken apart, real vs fake letters, checklist
+function renderJudged(x, c, brand) {
+  if (!x) return "";
+  const p = x.parts, fakeCls = c.verdict === "official" ? "ok" : c.verdict === "likely_fake" ? "bad" : c.verdict === "suspicious" ? "warn" : "";
+  const seg = (txt, cls, label) => txt ? `<span class="seg ${cls}"><span class="t">${esc(txt)}</span><span class="l">${label}</span></span>` : "";
+  const bar = `<div class="addr">
+      ${seg(p.scheme + "://", "dim", p.scheme === "https" ? "encrypted" : "not encrypted")}
+      ${seg(p.userinfo ? p.userinfo + "@" : "", "strike", "ignored by browser")}
+      ${seg(p.subdomain ? p.subdomain + "." : "", "dim", "subdomain (anyone can pick)")}
+      ${seg(p.domain + (p.suffix ? "." + p.suffix : ""), "main " + fakeCls, "the real owner")}
+      ${seg(p.port ? ":" + p.port : "", "dim", "port")}
+      ${seg(p.path && p.path !== "/" ? p.path : "", "dim", "page path")}</div>
+    <p class="note-muted" style="margin:6px 0 0">Only the highlighted part decides who owns the site${p.decoded_domain !== (p.domain + (p.suffix ? "." + p.suffix : "")) ? `. Shown in a browser as <b style="font-family:var(--mono)">${esc(p.decoded_domain)}</b>` : ""}.</p>`;
+  let cmp = "";
+  if (x.comparison) {
+    const k = x.comparison, ch = (s, cls) => [...s].map(t => `<span class="${cls}${t.charCodeAt(0) > 127 ? " nl" : ""}" title="${t.charCodeAt(0) > 127 ? "non-Latin letter U+" + t.codePointAt(0).toString(16).toUpperCase().padStart(4, "0") : ""}">${esc(t)}</span>`).join("");
+    // letter-level imitation: colour the differing letters; borrowed name: show both plainly
+    const fake = k.letter_level ? k.ops.map(o => o.op === "equal" ? esc(o.fake) : ch(o.fake, "dx")).join("")
+      : `<span style="color:var(--sus);font-weight:700">${esc(k.fake)}</span>`;
+    const real = k.letter_level ? k.ops.map(o => o.op === "equal" ? esc(o.real) : ch(o.real, "dr")).join("")
+      : `<span style="color:var(--ok);font-weight:700">${esc(k.real)}</span>`;
+    cmp = `<div class="cmp"><div class="row"><span class="k">This link</span><span class="v">${fake}</span></div>
+      <div class="row"><span class="k">Real ${esc(brand ? brand.name : "")}</span><span class="v">${real}</span></div>
+      <p class="note-muted" style="margin:6px 0 0">${k.letter_level ? "Red letters are where the link differs from the real site: swapped, added or missing." : "The link borrows the brand's name but adds its own words and ending."}
+      ${k.non_latin.length ? ` <b class="badline">Contains non-Latin letters (${k.non_latin.map(t => "U+" + t.codePointAt(0).toString(16).toUpperCase().padStart(4, "0")).join(", ")}) that look identical to normal ones.</b>` : ""}</p></div>`;
+  }
+  const icon = { pass: ["ok", "✓"], fail: ["bad", "✗"], "n/a": ["na", "–"], not_run: ["na", "…"] };
+  const checks = x.checks.map(ch => {
+    let st = ch.state;
+    if (ch.key === "official" && st === "n/a") st = "n/a";
+    const [cls, sym] = icon[st];
+    const say = ch.key === "official" ? (st === "pass" ? "yes" : st === "fail" ? "no" : "no brand involved")
+      : ch.key === "https" ? (st === "pass" ? "yes" : "no") : st === "fail" ? "found" : st === "not_run" ? "turn on safe lookups" : "no";
+    const bad = ch.key === "official" ? st === "fail" : st === "fail";
+    return `<li class="${bad ? "hit" : ""}"><span class="ci ${ch.key === "official" && st === "pass" ? "ok" : bad ? "bad" : cls}">${ch.key === "official" && st === "pass" ? "✓" : bad ? "✗" : sym}</span><span class="q">${esc(ch.question)}</span><span class="a">${say}</span></li>`;
+  }).join("");
+  const nFail = x.checks.filter(ch => ch.state === "fail").length;
+  return `<h3 class="bbh">How it was judged</h3>
+    <div class="judge"><div class="jstep"><span class="n">1</span><div><b>Take the address apart</b>${bar}</div></div>
+      ${cmp ? `<div class="jstep"><span class="n">2</span><div><b>${x.comparison.letter_level ? "Compare with the real site, letter by letter" : "Compare with the real site"}</b>${cmp}</div></div>` : ""}
+      <div class="jstep"><span class="n">${cmp ? 3 : 2}</span><div><b>Run every test</b> <span class="note-muted">(${nFail} of ${x.checks.length} raised a flag)</span><ul class="checks">${checks}</ul></div></div></div>`;
+}
+
+// ---------- sandboxed preview
+async function runPreview(url) {
+  const btn = $("#pvRun");
+  btn.disabled = true;
+  $("#pvOut").innerHTML = `<div style="padding:16px 0;display:flex;gap:10px;align-items:center"><div class="spin"></div><span class="note-muted">Opening in the sandbox (up to 15 s)…</span></div>`;
+  let d;
+  try {
+    const r = await fetch("/blackbox/preview", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url }) });
+    d = await r.json();
+    if (!r.ok) throw new Error(typeof d.detail === "string" ? d.detail : "Preview failed");
+  } catch (e) {
+    $("#pvOut").innerHTML = `<div class="callout warn" style="margin-top:12px"><b>No preview.</b> ${esc(e.message)}</div>`;
+    btn.disabled = false;
+    return;
+  }
+  btn.disabled = false;
+  if (urlState) urlState.preview = d;
+  const fc = d.final_check || {}, V = URL_VERDICT[fc.verdict];
+  const chain = (d.redirects || []).length > 1 ? `<div class="chain">${d.redirects.map((u, i) => `<span class="hop">${esc(u)}</span>${i < d.redirects.length - 1 ? '<span class="arr">→</span>' : ""}`).join("")}</div>` : "";
+  const obs = (d.observations || []).map(o => `<div class="fcard"><div class="h"><span class="tag ${STRENGTH_TAG[o.strength]}">${esc(o.strength)}</span><span class="name">${esc(o.name.replace(/_/g, " "))}</span></div><div class="d">${esc(o.detail)}</div></div>`).join("")
+    || `<p class="note-muted">The visit added no new warning signs.</p>`;
+  $("#pvOut").innerHTML = `
+    <div class="pv">
+      <div class="frame"><div class="fbar"><span class="dots"><i></i><i></i><i></i></span>
+        <span class="furl ${fc.verdict === "likely_fake" ? "bad" : ""}">${esc(d.final_url || d.requested_url)}</span><span class="ftag">picture only · not live</span></div>
+        ${d.screenshot_id ? `<img alt="Sandboxed screenshot of ${esc(d.final_url || d.requested_url)}" src="/evidence/${esc(d.screenshot_id)}/screenshot">` : `<div class="noshot">No picture: ${esc(d.load_error || "the page did not load")}</div>`}</div>
+      <div class="pvside">
+        <div class="stats" style="margin:0;grid-template-columns:repeat(2,1fr)">
+          <div><b>${d.status ?? "–"}</b><span>server reply</span></div>
+          <div><b>${(d.redirects || []).length ? d.redirects.length - 1 : "–"}</b><span>redirects</span></div>
+          <div><b>${d.password_fields ?? "–"}</b><span>password boxes</span></div>
+          <div><b>${d.seconds}s</b><span>${d.requests} requests${(d.blocked_requests || []).length ? ", " + d.blocked_requests.length + " blocked" : ""}</span></div></div>
+        <p style="margin:10px 0 4px"><b>Page title:</b> ${esc(d.title || "–")}</p>
+        ${V ? `<p style="margin:0 0 8px"><b>Final address:</b> <span class="tag ${STRENGTH_TAG[fc.verdict === "likely_fake" ? "strong" : fc.verdict === "suspicious" ? "medium" : "weak"]}">${esc(V.t)}</span> <span style="font-family:var(--mono);font-size:12px">${esc(fc.registrable || "")}</span></p>` : ""}
+        ${chain}
+        <h3 class="bbh" style="margin-top:12px">What the visit showed</h3>${obs}
+        <p class="note-muted" style="margin:8px 0 0">Screenshot evidence: <span class="pill-check">${esc(d.screenshot_id || "none")}</span></p>
+      </div></div>`;
 }
 
 $("#coordRun").onclick = async () => {

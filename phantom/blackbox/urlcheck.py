@@ -429,3 +429,93 @@ def safe_lookups(registrable: str, now: datetime | None = None, timeout: float =
     except Exception as e:  # noqa: BLE001 - offline, blocked, malformed
         out["rdap_error"] = type(e).__name__
     return out
+
+
+# ------------------------------------------------------------------ explanation (UI)
+
+MAIN_DOMAIN = {"amazon": "amazon.in", "flipkart": "flipkart.com", "myntra": "myntra.com",
+               "meesho": "meesho.com", "paytm": "paytm.com", "phonepe": "phonepe.com",
+               "gpay": "pay.google.com", "sbi": "onlinesbi.sbi", "hdfc": "hdfcbank.com",
+               "icici": "icicibank.com", "irctc": "irctc.co.in", "indiapost": "indiapost.gov.in"}
+
+# Every test the checker runs, in the order shown to the user, with the signal
+# names that mean "this test found a problem".
+CHECKS = [
+    ("official", "Is it one of the brand's official domains?", ()),
+    ("brand_name", "Does the domain contain a brand's name?",
+     ("brand_in_domain", "brand_on_unofficial_ending")),
+    ("typo", "Is the name one typo away from a brand (flipkarrt, amazn)?", ("typosquat",)),
+    ("lookalike", "Look-alike letters (0 for o, rn for m, Cyrillic a)?",
+     ("homoglyph", "punycode")),
+    ("split", "Brand name cut by a dot or hyphen (amaz.on, am-azon)?",
+     ("brand_split_across_dots",)),
+    ("subdomain", "Brand name placed in front, on someone else's domain?",
+     ("brand_in_subdomain",)),
+    ("userinfo", "Fake address before an '@' (browsers ignore it)?",
+     ("brand_in_userinfo", "userinfo_trick")),
+    ("hosting", "User-made page on a brand's hosting service?", ("hosted_on_brand_platform",)),
+    ("shortener", "Link shortener hiding the real destination?", ("link_shortener",)),
+    ("ending", "Risky ending (.xyz, .top, .shop...)?", ("risky_tld",)),
+    ("words", "Phishing words (login, kyc, verify, reward...)?", ("phishing_words",)),
+    ("https", "Encrypted connection (https)?", ("no_https",)),
+    ("ip_port", "Bare IP address or unusual port?", ("ip_address_host", "unusual_port")),
+    ("shape", "Odd shape (many subdomains, many hyphens, very long)?",
+     ("many_subdomains", "many_hyphens", "long_url")),
+    ("path", "Brand name only in the path, on an unrelated domain?", ("brand_in_path",)),
+    ("age", "Newly registered or missing domain (safe lookups)?",
+     ("new_domain", "young_domain", "does_not_resolve")),
+]
+
+
+def explain(report: UrlReport, url: str) -> dict:
+    """Data for the 'how it was judged' view: address parts, the closest real
+    domain with a letter-by-letter diff, and the checklist of tests."""
+    import difflib
+
+    raw = url.strip()
+    if not re.match(r"^[a-z][a-z0-9+.-]*://", raw, re.I):
+        raw = "http://" + raw
+    p = urlparse(raw)
+    host = report.host
+    try:
+        ipaddress.ip_address(host)
+        is_ip = True
+    except ValueError:
+        is_ip = False
+    sub, label, suffix = ("", host, "") if is_ip else split_host(host)
+    parts = {"scheme": p.scheme, "userinfo": p.netloc.rsplit("@", 1)[0] if "@" in p.netloc
+             else "", "subdomain": sub, "domain": label, "suffix": suffix,
+             "port": str(p.port or ""), "path": (p.path or "") + (f"?{p.query}" if p.query
+                                                                   else ""),
+             "decoded_domain": _decode_idn(report.registrable)}
+    names = {s.name for s in report.signals}
+    checks = []
+    for key, question, sigs in CHECKS:
+        if key == "official":
+            state = "pass" if report.verdict == "official" else "fail" if report.brand else "n/a"
+        elif key == "age" and not report.lookups:
+            state = "not_run"
+        else:
+            state = "fail" if names & set(sigs) else "pass"
+        checks.append({"key": key, "question": question, "state": state,
+                       "signals": sorted(names & set(sigs))})
+    comparison = None
+    if report.brand and report.verdict != "official":
+        fake = _decode_idn(report.registrable)
+        if "brand_split_across_dots" in names:  # amaz.on.in: the imitation spans the dot
+            fake = _decode_idn(host.removeprefix("www."))
+        real = MAIN_DOMAIN.get(report.brand) or sorted(BRANDS[report.brand].official)[0]
+        if names & {"typosquat", "homoglyph", "brand_split_across_dots"}:
+            # letter-level imitation: line it up against the nearest real domain
+            near = min(BRANDS[report.brand].official,
+                       key=lambda d: (osa_distance(fake, d), len(d)))
+            if osa_distance(fake, near) <= 3:
+                real = near
+        ops = [{"op": tag, "fake": fake[i1:i2], "real": real[j1:j2]}
+               for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(
+                   None, fake, real, autojunk=False).get_opcodes()]
+        comparison = {"fake": fake, "real": real, "ops": ops,
+                      "letter_level": bool(names & {"typosquat", "homoglyph",
+                                                    "brand_split_across_dots"}),
+                      "non_latin": sorted({c for c in fake if not c.isascii()})}
+    return {"parts": parts, "checks": checks, "comparison": comparison}

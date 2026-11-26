@@ -29,9 +29,21 @@ Flipkart, Myntra, Meesho, Paytm, PhonePe, Google Pay, SBI, HDFC, ICICI, IRCTC, I
 or imitates one: brand name on an unofficial domain, typos (`flipkarrt`), look-alike
 letters (`amaz0n`, Cyrillic `а`), brand in a subdomain or before an `@`, brand split by a
 hyphen or dot, user content on brand hosting (`s3.amazonaws.com`), plus risky endings and
-link shorteners. **The page is never opened.** The optional *safe lookups* ask DNS whether
-the domain exists and the public RDAP registry when it was registered (only the domain name
-is sent).
+link shorteners. **The verdict is made from the address alone**; the page is not opened for
+it. The optional *safe lookups* ask DNS whether the domain exists and the public RDAP registry
+when it was registered (only the domain name is sent).
+
+Each result shows **how it was judged**: the address split into parts (which part really
+decides the owner), a letter-by-letter comparison with the real brand domain (non-Latin
+look-alike letters marked), and the checklist of all 16 tests.
+
+**See the website safely** (opt-in button, `POST /blackbox/preview`): the server takes one
+screenshot in a throwaway headless browser. JavaScript is off; there are no cookies, storage
+or downloads; private and local network addresses are blocked on every request; there is a
+60-request cap and a 15 s limit; nothing is clicked or typed. The result shows the picture,
+where redirects really end, the page title and any password boxes, and re-checks the final
+address. Your own browser never loads the site. The site's owner does see one visit from the
+server.
 
 Use the BLACKBOX tab (*Is this link real?*), `POST /blackbox/check-url` with
 `{"url": "...", "lookups": false}`, or `GET /blackbox/brands`. Reproduce the evaluation

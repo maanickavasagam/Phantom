@@ -232,6 +232,39 @@ def blackbox_check_url(options: UrlCheckRequest) -> ToolResult:
     return check_url_tool(options.url, store, lookups=options.lookups)
 
 
+class PreviewRequest(BaseModel):
+    url: str = Field(min_length=1, max_length=2048)
+
+
+@app.post("/blackbox/preview")
+def blackbox_preview(options: PreviewRequest) -> dict:
+    """Opt-in sandboxed screenshot: our server opens the page in a throwaway headless
+    browser (JavaScript off, no cookies/downloads, public addresses only, 15 s limit).
+    The user's own browser never loads the site."""
+    from phantom.blackbox.preview import PreviewRefused, safe_preview
+
+    try:
+        return safe_preview(options.url, store)
+    except PreviewRefused as error:
+        raise HTTPException(400, str(error)) from error
+    except RuntimeError as error:
+        raise HTTPException(503, str(error)) from error
+
+
+@app.get("/evidence/{evidence_id}/screenshot")
+def evidence_screenshot(evidence_id: str) -> Response:
+    """A stored BLACKBOX preview screenshot (PNG), served as an image only."""
+    try:
+        blob, record = store.get(evidence_id)
+    except KeyError as e:
+        raise HTTPException(404, "evidence not found") from e
+    if record.get("kind") != "screenshot" or not blob.startswith(b"\x89PNG"):
+        raise HTTPException(400, "evidence item is not a screenshot")
+    return Response(blob, media_type="image/png",
+                    headers={"Content-Security-Policy": "default-src 'none'",
+                             "X-Content-Type-Options": "nosniff"})
+
+
 @app.get("/blackbox/brands")
 def blackbox_brands() -> dict:
     from phantom.blackbox.brands import BRANDS

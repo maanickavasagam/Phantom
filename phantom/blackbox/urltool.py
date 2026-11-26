@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 
 from phantom.blackbox.brands import BRANDS
-from phantom.blackbox.urlcheck import check_url
+from phantom.blackbox.urlcheck import check_url, explain
 from phantom.common.evidence_store import EvidenceStore
 from phantom.common.schemas import (
     EvidenceRef,
@@ -58,7 +58,7 @@ def check_url_tool(url: str, store: EvidenceStore, lookups: bool = False) -> Too
             evidence=ref,
             uncertainty=Uncertainty(confidence=_STRENGTH_CONF[s.strength],
                                     notes=f"{s.strength} signal")))
-    result.artifacts = {"url_check": report.to_dict()}
+    result.artifacts = {"url_check": report.to_dict(), "explain": explain(report, url)}
     result.limitations += [
         "Judged from the URL (and, if enabled, DNS + domain registration date) only; the page "
         "was never opened, so a fake with a clean-looking domain, or a compromised official "
