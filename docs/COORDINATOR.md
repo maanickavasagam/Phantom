@@ -5,16 +5,39 @@ IDs, and an optional `website_url` for BLACKBOX (or a legacy synthetic `scenario
 only the relevant supplied inputs, runs each module at most once (three calls at most), records
 a trace of every step, and always marks the report for human review.
 
-Run MIRAGE and ECHO first to get evidence IDs, then submit them with a link for a mixed
-investigation.
+## Interface (Coordinator tab)
+
+1. **Goal** in plain words, with example chips. The routing uses whole-word keywords
+   (`invoice`, `bill`, `call`, `recording`, `link`, `website`...). "investigate" or "all" runs
+   everything supplied. A **plan preview** shows before running which checks will run, which
+   are asked for but missing evidence, and which evidence the goal ignores.
+2. **Evidence:** upload a document or recording (`POST /evidence/upload?kind=document|audio`,
+   stored and hashed, not analysed yet), or pick a recent one from earlier MIRAGE/ECHO runs
+   (`GET /evidence/recent`). Paste a link for BLACKBOX.
+3. **Limits:** number of checks, overall time budget and per-check timeout.
+4. **Live progress** (`POST /coordinator/stream`, NDJSON events: `started`, `plan`, `start`,
+   `step`, `report`). It shows checks used, time used, and each step as waiting / running
+   (with a timeout bar) / done / failed / timed out / skipped.
+5. **Stop after current check** (`POST /coordinator/stop/{run}`). A running check is not
+   interrupted; the rest are skipped as "stopped by user". Closing the page has the same
+   effect.
+6. **Report:** the headline says what was found ("Problems found by 2 of 3 checks"), with the
+   run status as a detail. It also shows one card per module using that module's own verdict
+   rule (`verdicts`), hidden-instruction warnings, problems, missing evidence, findings sorted
+   by severity with evidence links, the full action history, and the limits used. Export JSON
+   and Print work on it.
+
+`POST /coordinator/investigate` returns the same report in one response, without progress
+events.
 
 ## Report fields
 
 | Field | Meaning |
 |---|---|
 | `status` | `completed` · `partial` (some tools failed) · `failed` · `nothing_to_do` |
-| `stop_reason` | `completed`, `completed_with_errors`, `call_budget`, `time_budget`, `repeated_failures`, `all_failed`, `nothing_to_do` |
+| `stop_reason` | `completed`, `completed_with_errors`, `call_budget`, `time_budget`, `repeated_failures`, `all_failed`, `nothing_to_do`, `stopped_by_user` |
 | `plan` | modules chosen **before** any tool ran (from the goal and supplied inputs only) |
+| `verdicts` | each module's headline verdict by its own rule (MIRAGE/ECHO `suspicious`/`inconclusive`/`benign`, BLACKBOX `official`/`likely_fake`/...) |
 | `trace` | per module: `completed` / `failed` / `timed_out` / `skipped` (with reason), time taken |
 | `errors` | `invalid_input`, `tool_failed`, `tool_timeout`, `malformed_result` and module errors |
 | `warnings` | `instructions_in_content`, `duplicate_input` |
@@ -48,5 +71,6 @@ completes with a `likely_fake` finding.
 - The injection scan is a small set of English phrase patterns. It is a reviewer alert, not
   the defence: the defence is that tool output never controls the coordinator. Paraphrased or
   non-English instructions will not be flagged (and still cannot change anything).
-- Routing uses keywords in the goal, not a language model. A goal that names no module
+- Routing uses whole-word keywords in the goal, not a language model. (Fixed 26 Nov: plain
+  substring matching made "invoice" trigger the call check, because it contains "voice".) A goal that names no module
   keyword, and is not "investigate"/"all", runs nothing and says so (`nothing_to_do`).

@@ -4,13 +4,16 @@ from __future__ import annotations
 
 import json
 import logging
+import queue
 import tempfile
+import threading
+import uuid
 from pathlib import Path
 
 import cv2
 import numpy as np
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
-from fastapi.responses import FileResponse, HTMLResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse, Response, StreamingResponse
 from pydantic import BaseModel, Field
 
 from phantom.blackbox.investigate import SCENARIOS, evaluate, investigate, scenario_html
@@ -23,6 +26,7 @@ from phantom.echo.analyze import overall_outcome as echo_overall_outcome
 from phantom.mirage.analyze import analyze_document, overall_outcome
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
+log = logging.getLogger("phantom.api")
 app = FastAPI(title="PHANTOM AI", version="0.3.0")
 REPO_ROOT = Path(__file__).resolve().parents[2]
 store = EvidenceStore(REPO_ROOT / "evidence_store")
@@ -287,24 +291,125 @@ class CoordinatorRequest(BaseModel):
     website_url: str | None = Field(default=None, max_length=2048)
     url_lookups: bool = False
     max_calls: int = Field(default=3, ge=1, le=3)
+    max_seconds: float = Field(default=120, ge=1, le=600)
+    tool_timeout: float = Field(default=90, ge=1, le=600)
 
 
-@app.post("/coordinator/investigate")
-def coordinator_investigate(options: CoordinatorRequest, request: Request) -> dict:
+def _coordinator_kwargs(options: CoordinatorRequest, request: Request) -> dict:
     if options.scenario is not None and options.scenario not in SCENARIOS:
         raise HTTPException(400, "unknown synthetic scenario")
     url = (
         str(request.base_url).rstrip("/") + f"/synthetic/{options.scenario}/start"
         if options.scenario else None
     )
+    return {"goal": options.goal, "store": store,
+            "document_id": options.document_evidence_id or None,
+            "audio_id": options.audio_evidence_id or None, "target_url": url,
+            "max_calls": options.max_calls, "max_seconds": options.max_seconds,
+            "website_url": options.website_url or None, "url_lookups": options.url_lookups,
+            "tool_timeout": options.tool_timeout}
+
+
+@app.post("/coordinator/investigate")
+def coordinator_investigate(options: CoordinatorRequest, request: Request) -> dict:
     try:
-        return coordinate(
-            options.goal, store, options.document_evidence_id,
-            options.audio_evidence_id, url, options.max_calls,
-            website_url=options.website_url, url_lookups=options.url_lookups,
-        )
+        return coordinate(**_coordinator_kwargs(options, request))
     except CoordinatorInputError as error:
         raise HTTPException(400, str(error)) from error
+
+
+_STOP_FLAGS: dict[str, threading.Event] = {}
+
+
+@app.post("/coordinator/stream")
+def coordinator_stream(options: CoordinatorRequest, request: Request) -> StreamingResponse:
+    """Same investigation, streamed as NDJSON progress events for the live UI:
+    started -> plan -> start/step per module -> report (or error)."""
+    kwargs = _coordinator_kwargs(options, request)
+    run = f"crun_{uuid.uuid4().hex[:12]}"
+    stop = _STOP_FLAGS[run] = threading.Event()
+    events: queue.Queue = queue.Queue()
+
+    def work():
+        try:
+            report = coordinate(**kwargs, on_event=events.put, should_stop=stop.is_set)
+            events.put({"type": "report", "report": report})
+        except CoordinatorInputError as error:
+            events.put({"type": "error", "message": str(error)})
+        except Exception as error:  # noqa: BLE001 - reported to the UI, not raised
+            log.exception("coordinator run failed")
+            events.put({"type": "error", "message": f"{type(error).__name__}: {error}"})
+        finally:
+            events.put(None)
+
+    def stream():
+        yield json.dumps({"type": "started", "run": run}) + "\n"
+        threading.Thread(target=work, daemon=True, name=run).start()
+        try:
+            while (event := events.get()) is not None:
+                yield json.dumps(event, default=str) + "\n"
+        finally:
+            stop.set()  # client went away: do not start further tools
+            _STOP_FLAGS.pop(run, None)
+
+    return StreamingResponse(stream(), media_type="application/x-ndjson")
+
+
+@app.post("/coordinator/stop/{run}")
+def coordinator_stop(run: str) -> dict:
+    """Ask a streaming run to stop before its next tool call."""
+    flag = _STOP_FLAGS.get(run)
+    if flag is None:
+        raise HTTPException(404, "no such running investigation")
+    flag.set()
+    return {"run": run, "stopping": True}
+
+
+UPLOAD_TYPES = {
+    "document": {".pdf", ".png", ".jpg", ".jpeg", ".tif", ".tiff"},
+    "audio": {".wav", ".mp3", ".flac", ".m4a", ".mp4", ".ogg", ".opus", ".webm", ".aac",
+              ".amr", ".3gp", ".wma"},
+}
+MAX_UPLOAD_BYTES = 50 * 1024 * 1024
+
+
+@app.post("/evidence/upload")
+async def evidence_upload(kind: str, file: UploadFile = File(...)) -> dict:
+    """Store a document or recording as evidence (hashed), without analysing it,
+    so the coordinator can run the modules on it."""
+    if kind not in UPLOAD_TYPES:
+        raise HTTPException(400, "kind must be 'document' or 'audio'")
+    suffix = Path(file.filename or "").suffix.lower()
+    if suffix not in UPLOAD_TYPES[kind]:
+        raise HTTPException(400, f"unsupported {kind} file type {suffix or '(none)'}; "
+                                 f"allowed: {', '.join(sorted(UPLOAD_TYPES[kind]))}")
+    data = await file.read(MAX_UPLOAD_BYTES + 1)
+    if not data:
+        raise HTTPException(400, "empty file")
+    if len(data) > MAX_UPLOAD_BYTES:
+        raise HTTPException(413, "file larger than 50 MB")
+    name = Path(file.filename or f"upload{suffix}").name[:200]
+    evidence_id = store.put(data, kind=kind, source=name)
+    return {"evidence_id": evidence_id, "kind": kind, "source": name, "bytes": len(data)}
+
+
+@app.get("/evidence/recent")
+def evidence_recent(kind: str, limit: int = 12) -> dict:
+    """Most recent document / audio evidence (from uploads or earlier MIRAGE/ECHO runs)."""
+    if kind not in UPLOAD_TYPES:
+        raise HTTPException(400, "kind must be 'document' or 'audio'")
+    items = []
+    for prov in sorted(store.root.glob("ev_*/provenance.json"),
+                       key=lambda p: p.stat().st_mtime, reverse=True):
+        try:
+            record = json.loads(prov.read_text())
+        except (OSError, ValueError):
+            continue
+        if record.get("kind") == kind:
+            items.append({k: record.get(k) for k in ("evidence_id", "source", "stored_at")})
+            if len(items) >= max(1, min(limit, 50)):
+                break
+    return {"kind": kind, "items": items}
 
 
 @app.get("/evidence/{evidence_id}")

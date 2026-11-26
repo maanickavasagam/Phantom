@@ -197,6 +197,63 @@
   .chain .hop { background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; overflow-wrap: anywhere; }
   .chain .arr { color: var(--text-3); }
   @media (max-width: 900px) { .pv { grid-template-columns: 1fr; } .checks { grid-template-columns: 1fr; } }
+  /* ---------- Coordinator */
+  .co-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(300px, 1fr); gap: 18px; align-items: start; }
+  .co-grid .card { margin-bottom: 18px; }
+  .co-goal { width: 100%; font: inherit; font-size: 15px; padding: 10px 12px; border: 1px solid var(--border-2); border-radius: 8px; resize: vertical; }
+  .co-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .co-chips button { cursor: pointer; text-transform: none; font-weight: 500; }
+  .co-in { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .co-in:last-of-type { border-bottom: 0; }
+  .co-ic { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; flex: none; background: var(--brand-soft); color: var(--brand); }
+  .co-ic svg { width: 18px; height: 18px; }
+  .co-body { flex: 1; min-width: 0; }
+  .co-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px; }
+  .co-row select, .co-row input:not([type=checkbox]) { font: inherit; padding: 6px 8px; border: 1px solid var(--border-2); border-radius: 7px; background: var(--surface); min-width: 0; }
+  .co-row #coUrl { flex: 1; min-width: 220px; }
+  .co-row select { max-width: 100%; }
+  .co-sel { margin-top: 6px; font-size: 13px; }
+  .linkbtn { border: 0; background: none; color: var(--brand); cursor: pointer; padding: 0 4px; font-size: 12px; }
+  .co-limits { margin-top: 12px; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; background: var(--surface-2); }
+  .co-limits summary { cursor: pointer; font-weight: 600; font-size: 13px; }
+  .co-plan { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 12px; font-size: 12px; }
+  .co-pl { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--border); border-radius: 99px; padding: 2px 9px; color: var(--text-3); }
+  .co-pl svg { width: 13px; height: 13px; }
+  .co-pl.run { color: var(--brand-ink); background: var(--brand-soft); border-color: #c7d2fe; font-weight: 600; }
+  .co-pl.missing, .co-pl.unasked { color: var(--inc); background: var(--inc-soft); border-color: var(--inc-line); }
+  .co-meters { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .co-meters div { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }
+  .co-meters span { display: block; font-size: 11px; color: var(--text-3); }
+  .co-meters b { font-size: 15px; }
+  .co-meters i, .co-bar { display: block; height: 5px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--border); margin-top: 6px; overflow: hidden; }
+  .co-meters u, .co-bar u { display: block; height: 100%; background: var(--brand); transition: width .2s linear; }
+  .co-meters u.hot { background: var(--inc); }
+  .co-steps { list-style: none; margin: 0; padding: 0; position: relative; }
+  .co-empty { color: var(--text-3); font-size: 13px; padding: 10px 0; }
+  .co-step { display: flex; gap: 12px; padding: 0 0 14px; position: relative; }
+  .co-step:not(:last-child)::before { content: ""; position: absolute; left: 13px; top: 28px; bottom: 2px; width: 2px; background: var(--border); }
+  .co-step > div { flex: 1; min-width: 0; border: 1px solid var(--border); border-radius: 9px; padding: 8px 10px; background: var(--surface); }
+  .co-dot { width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 13px; background: var(--surface-2); border: 2px solid var(--border-2); color: var(--text-3); z-index: 1; }
+  .co-step.running .co-dot { border-color: var(--brand); background: var(--brand-soft); }
+  .co-step.running > div { border-color: #a5b4fc; box-shadow: 0 0 0 3px #e0e7ff; }
+  .co-step.completed .co-dot { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .co-step.failed .co-dot, .co-step.timed_out .co-dot { background: var(--sus); border-color: var(--sus); color: #fff; }
+  .co-step.failed > div, .co-step.timed_out > div { border-color: var(--sus-line); background: var(--sus-soft); }
+  .co-step.skipped > div { border-style: dashed; color: var(--text-3); }
+  .co-sh { display: flex; align-items: center; gap: 7px; }
+  .co-sh svg { width: 15px; height: 15px; color: var(--brand); }
+  .co-sd { font-size: 12.5px; color: var(--text-2); margin-top: 3px; overflow-wrap: anywhere; }
+  .co-st { font-size: 11.5px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .04em; }
+  .co-st.completed { color: var(--ok); } .co-st.failed, .co-st.timed_out { color: var(--sus); }
+  .spin.sm { width: 14px; height: 14px; border-width: 2px; }
+  .co-mods { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 14px; }
+  .co-mod { border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; border-left-width: 4px; }
+  .co-mod.suspicious { border-left-color: var(--sus); } .co-mod.inconclusive { border-left-color: var(--inc); } .co-mod.benign { border-left-color: var(--ok); }
+  .co-hist { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .co-hist th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); border-bottom: 1px solid var(--border); padding: 6px 8px; }
+  .co-hist td { border-bottom: 1px solid var(--border); padding: 7px 8px; vertical-align: top; overflow-wrap: anywhere; }
+  .co-hist td.num { white-space: nowrap; }
+  @media (max-width: 1000px) { .co-grid { grid-template-columns: 1fr; } }
   .fcard { border: 1px solid var(--border); border-radius: 9px; padding: 12px; margin-bottom: 10px; background: var(--surface); box-shadow: var(--shadow); transition: border-color .12s, box-shadow .12s; }
   .fcard:hover, .fcard.hl { border-color: #a5b4fc; box-shadow: 0 0 0 3px #e0e7ff; }
   .fcard .h { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
@@ -440,17 +497,52 @@
         </div></details>
     </div></div></section>
     <section class="view hidden" id="v-coordinator"><div class="evalv"><div class="wrap">
-      <div class="card"><div class="ch"><h2>Bounded coordinator</h2></div>
-        <div style="padding:20px">
-          <p>Select the supplied evidence to inspect. The coordinator keeps a tool trace and requires human review.</p>
-          <label>Goal <input id="coordGoal" value="Investigate document, audio and website" style="min-width:320px"></label>
-          <label>Document evidence ID <input id="coordDoc" placeholder="ev_…"></label>
-          <label>Audio evidence ID <input id="coordAudio" placeholder="ev_…"></label>
-          <label>Website scenario <select id="coordScenario"><option value="">None</option></select></label>
-          <button class="btn primary" id="coordRun">Run investigation</button>
-          <pre class="json" id="coordOutput">Supply an evidence ID or synthetic scenario.</pre>
-        </div>
+      <div class="ph"><div><h1>Investigate a case</h1>
+        <p>Give one goal and the evidence you have. The coordinator decides which checks to run (at most three),
+        runs them under time limits, records every step, and hands the result to a human reviewer.</p></div></div>
+      <div class="co-grid">
+        <div class="card"><div class="ch"><h2>1 · What should be checked?</h2></div><div class="cb" style="padding-top:12px">
+          <textarea id="coGoal" rows="2" maxlength="2000" class="co-goal">Investigate the invoice, the call recording and the link</textarea>
+          <div class="co-chips" id="coGoalChips"></div>
+          <h3 class="bbh">2 · Evidence</h3>
+          <div class="co-in" data-mod="mirage">
+            <div class="co-ic mirage"><svg><use href="#i-doc"/></svg></div>
+            <div class="co-body"><b>Document</b> <span class="note-muted">MIRAGE · invoice or receipt (PDF, PNG, JPG, TIFF)</span>
+              <div class="co-row"><label class="btn"><svg><use href="#i-upload"/></svg> Upload<input type="file" id="coDocFile" hidden accept=".pdf,.png,.jpg,.jpeg,.tif,.tiff"></label>
+                <select id="coDocRecent"><option value="">…or pick a recent document</option></select></div>
+              <div class="co-sel" id="coDocSel"></div></div></div>
+          <div class="co-in" data-mod="echo">
+            <div class="co-ic echo"><svg><use href="#i-wave"/></svg></div>
+            <div class="co-body"><b>Call recording</b> <span class="note-muted">ECHO · WAV, MP3, M4A, FLAC…</span>
+              <div class="co-row"><label class="btn"><svg><use href="#i-upload"/></svg> Upload<input type="file" id="coAudioFile" hidden accept=".wav,.mp3,.flac,.m4a,.mp4,.ogg,.opus,.webm,.aac,.amr,.3gp,.wma"></label>
+                <select id="coAudioRecent"><option value="">…or pick a recent recording</option></select></div>
+              <div class="co-sel" id="coAudioSel"></div></div></div>
+          <div class="co-in" data-mod="blackbox">
+            <div class="co-ic blackbox"><svg><use href="#i-globe"/></svg></div>
+            <div class="co-body"><b>Website link</b> <span class="note-muted">BLACKBOX · is it the real brand or a lookalike?</span>
+              <div class="co-row"><input id="coUrl" placeholder="https://…" maxlength="2048">
+                <label class="tgl"><input type="checkbox" id="coLookups"> Safe lookups</label></div></div></div>
+          <details class="co-limits"><summary>Limits <span class="note-muted" id="coLimitsSum"></span></summary>
+            <div class="co-row" style="margin-top:8px">
+              <label>Max checks <select id="coMaxCalls"><option>1</option><option>2</option><option selected>3</option></select></label>
+              <label>Time budget <select id="coMaxSec"><option value="30">30 s</option><option value="60">60 s</option><option value="120" selected>2 min</option><option value="300">5 min</option></select></label>
+              <label>Per-check timeout <select id="coToolTo"><option value="10">10 s</option><option value="30">30 s</option><option value="90" selected>90 s</option><option value="180">3 min</option></select></label>
+            </div>
+            <label style="display:block;margin-top:8px" class="note-muted">Legacy synthetic website scenario <select id="coordScenario"><option value="">None</option></select></label>
+          </details>
+          <div class="co-plan" id="coPlan"></div>
+          <div class="co-row" style="margin-top:12px">
+            <button class="btn primary" id="coRun"><svg><use href="#i-search"/></svg> Run investigation</button>
+            <button class="btn" id="coStop" hidden>Stop after current check</button>
+            <span class="note-muted" id="coMsg"></span></div>
+        </div></div>
+        <div class="card"><div class="ch"><h2>Progress</h2><span class="grow"></span><span class="tag neutral" id="coState">idle</span></div>
+          <div class="cb" style="padding-top:12px">
+            <div class="co-meters" id="coMeters"></div>
+            <ol class="co-steps" id="coSteps"><li class="co-empty">Steps appear here when the investigation runs.</li></ol>
+          </div></div>
       </div>
+      <div id="coReport"></div>
     </div></div></section>
     <section class="view hidden" id="v-eval"><div class="evalv"><div class="wrap" id="evalBody"></div></div></section>
   </div>
@@ -1138,23 +1230,241 @@ async function runPreview(url) {
       </div></div>`;
 }
 
-$("#coordRun").onclick = async () => {
-  $("#coordOutput").textContent = "Investigating…";
+// ============================================================ Coordinator: inputs, live progress, report
+const CO_MODS = {
+  mirage: { name: "MIRAGE", what: "Document check", icon: "i-doc" },
+  echo: { name: "ECHO", what: "Call check", icon: "i-wave" },
+  blackbox: { name: "BLACKBOX", what: "Link check", icon: "i-globe" } };
+// mirrors phantom/coordinator/engine.py KEYWORDS (used only to preview the plan)
+const CO_KEYWORDS = {
+  mirage: ["document", "invoice", "receipt", "image", "pdf", "bill"],
+  echo: ["audio", "voice", "call", "speech", "recording"],
+  blackbox: ["web", "website", "browser", "site", "url", "link", "domain"] };
+const CO_ALL = ["investigate", "all", "everything", "investigate all"];
+const CO_GOALS = ["Investigate the invoice, the call recording and the link", "Check this invoice",
+  "Is this call a scam?", "Is this link real?", "investigate"];
+const CO_STOP = {
+  completed: "All planned checks finished.", completed_with_errors: "Finished, but some checks reported errors.",
+  call_budget: "Stopped: the maximum number of checks was reached.", time_budget: "Stopped: the time budget ran out.",
+  repeated_failures: "Stopped after two checks failed in a row.", all_failed: "Every planned check failed.",
+  nothing_to_do: "Nothing to run: the goal does not mention any supplied evidence.",
+  stopped_by_user: "Stopped by you before the remaining checks." };
+const CO_STATUS = { completed: ["benign", "i-check", "Investigation complete"], partial: ["inconclusive", "i-help", "Partly complete"],
+  failed: ["suspicious", "i-alert", "Investigation failed"], nothing_to_do: ["inconclusive", "i-help", "Nothing was run"] };
+const co = { doc: null, audio: null, run: null, t0: 0, timer: null, steps: {}, plan: [], budget: null, calls: 0 };
+
+$("#coGoalChips").innerHTML = CO_GOALS.map(g => `<button class="tag neutral" data-g="${esc(g)}">${esc(g)}</button>`).join("");
+$$("#coGoalChips button").forEach(b => b.onclick = () => { $("#coGoal").value = b.dataset.g; coPlanPreview(); });
+
+async function coRecent(kind, sel) {
   try {
-    const response = await fetch("/coordinator/investigate", {
-      method: "POST", headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        goal: $("#coordGoal").value,
-        document_evidence_id: $("#coordDoc").value || null,
-        audio_evidence_id: $("#coordAudio").value || null,
-        scenario: $("#coordScenario").value || null
-      })
-    });
-    coordState = await response.json();
-    $("#coordOutput").textContent = JSON.stringify(coordState, null, 2);
-    $("#btnJson").disabled = $("#btnPrint").disabled = !response.ok;
-  } catch (error) { $("#coordOutput").textContent = String(error); }
+    const d = await (await fetch(`/evidence/recent?kind=${kind}`)).json();
+    const first = sel.options[0];
+    sel.innerHTML = "";
+    sel.add(first);
+    (d.items || []).forEach(it => sel.add(new Option(`${it.source} · ${it.evidence_id}`, it.evidence_id)));
+  } catch (e) { /* list stays empty */ }
+}
+function coShowSel(slot) {
+  const it = co[slot], box = $(slot === "doc" ? "#coDocSel" : "#coAudioSel");
+  box.innerHTML = it ? `<span class="pill-check">${esc(it.id)}</span> <b>${esc(it.source)}</b>
+    <button class="linkbtn" data-clear="${slot}">remove</button>` : "";
+  const b = box.querySelector("[data-clear]");
+  if (b) b.onclick = () => { co[slot] = null; $(slot === "doc" ? "#coDocRecent" : "#coAudioRecent").value = ""; coShowSel(slot); coPlanPreview(); };
+  coPlanPreview();
+}
+async function coUpload(input, kind, slot) {
+  const f = input.files[0];
+  if (!f) return;
+  const box = $(slot === "doc" ? "#coDocSel" : "#coAudioSel");
+  box.innerHTML = `<span class="note-muted">Uploading ${esc(f.name)}…</span>`;
+  const fd = new FormData();
+  fd.append("file", f);
+  const r = await fetch(`/evidence/upload?kind=${kind}`, { method: "POST", body: fd });
+  const d = await r.json();
+  input.value = "";
+  if (!r.ok) { box.innerHTML = `<span class="badline">${esc(d.detail || "Upload failed")}</span>`; return; }
+  co[slot] = { id: d.evidence_id, source: d.source };
+  coShowSel(slot);
+  coRecent(kind, $(slot === "doc" ? "#coDocRecent" : "#coAudioRecent"));
+}
+$("#coDocFile").onchange = e => coUpload(e.target, "document", "doc");
+$("#coAudioFile").onchange = e => coUpload(e.target, "audio", "audio");
+$("#coDocRecent").onchange = e => { const o = e.target.selectedOptions[0]; co.doc = e.target.value ? { id: e.target.value, source: o.text.split(" · ")[0] } : null; coShowSel("doc"); };
+$("#coAudioRecent").onchange = e => { const o = e.target.selectedOptions[0]; co.audio = e.target.value ? { id: e.target.value, source: o.text.split(" · ")[0] } : null; coShowSel("audio"); };
+["#coGoal", "#coUrl", "#coMaxCalls", "#coMaxSec", "#coToolTo", "#coordScenario"].forEach(s => $(s).addEventListener("input", coPlanPreview));
+
+function coSupplied() {
+  return { mirage: co.doc && co.doc.id, echo: co.audio && co.audio.id,
+    blackbox: $("#coUrl").value.trim() || ($("#coordScenario").value ? "scenario" : "") };
+}
+function coPlanPreview() {
+  const g = $("#coGoal").value.toLowerCase().trim(), sup = coSupplied(), all = CO_ALL.includes(g);
+  const rows = Object.keys(CO_MODS).map(m => {
+    const asked = all || CO_KEYWORDS[m].some(w => new RegExp("\\b" + w).test(g));
+    const st = asked && sup[m] ? "run" : asked ? "missing" : sup[m] ? "unasked" : "off";
+    const say = { run: "will run", missing: "goal asks for it, but no evidence given", unasked: "evidence given, but the goal does not ask for it", off: "not needed" }[st];
+    return `<span class="co-pl ${st}"><svg><use href="#${CO_MODS[m].icon}"/></svg>${CO_MODS[m].name}: ${say}</span>`;
+  }).join("");
+  $("#coPlan").innerHTML = `<span class="note-muted" style="margin-right:4px">Plan:</span>${rows}`;
+  $("#coLimitsSum").textContent = `· up to ${$("#coMaxCalls").value} checks, ${$("#coMaxSec").selectedOptions[0].text} total, ${$("#coToolTo").selectedOptions[0].text} each`;
+}
+
+function coMeters() {
+  const b = co.budget || { max_calls: +$("#coMaxCalls").value, max_seconds: +$("#coMaxSec").value };
+  const el = co.t0 ? (performance.now() - co.t0) / 1000 : 0;
+  const pct = (v, m) => Math.min(100, Math.round(100 * v / m));
+  $("#coMeters").innerHTML = `
+    <div><span>Checks used</span><b>${co.calls} / ${b.max_calls}</b><i><u style="width:${pct(co.calls, b.max_calls)}%"></u></i></div>
+    <div><span>Time used</span><b>${el.toFixed(1)} s / ${b.max_seconds} s</b><i><u class="${el > b.max_seconds * .8 ? "hot" : ""}" style="width:${pct(el, b.max_seconds)}%"></u></i></div>`;
+}
+const CO_STEP_TXT = { waiting: "waiting", running: "running…", completed: "done", failed: "failed", timed_out: "timed out", skipped: "skipped" };
+function coRenderSteps() {
+  const order = co.plan.length ? co.plan : Object.keys(co.steps);
+  if (!order.length) { $("#coSteps").innerHTML = `<li class="co-empty">${co.run ? "Planning…" : "No checks were planned."}</li>`; return; }
+  $("#coSteps").innerHTML = order.map((m, i) => {
+    const s = co.steps[m] || { status: "waiting" }, M = CO_MODS[m];
+    let detail = "";
+    if (s.status === "running") {
+      const el = (performance.now() - s.t) / 1000;
+      detail = `${el.toFixed(1)} s of max ${s.timeout} s<i class="co-bar"><u style="width:${Math.min(100, 100 * el / s.timeout)}%"></u></i>`;
+    } else if (s.status === "completed") detail = `${s.findings} finding${s.findings === 1 ? "" : "s"} · ${s.seconds} s`;
+    else if (s.status === "failed" || s.status === "timed_out") detail = `<span class="badline">${esc(s.code || "")}</span> ${esc(s.error || "")}`;
+    else if (s.status === "skipped") detail = esc(s.reason || "");
+    return `<li class="co-step ${s.status}"><span class="co-dot">${s.status === "running" ? '<span class="spin sm"></span>' : s.status === "completed" ? "✓" : s.status === "waiting" ? i + 1 : s.status === "skipped" ? "–" : "✗"}</span>
+      <div><div class="co-sh"><svg><use href="#${M.icon}"/></svg><b>${M.name}</b> <span class="note-muted">${M.what}</span><span class="grow"></span>
+      <span class="co-st">${CO_STEP_TXT[s.status] || esc(s.status)}</span></div><div class="co-sd">${detail}</div></div></li>`;
+  }).join("");
+}
+function coTick() { coMeters(); if (Object.values(co.steps).some(s => s.status === "running")) coRenderSteps(); }
+
+function coEvent(ev) {
+  if (ev.type === "started") { co.run = ev.run; $("#coStop").hidden = false; }
+  else if (ev.type === "plan") { co.plan = ev.plan; co.budget = ev.budget; }
+  else if (ev.type === "start") { co.steps[ev.module] = { status: "running", t: performance.now(), timeout: ev.timeout_s }; co.calls++; }
+  else if (ev.type === "step") {
+    const s = ev.step;
+    if (!co.plan.includes(s.module)) co.plan.push(s.module);
+    co.steps[s.module] = s;
+  } else if (ev.type === "report") coFinish(ev.report);
+  else if (ev.type === "error") coFinish(null, ev.message);
+  coRenderSteps(); coMeters();
+}
+async function coRunInvestigation() {
+  if (!$("#coGoal").value.trim()) { $("#coMsg").textContent = "Write a goal first, e.g. \"Check this invoice\"."; $("#coGoal").focus(); return; }
+  const body = { goal: $("#coGoal").value.trim(), document_evidence_id: co.doc && co.doc.id, audio_evidence_id: co.audio && co.audio.id,
+    website_url: $("#coUrl").value.trim() || null, url_lookups: $("#coLookups").checked, scenario: $("#coordScenario").value || null,
+    max_calls: +$("#coMaxCalls").value, max_seconds: +$("#coMaxSec").value, tool_timeout: +$("#coToolTo").value };
+  Object.assign(co, { run: null, steps: {}, plan: [], budget: null, calls: 0, t0: performance.now() });
+  $("#coRun").disabled = true; $("#coMsg").textContent = ""; $("#coReport").innerHTML = "";
+  $("#coState").className = "tag inc"; $("#coState").textContent = "running";
+  clearInterval(co.timer); co.timer = setInterval(coTick, 200);
+  coRenderSteps(); coMeters();
+  try {
+    const r = await fetch("/coordinator/stream", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    if (!r.ok) {
+      const d = await r.json().catch(() => ({}));
+      const msg = Array.isArray(d.detail) ? d.detail.map(x => `${x.loc.slice(-1)[0]}: ${x.msg}`).join("; ") : d.detail;
+      return coFinish(null, msg || `request failed (${r.status})`);
+    }
+    const reader = r.body.getReader(), dec = new TextDecoder();
+    let buf = "";
+    for (;;) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let nl;
+      while ((nl = buf.indexOf("\n")) >= 0) {
+        const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
+        if (line) coEvent(JSON.parse(line));
+      }
+    }
+    if (co.run) coFinish(null, "the connection closed before the report arrived");
+  } catch (e) { coFinish(null, String(e.message || e)); }
+}
+$("#coRun").onclick = coRunInvestigation;
+$("#coStop").onclick = async () => {
+  if (!co.run) return;
+  $("#coStop").disabled = true; $("#coMsg").textContent = "Stopping after the current check…";
+  await fetch(`/coordinator/stop/${encodeURIComponent(co.run)}`, { method: "POST" }).catch(() => {});
 };
+
+const CO_VERDICT = { suspicious: ["suspicious", "Suspicious"], inconclusive: ["inconclusive", "Inconclusive"], benign: ["benign", "No problems found"],
+  official: ["benign", "Official website"], likely_fake: ["suspicious", "Likely FAKE website"], no_brand_link: ["benign", "No brand link"] };
+function coModVerdict(res, report) {
+  const v = (report.verdicts || []).find(x => x.module === res.module);
+  if (res.errors && res.errors.length && !res.findings.length) return ["inconclusive", "Could not analyse"];
+  if (v && res.module === "blackbox" && v.verdict === "suspicious") return ["inconclusive", "Suspicious website"];
+  return CO_VERDICT[v && v.verdict] || ["inconclusive", "See findings"];
+}
+function coFinish(report, error) {
+  clearInterval(co.timer); co.timer = null;
+  co.run = null;
+  $("#coRun").disabled = false; $("#coStop").hidden = true; $("#coStop").disabled = false;
+  if (!report) {
+    $("#coState").className = "tag sus"; $("#coState").textContent = "error";
+    $("#coMsg").textContent = "";
+    $("#coReport").innerHTML = `<div class="callout warn"><b>The investigation could not run.</b> ${esc(error)}</div>`;
+    return;
+  }
+  coordState = report;
+  ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = false);
+  co.plan = report.plan.length ? report.plan : co.plan;
+  report.trace.forEach(t => { co.steps[t.module] = t; });
+  coRenderSteps(); coMeters();
+  const [cls, icon, title] = CO_STATUS[report.status] || CO_STATUS.partial;
+  $("#coState").className = `tag ${cls === "benign" ? "ok" : cls === "suspicious" ? "sus" : "inc"}`;
+  $("#coState").textContent = report.status.replace(/_/g, " ");
+  $("#coMsg").textContent = `Finished in ${report.elapsed_s} s`;
+  const mods = report.results.map(res => {
+    const [vc, vt] = coModVerdict(res, report), M = CO_MODS[res.module];
+    return `<div class="co-mod ${vc}"><div class="co-sh"><svg><use href="#${M.icon}"/></svg><b>${M.name}</b><span class="grow"></span>
+      <span class="tag ${vc === "benign" ? "ok" : vc === "suspicious" ? "sus" : "inc"}">${esc(vt)}</span></div>
+      <div class="note-muted" style="font-size:12px;margin-top:4px">${res.findings.length} finding${res.findings.length === 1 ? "" : "s"} · ${res.evidence_ids.length} evidence item${res.evidence_ids.length === 1 ? "" : "s"}</div></div>`;
+  }).join("");
+  const warn = (report.warnings || []).map(w => `<div class="callout warn" style="margin:0 0 8px"><b>${w.code === "instructions_in_content" ? "Hidden instructions found in the evidence" : "Check the inputs"}.</b> ${esc(w.message)}</div>`).join("");
+  const errs = (report.errors || []).map(e => `<li><span class="tag sus">${esc(e.code)}</span> <b>${esc((CO_MODS[e.module] || {}).name || e.module)}</b>: ${esc(e.message)}</li>`).join("");
+  const miss = (report.missing_inputs || []).map(m => `<li>${esc(m === "no relevant supplied input" ? m : `${CO_MODS[m] ? CO_MODS[m].what : m}: the goal mentions it but no evidence was given`)}</li>`).join("");
+  const order = { suspicious: 0, inconclusive: 1, benign: 2 };
+  const fnd = [...report.findings].sort((a, b) => order[a.outcome] - order[b.outcome]).map(f => {
+    const oc = f.outcome;
+    return `<div class="fcard"><div class="h"><span class="tag ${oc === "suspicious" ? "sus" : oc === "inconclusive" ? "inc" : "ok"}">${esc(oc)}</span>
+      <span class="tag neutral">${esc((CO_MODS[f.module] || {}).name || f.module)}</span><span class="name">${esc((CHECKS[f.check] || {}).name || f.check.replace(/^verdict_/, "verdict: ").replace(/_/g, " "))}</span></div>
+      <div class="d">${esc(f.description)}</div>
+      <div class="meta"><span>evidence ${[...new Set(f.evidence.map(e => e.evidence_id))].map(id => ({ evidence_id: id })).map(e => `<a class="pill-check" href="/evidence/${esc(e.evidence_id)}" target="_blank" rel="noopener">${esc(e.evidence_id)}</a>`).join(" ")}</span>
+      <span>confidence ${Math.round(100 * f.uncertainty.confidence)}% (uncalibrated)</span></div></div>`;
+  }).join("") || `<p class="note-muted">No findings.</p>`;
+  const hist = report.trace.map((t, i) => `<tr><td class="num">${i + 1}</td><td><b>${esc((CO_MODS[t.module] || {}).name || t.module)}</b></td>
+    <td><span class="co-st ${t.status}">${esc(CO_STEP_TXT[t.status] || t.status)}</span></td>
+    <td class="num">${t.seconds != null ? t.seconds + " s" : t.elapsed_s != null ? "at " + t.elapsed_s + " s" : "–"}</td>
+    <td>${esc(t.reason || t.error || (t.run_id ? `run ${t.run_id} · ${t.findings} finding(s)` : ""))}</td></tr>`).join("");
+  // headline = what the checks found; the run status (complete / partial / failed) is the detail
+  const mv = report.results.map(res => coModVerdict(res, report)[0]);
+  const nBad = mv.filter(v => v === "suspicious").length, nInc = mv.filter(v => v === "inconclusive").length;
+  const [hc, hi, ht] = !report.results.length ? [cls, icon, title]
+    : nBad ? ["suspicious", "i-alert", `Problems found by ${nBad} of ${mv.length} check${mv.length === 1 ? "" : "s"}`]
+    : nInc ? ["inconclusive", "i-help", `Unclear: ${nInc} of ${mv.length} check${mv.length === 1 ? "" : "s"} need a closer look`]
+    : ["benign", "i-check", `No problems found by ${mv.length} check${mv.length === 1 ? "" : "s"}`];
+  const runNote = report.status === "completed" ? "" : ` <span class="tag ${cls === "suspicious" ? "sus" : "inc"}">${esc(title)}</span>`;
+  $("#coReport").innerHTML = `
+    <div class="card"><div class="cb" style="padding:18px">
+      <div class="verdict ${hc}" style="margin:0"><div class="lbl">Coordinator report · needs human review${runNote}</div>
+        <div class="v"><svg><use href="#${hi}"/></svg>${ht}</div>
+        <p>${esc(CO_STOP[report.stop_reason] || report.stop_reason)} ${report.tool_calls} check${report.tool_calls === 1 ? "" : "s"} run in ${report.elapsed_s} s.
+        These are leads for a person to verify, not accusations.</p></div>
+      ${mods ? `<div class="co-mods">${mods}</div>` : ""}
+      ${warn ? `<div style="margin-top:14px">${warn}</div>` : ""}
+      ${errs ? `<h3 class="bbh">Problems</h3><ul class="notes">${errs}</ul>` : ""}
+      ${miss ? `<h3 class="bbh">Missing evidence</h3><ul class="notes">${miss}</ul>` : ""}
+      <h3 class="bbh">Findings (${report.findings.length})</h3>${fnd}
+      <h3 class="bbh">Action history</h3>
+      <table class="co-hist"><tr><th>#</th><th>Check</th><th>Result</th><th>Time</th><th>Detail</th></tr>${hist}</table>
+      <p class="note-muted" style="margin:10px 0 0">Evidence items: ${report.evidence_ids.map(id => `<a class="pill-check" href="/evidence/${esc(id)}" target="_blank" rel="noopener">${esc(id)}</a>`).join(" ") || "none"}
+       · limits: ${report.budget.max_calls} checks, ${report.budget.max_seconds} s total, ${report.budget.tool_timeout} s per check</p>
+    </div></div>`;
+}
+coRecent("document", $("#coDocRecent")); coRecent("audio", $("#coAudioRecent"));
+coPlanPreview(); coMeters();
 renderLib();
 </script>
 </body>

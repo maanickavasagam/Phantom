@@ -36,7 +36,9 @@ from phantom.blackbox.urltool import MAX_URL_LENGTH, check_url_tool
 from phantom.common.evidence_store import EvidenceStore
 from phantom.common.schemas import ToolResult
 from phantom.echo.analyze import analyze_audio
+from phantom.echo.analyze import overall_outcome as echo_outcome
 from phantom.mirage.analyze import analyze_document
+from phantom.mirage.analyze import overall_outcome as mirage_outcome
 
 MAX_CALLS = 3
 MAX_GOAL_LENGTH = 2000
@@ -49,6 +51,11 @@ KEYWORDS = {
     "echo": ("audio", "voice", "call", "speech", "recording"),
     "blackbox": ("web", "website", "browser", "site", "url", "link", "domain"),
 }
+def _asks_for(goal_text: str, module: str) -> bool:
+    """Whole-word (prefix) keyword match: "calls" counts, "invoice" is not "voice"."""
+    return any(re.search(r"\b" + re.escape(w), goal_text) for w in KEYWORDS[module])
+
+
 ALL_GOALS = {"investigate", "all", "everything", "investigate all"}
 
 # Instruction-like phrases that have no business inside a receipt, a call
@@ -153,7 +160,29 @@ def _analyze_stored(name: str, blob: bytes, record: dict, store: EvidenceStore) 
         analyze = analyze_document if name == "mirage" else analyze_audio
         return analyze(path, store, source=record["source"])
     finally:
-        path.unlink(missing_ok=True)
+        try:
+            path.unlink(missing_ok=True)
+        except OSError:  # Windows: a parser may still hold the file; never mask the real error
+            pass
+
+
+def module_verdict(result: ToolResult) -> dict:
+    """Each module's own headline verdict (the same rule its tab and evaluation use)."""
+    try:
+        if result.module.value == "blackbox":
+            check = result.artifacts.get("url_check") or {}
+            if check:
+                return {"module": "blackbox", "verdict": check.get("verdict"),
+                        "brand": check.get("brand")}
+        rule = mirage_outcome if result.module.value == "mirage" else echo_outcome
+        if result.module.value in ("mirage", "echo"):
+            return {"module": result.module.value, "verdict": rule(result).value}
+    except Exception:  # noqa: BLE001 - a verdict summary must never break the report
+        pass
+    outcomes = {f.outcome.value for f in result.findings}
+    worst = next((o for o in ("suspicious", "inconclusive", "benign") if o in outcomes),
+                 "inconclusive")
+    return {"module": result.module.value, "verdict": worst}
 
 
 def coordinate(
@@ -167,7 +196,12 @@ def coordinate(
     website_url: str | None = None,
     url_lookups: bool = False,
     tool_timeout: float = DEFAULT_TOOL_TIMEOUT,
+    on_event: Callable[[dict], None] | None = None,
+    should_stop: Callable[[], bool] | None = None,
 ) -> dict:
+    """Run the bounded investigation. on_event receives progress events
+    ({"type": "plan" | "start" | "step", ...}) for the live UI; should_stop is
+    checked before every tool call (a running tool is not interrupted)."""
     # ---- 1. validate the call itself (fail fast, nothing has run yet)
     if not isinstance(goal, str) or not goal.strip():
         raise CoordinatorInputError("goal must be a non-empty string")
@@ -182,7 +216,19 @@ def coordinate(
 
     start = time.monotonic()
     results: list[ToolResult] = []
-    trace: list[dict] = []
+    def emit(event: dict) -> None:
+        if on_event:
+            try:
+                on_event(event)
+            except Exception:  # noqa: BLE001 - a broken listener must not break the run
+                pass
+
+    class _Trace(list):  # every trace entry is also a progress event
+        def append(self, item):
+            super().append(item)
+            emit({"type": "step", "step": item})
+
+    trace: list[dict] = _Trace()
     errors: list[dict] = []
     warnings: list[dict] = []
     attempts = 0
@@ -202,13 +248,19 @@ def coordinate(
     supplied = {"mirage": document_id, "echo": audio_id, "blackbox": website_url or target_url}
     run_all = goal_text in ALL_GOALS
     plan = [name for name in ("mirage", "echo", "blackbox")
-            if supplied[name] and (run_all or any(w in goal_text for w in KEYWORDS[name]))]
+            if supplied[name] and (run_all or _asks_for(goal_text, name))]
     if document_id and audio_id and document_id == audio_id:
         # one item cannot be both; the kind check below rejects the wrong one
         warnings.append({"code": "duplicate_input",
                          "message": "the same evidence ID was given as document and audio"})
 
+    emit({"type": "plan", "plan": plan, "budget": {"max_calls": max_calls,
+          "max_seconds": max_seconds, "tool_timeout": tool_timeout}})
     for name in plan:
+        if should_stop and should_stop():
+            trace.append({"module": name, "status": "skipped", "reason": "stopped by user"})
+            stop_reason = "stopped_by_user"
+            continue
         key = (name, str(supplied[name]))
         if key in seen:
             trace.append({"module": name, "status": "skipped", "reason": "repeated action"})
@@ -248,6 +300,8 @@ def coordinate(
 
         attempts += 1
         timeout = max(0.1, min(tool_timeout, remaining))
+        emit({"type": "start", "module": name, "timeout_s": round(timeout, 1),
+              "elapsed_s": round(time.monotonic() - start, 3)})
         t0 = time.monotonic()
         try:
             result = _run_with_timeout(job, timeout)
@@ -283,7 +337,7 @@ def coordinate(
                       "findings": len(result.findings)})
 
     missing = [name for name in ("mirage", "echo", "blackbox")
-               if any(w in goal_text for w in KEYWORDS[name]) and not supplied[name]]
+               if _asks_for(goal_text, name) and not supplied[name]]
     if not plan:
         missing.append("no relevant supplied input")
         stop_reason = "nothing_to_do"
@@ -302,6 +356,7 @@ def coordinate(
         "stop_reason": stop_reason,
         "plan": plan,
         "needs_human_review": True,
+        "verdicts": [module_verdict(result) for result in results],
         "findings": findings,
         "evidence_ids": sorted({eid for result in results for eid in result.evidence_ids}),
         "results": [result.model_dump(mode="json") for result in results],
