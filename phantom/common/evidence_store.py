@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import re
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -35,6 +36,10 @@ class EvidenceStore:
         return evidence_id
 
     def get(self, evidence_id: str) -> tuple[bytes, dict]:
+        # IDs are ev_ + 16 hex chars; anything else (e.g. "../x") must not
+        # become a path outside the store.
+        if not re.fullmatch(r"ev_[0-9a-f]{16}", str(evidence_id)):
+            raise KeyError(evidence_id)
         folder = self.root / evidence_id
         if not folder.exists():
             raise KeyError(evidence_id)

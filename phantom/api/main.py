@@ -17,7 +17,7 @@ from phantom.blackbox.investigate import SCENARIOS, evaluate, investigate, scena
 from phantom.blackbox.urltool import check_url_tool
 from phantom.common.evidence_store import EvidenceStore
 from phantom.common.schemas import ModuleName, ToolResult
-from phantom.coordinator.engine import coordinate
+from phantom.coordinator.engine import CoordinatorInputError, coordinate
 from phantom.echo.analyze import analyze_audio
 from phantom.echo.analyze import overall_outcome as echo_overall_outcome
 from phantom.mirage.analyze import analyze_document, overall_outcome
@@ -247,7 +247,7 @@ def blackbox_eval(request: Request) -> dict:
 
 
 class CoordinatorRequest(BaseModel):
-    goal: str
+    goal: str = Field(min_length=1, max_length=2000)
     document_evidence_id: str | None = None
     audio_evidence_id: str | None = None
     scenario: str | None = None
@@ -264,11 +264,14 @@ def coordinator_investigate(options: CoordinatorRequest, request: Request) -> di
         str(request.base_url).rstrip("/") + f"/synthetic/{options.scenario}/start"
         if options.scenario else None
     )
-    return coordinate(
-        options.goal, store, options.document_evidence_id,
-        options.audio_evidence_id, url, options.max_calls,
-        website_url=options.website_url, url_lookups=options.url_lookups,
-    )
+    try:
+        return coordinate(
+            options.goal, store, options.document_evidence_id,
+            options.audio_evidence_id, url, options.max_calls,
+            website_url=options.website_url, url_lookups=options.url_lookups,
+        )
+    except CoordinatorInputError as error:
+        raise HTTPException(400, str(error)) from error
 
 
 @app.get("/evidence/{evidence_id}")
