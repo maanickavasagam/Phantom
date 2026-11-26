@@ -278,8 +278,8 @@
     <div class="navlabel">Modules</div>
     <button class="nav active" data-view="investigate"><svg><use href="#i-doc"/></svg>MIRAGE · Documents</button>
     <button class="nav" data-view="echo"><svg><use href="#i-wave"/></svg>ECHO · Calls</button>
-    <button class="nav disabled" title="Phase 4"><svg><use href="#i-globe"/></svg>BLACKBOX · Web<span class="soon">soon</span></button>
-    <button class="nav disabled" title="Phase 5"><svg><use href="#i-flow"/></svg>Coordinator<span class="soon">soon</span></button>
+    <button class="nav" data-view="blackbox"><svg><use href="#i-globe"/></svg>BLACKBOX · Web</button>
+    <button class="nav" data-view="coordinator"><svg><use href="#i-flow"/></svg>Coordinator</button>
     <div class="navlabel">Quality</div>
     <button class="nav" data-view="eval"><svg><use href="#i-chart"/></svg>Evaluation</button>
     <div class="foot">Decision support only. Findings are indicators, not proof. Every result requires human review.</div>
@@ -366,6 +366,31 @@
     </section>
 
     <!-- ===================== EVALUATION ===================== -->
+    <section class="view hidden" id="v-blackbox"><div class="evalv"><div class="wrap">
+      <div class="card"><div class="ch"><h2>BLACKBOX · local synthetic websites</h2></div>
+        <div style="padding:20px">
+          <p>Explore a controlled scenario with a fixed, random, or trained action policy. Only local synthetic pages are allowed.</p>
+          <label>Scenario <select id="bbScenario"></select></label>
+          <label>Strategy <select id="bbStrategy"><option>learned</option><option>fixed</option><option>random</option></select></label>
+          <button class="btn primary" id="bbRun">Investigate</button>
+          <button class="btn" id="bbEval">Compare strategies</button>
+          <pre class="json" id="bbOutput">Choose a scenario to start.</pre>
+        </div>
+      </div>
+    </div></div></section>
+    <section class="view hidden" id="v-coordinator"><div class="evalv"><div class="wrap">
+      <div class="card"><div class="ch"><h2>Bounded coordinator</h2></div>
+        <div style="padding:20px">
+          <p>Select the supplied evidence to inspect. The coordinator keeps a tool trace and requires human review.</p>
+          <label>Goal <input id="coordGoal" value="Investigate document, audio and website" style="min-width:320px"></label>
+          <label>Document evidence ID <input id="coordDoc" placeholder="ev_…"></label>
+          <label>Audio evidence ID <input id="coordAudio" placeholder="ev_…"></label>
+          <label>Website scenario <select id="coordScenario"><option value="">None</option></select></label>
+          <button class="btn primary" id="coordRun">Run investigation</button>
+          <pre class="json" id="coordOutput">Supply an evidence ID or synthetic scenario.</pre>
+        </div>
+      </div>
+    </div></div></section>
     <section class="view hidden" id="v-eval"><div class="evalv"><div class="wrap" id="evalBody"></div></div></section>
   </div>
 </div>
@@ -399,13 +424,13 @@ let libs = { real: null, synthetic: null }, libKey = "real", state = null, zoom 
 
 // ------------------------------------------------------------ navigation
 let activeView = "investigate";
-const CRUMBS = { investigate: ["MIRAGE", "Documents"], echo: ["ECHO", "Calls"], eval: ["Quality", "Evaluation"] };
+const CRUMBS = { investigate: ["MIRAGE", "Documents"], echo: ["ECHO", "Calls"], blackbox: ["BLACKBOX", "Web"], coordinator: ["Coordinator", "Report"], eval: ["Quality", "Evaluation"] };
 $$(".nav[data-view]").forEach(b => b.onclick = () => {
   $$(".nav").forEach(x => x.classList.toggle("active", x === b));
   const v = activeView = b.dataset.view;
-  ["investigate", "echo", "eval"].forEach(k => $("#v-" + k).classList.toggle("hidden", v !== k));
+  ["investigate", "echo", "blackbox", "coordinator", "eval"].forEach(k => $("#v-" + k).classList.toggle("hidden", v !== k));
   $("#crumbs").innerHTML = `${CRUMBS[v][0]} <span style="margin:0 6px">/</span> <b>${CRUMBS[v][1]}</b>`;
-  const st = v === "echo" ? echoState : v === "investigate" ? state : null;
+  const st = v === "echo" ? echoState : v === "investigate" ? state : v === "blackbox" ? bbState : v === "coordinator" ? coordState : null;
   ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = !st);
   if (v === "eval") loadEval();
   if (v === "echo") renderEchoLib();
@@ -609,14 +634,18 @@ function renderInspector() {
 
 // ------------------------------------------------------------ export
 $("#btnJson").onclick = () => {
-  const st = activeView === "echo" ? echoState : state;
+  const st = activeView === "echo" ? echoState : activeView === "blackbox" ? bbState : activeView === "coordinator" ? coordState : state;
   if (!st) return;
-  const mod = activeView === "echo" ? "echo" : "mirage";
-  const blob = new Blob([JSON.stringify({ verdict: st.verdict, input: st.name, result: st.result }, null, 2)], { type: "application/json" });
-  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `${mod}_${st.result.run_id}.json` });
+  const mod = activeView === "investigate" ? "mirage" : activeView;
+  const payload = st.result ? { verdict: st.verdict, input: st.name, result: st.result } : st;
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `${mod}_report.json` });
   a.click(); URL.revokeObjectURL(a.href);
 };
-$("#btnPrint").onclick = () => (activeView === "echo" ? echoState : state) && window.print();
+$("#btnPrint").onclick = () => {
+  const st = activeView === "echo" ? echoState : activeView === "blackbox" ? bbState : activeView === "coordinator" ? coordState : state;
+  if (st) window.print();
+};
 
 // ------------------------------------------------------------ evaluation
 function echoPublicCard(ev) {
@@ -877,6 +906,47 @@ function renderEchoInsp() {
   });
 }
 
+let bbState = null, coordState = null;
+fetch("/blackbox/scenarios").then(r => r.json()).then(data => {
+  (data.scenarios || []).forEach(name => {
+    $("#bbScenario").add(new Option(name, name));
+    $("#coordScenario").add(new Option(name, name));
+  });
+});
+$("#bbRun").onclick = async () => {
+  $("#bbOutput").textContent = "Exploring…";
+  try {
+    const response = await fetch("/blackbox/investigate", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({scenario: $("#bbScenario").value, strategy: $("#bbStrategy").value})
+    });
+    bbState = await response.json();
+    $("#bbOutput").textContent = JSON.stringify(bbState, null, 2);
+    $("#btnJson").disabled = $("#btnPrint").disabled = !response.ok;
+  } catch (error) { $("#bbOutput").textContent = String(error); }
+};
+$("#bbEval").onclick = async () => {
+  $("#bbOutput").textContent = "Comparing strategies…";
+  const response = await fetch("/blackbox/eval");
+  $("#bbOutput").textContent = JSON.stringify(await response.json(), null, 2);
+};
+$("#coordRun").onclick = async () => {
+  $("#coordOutput").textContent = "Investigating…";
+  try {
+    const response = await fetch("/coordinator/investigate", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        goal: $("#coordGoal").value,
+        document_evidence_id: $("#coordDoc").value || null,
+        audio_evidence_id: $("#coordAudio").value || null,
+        scenario: $("#coordScenario").value || null
+      })
+    });
+    coordState = await response.json();
+    $("#coordOutput").textContent = JSON.stringify(coordState, null, 2);
+    $("#btnJson").disabled = $("#btnPrint").disabled = !response.ok;
+  } catch (error) { $("#coordOutput").textContent = String(error); }
+};
 renderLib();
 </script>
 </body>

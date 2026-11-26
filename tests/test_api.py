@@ -79,5 +79,16 @@ def test_echo_analyze_bad_audio(tmp_path, monkeypatch):
     assert body["errors"][0]["code"] == "ingest_failed"
 
 
-def test_blackbox_mock():
-    assert client.post("/blackbox/investigate").json()["module"] == "blackbox"
+def test_blackbox_routes(monkeypatch):
+    assert "data-behaviour" in client.get("/synthetic/fees/clue").text
+    assert client.get("/synthetic/unknown/start").status_code == 404
+    assert "fees" in client.get("/blackbox/scenarios").json()["scenarios"]
+    monkeypatch.setattr(main, "investigate", lambda *args: main.ToolResult(module="blackbox"))
+    response = client.post("/blackbox/investigate", json={"scenario": "fees"})
+    assert response.json()["module"] == "blackbox"
+    assert client.post("/blackbox/investigate", json={"scenario": "unknown"}).status_code == 400
+
+
+def test_coordinator_route_without_input():
+    body = client.post("/coordinator/investigate", json={"goal": "Investigate website"}).json()
+    assert body["needs_human_review"] and "blackbox" in body["missing_inputs"]

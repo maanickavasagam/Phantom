@@ -1,4 +1,4 @@
-"""FastAPI app. MIRAGE and ECHO are complete pipelines; BLACKBOX is still a mock."""
+"""FastAPI app for MIRAGE, ECHO, BLACKBOX, and the bounded coordinator."""
 
 from __future__ import annotations
 
@@ -9,11 +9,14 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, Response
+from pydantic import BaseModel, Field
 
+from phantom.blackbox.investigate import SCENARIOS, evaluate, investigate, scenario_html
 from phantom.common.evidence_store import EvidenceStore
 from phantom.common.schemas import ModuleName, ToolResult
+from phantom.coordinator.engine import coordinate
 from phantom.echo.analyze import analyze_audio
 from phantom.echo.analyze import overall_outcome as echo_overall_outcome
 from phantom.mirage.analyze import analyze_document, overall_outcome
@@ -133,14 +136,6 @@ def mirage_verdict(result: ToolResult) -> dict:
     return {"verdict": overall_outcome(result).value}
 
 
-def _mock(module: ModuleName) -> ToolResult:
-    return ToolResult(
-        module=module,
-        limitations=["mock endpoint: module not implemented yet"],
-        needs_human_review=True,
-    )
-
-
 @app.post("/echo/analyze", response_model=ToolResult)
 async def echo_analyze(file: UploadFile = File(...)) -> ToolResult:
     """Full ECHO pipeline: validate audio, transcribe locally (Whisper), extract
@@ -192,9 +187,64 @@ def evidence_audio(evidence_id: str) -> Response:
     return Response(blob, media_type=media)
 
 
+class BlackboxRequest(BaseModel):
+    scenario: str = "fees"
+    strategy: str = "learned"
+    action_budget: int = Field(default=2, ge=1, le=10)
+
+
+@app.get("/synthetic/{scenario}/{page}", response_class=HTMLResponse)
+def synthetic_page(scenario: str, page: str) -> HTMLResponse:
+    try:
+        return HTMLResponse(scenario_html(scenario, page))
+    except ValueError as error:
+        raise HTTPException(404, str(error)) from error
+
+
+@app.get("/blackbox/scenarios")
+def blackbox_scenarios() -> dict:
+    return {"scenarios": list(SCENARIOS)}
+
+
 @app.post("/blackbox/investigate", response_model=ToolResult)
-def blackbox_investigate() -> ToolResult:
-    return _mock(ModuleName.BLACKBOX)
+def blackbox_investigate(options: BlackboxRequest, request: Request) -> ToolResult:
+    if options.scenario not in SCENARIOS:
+        raise HTTPException(400, "unknown synthetic scenario")
+    if options.strategy not in {"fixed", "random", "learned"}:
+        raise HTTPException(400, "unknown strategy")
+    url = str(request.base_url).rstrip("/") + f"/synthetic/{options.scenario}/start"
+    try:
+        return investigate(url, store, options.strategy, options.action_budget)
+    except (RuntimeError, ValueError) as error:
+        raise HTTPException(503, str(error)) from error
+
+
+@app.get("/blackbox/eval")
+def blackbox_eval(request: Request) -> dict:
+    url = str(request.base_url).rstrip("/")
+    return evaluate(url, store)
+
+
+class CoordinatorRequest(BaseModel):
+    goal: str
+    document_evidence_id: str | None = None
+    audio_evidence_id: str | None = None
+    scenario: str | None = None
+    max_calls: int = Field(default=3, ge=1, le=3)
+
+
+@app.post("/coordinator/investigate")
+def coordinator_investigate(options: CoordinatorRequest, request: Request) -> dict:
+    if options.scenario is not None and options.scenario not in SCENARIOS:
+        raise HTTPException(400, "unknown synthetic scenario")
+    url = (
+        str(request.base_url).rstrip("/") + f"/synthetic/{options.scenario}/start"
+        if options.scenario else None
+    )
+    return coordinate(
+        options.goal, store, options.document_evidence_id,
+        options.audio_evidence_id, url, options.max_calls
+    )
 
 
 @app.get("/evidence/{evidence_id}")

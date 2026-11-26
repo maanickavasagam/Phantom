@@ -12,12 +12,33 @@ System dependencies:
 - ffmpeg for ECHO. Put it on PATH or set `FFMPEG_BINARY`.
 - ECHO downloads the Whisper `base.en` model (~145 MB) on first use. Set `ECHO_MODEL_DIR` to
   choose where it's cached, and `ECHO_WHISPER_MODEL` to pick another model (e.g. `small.en`).
+- BLACKBOX uses Playwright Chromium (or installed Microsoft Edge). Install a browser with
+  `python -m playwright install chromium` if neither is available.
 
 ```bash
 pip install -r requirements.txt
+python -m playwright install chromium
 pytest -q
 uvicorn phantom.api.main:app --reload        # demo UI: http://127.0.0.1:8000/  · API docs: /docs
 ```
+
+## BLACKBOX and coordinator
+
+BLACKBOX explores only the six synthetic sites served at `/synthetic/{scenario}/start`.
+It records screenshots, a bounded action trace, and evidence-linked planted behaviours.
+The action ranker is a small scikit-learn MLP trained from the synthetic action catalogue;
+retrain it with `python -c "from phantom.blackbox.investigate import train_ranker; print(train_ranker())"`.
+Use the BLACKBOX and Coordinator tabs in the demo, or the
+`/blackbox/investigate` and `/coordinator/investigate` API endpoints.
+The coordinator accepts evidence IDs produced by document/audio analysis and a
+synthetic website scenario. Results remain subject to human review.
+
+The browser comparison endpoint `/blackbox/eval` runs fixed, random and learned
+policies on held-out synthetic scenarios under equal action budgets. These
+small synthetic scenarios establish a reproducible prototype, not a claim
+of effectiveness on live websites.
+See `docs/BLACKBOX_EVAL.md` for the comparison and `docs/COORDINATOR.md` for
+the routing smoke check and current limitations.
 
 ## MIRAGE demo
 Open http://127.0.0.1:8000/ after starting the API. The case library has six real receipts
@@ -84,9 +105,10 @@ phantom/echo/    ingestion, Whisper transcription, claim extraction, indicators,
 phantom/api/static/  single-page demo UI for MIRAGE + ECHO + evaluation (served at /)
 data/demo/       7 synthetic invoice demo cases + manifest with ground truth
 data/demo_echo/  7 scripted demo calls + manifest with ground truth
-phantom/blackbox/(Phase 4)
-phantom/api/     FastAPI app: /health, /mirage/analyze, /echo/analyze (full pipelines),
-                 /blackbox/investigate (mock), /evidence/{id}[/image|/audio]
+phantom/blackbox/ synthetic scenarios, browser exploration, trained action ranker
+phantom/coordinator/ bounded routing and unified evidence-backed report
+phantom/api/     FastAPI app: /health, /mirage/analyze, /echo/analyze,
+                 /blackbox/investigate, /coordinator/investigate, /evidence/{id}
 tests/           pytest suite
 ```
 
