@@ -41,7 +41,7 @@ def test_silent_audio_flagged(silent_wav, tmp_path):
 
 
 def test_unsupported_format_rejected(tmp_path):
-    p = tmp_path / "clip.ogg"
+    p = tmp_path / "clip.xyz"
     p.write_bytes(b"not real audio")
     with pytest.raises(IngestError):
         ingest(p, work_dir=tmp_path / "work")

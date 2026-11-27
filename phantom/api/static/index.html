@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PHANTOM AI · MIRAGE</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --surface: #ffffff; --surface-2: #f9fafb; --border: #e4e7ec; --border-2: #d0d5dd;
+    --text: #101828; --text-2: #475467; --text-3: #667085;
+    --brand: #3b5bdb; --brand-soft: #eef2ff; --brand-ink: #2f49b6;
+    --sus: #d92d20; --sus-soft: #fef3f2; --sus-line: #fda29b;
+    --inc: #b54708; --inc-soft: #fffaeb; --inc-line: #fec84b;
+    --ok: #067647; --ok-soft: #ecfdf3; --ok-line: #75e0a7;
+    --truth: #7a5af8; --clone: #e8590c;
+    --side: #0f172a; --side-2: #1e293b; --side-text: #cbd5e1; --side-muted: #64748b;
+    --shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
+    --shadow-lg: 0 12px 32px -8px rgba(16,24,40,.18);
+    --radius: 10px;
+    --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font: 14px/1.5 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  button { font: inherit; }
+  .app { display: grid; grid-template-columns: 232px 1fr; height: 100%; }
+
+  /* ---------- sidebar */
+  .side { background: var(--side); color: var(--side-text); display: flex; flex-direction: column; padding: 18px 14px; }
+  .brand { display: flex; gap: 10px; align-items: center; padding: 4px 8px 22px; }
+  .brand .mark { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg,#5c7cfa,#3b5bdb);
+    display: grid; place-items: center; box-shadow: 0 4px 12px rgba(59,91,219,.45); }
+  .brand b { color: #fff; font-size: 15px; letter-spacing: .06em; display: block; line-height: 1.1; }
+  .brand span { font-size: 11px; color: var(--side-muted); letter-spacing: .04em; }
+  .navlabel { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--side-muted); padding: 14px 10px 6px; }
+  .nav { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; color: var(--side-text);
+    cursor: pointer; border: 0; background: none; width: 100%; text-align: left; }
+  .nav:hover { background: var(--side-2); }
+  .nav.active { background: var(--side-2); color: #fff; box-shadow: inset 3px 0 0 #5c7cfa; }
+  .nav svg { width: 17px; height: 17px; opacity: .85; flex: none; }
+  .nav .soon { margin-left: auto; font-size: 10px; color: var(--side-muted); border: 1px solid #334155; border-radius: 99px; padding: 0 6px; }
+  .nav.disabled { cursor: default; opacity: .55; }
+  .nav.disabled:hover { background: none; }
+  .side .foot { margin-top: auto; font-size: 11.5px; color: var(--side-muted); padding: 10px; border-top: 1px solid #1e293b; line-height: 1.5; }
+
+  /* ---------- main */
+  .main { display: flex; flex-direction: column; min-width: 0; height: 100%; }
+  .topbar { height: 60px; flex: none; display: flex; align-items: center; gap: 14px; padding: 0 24px;
+    background: var(--surface); border-bottom: 1px solid var(--border); }
+  .crumbs { color: var(--text-3); font-size: 13px; }
+  .crumbs b { color: var(--text); font-weight: 600; }
+  .grow { flex: 1; }
+  .badge-guard { display: inline-flex; gap: 6px; align-items: center; font-size: 12px; color: var(--text-2);
+    background: var(--surface-2); border: 1px solid var(--border); padding: 4px 10px; border-radius: 99px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border-2); background: var(--surface);
+    color: var(--text); padding: 7px 12px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 13px; box-shadow: var(--shadow); }
+  .btn:hover { background: var(--surface-2); }
+  .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .btn.primary:hover { background: var(--brand-ink); }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .btn svg { width: 15px; height: 15px; }
+  .view { flex: 1; min-height: 0; }
+  .hidden { display: none !important; }
+
+  /* ---------- investigate layout */
+  .inv { display: grid; grid-template-columns: 300px 1fr 430px; height: 100%; }
+  .lib { background: var(--surface); border-right: 1px solid var(--border); overflow-y: auto; padding: 18px 14px; }
+  .lib h3, .insp h3 { font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3);
+    margin: 4px 6px 10px; font-weight: 600; }
+  .seg { display: flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 3px; margin: 0 4px 14px; }
+  .seg button { flex: 1; border: 0; background: none; padding: 5px 6px; border-radius: 6px; cursor: pointer; color: var(--text-2); font-size: 12.5px; font-weight: 500; }
+  .seg button.on { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+  .case { display: flex; gap: 11px; align-items: flex-start; padding: 10px; border-radius: 9px; cursor: pointer; border: 1px solid transparent; margin-bottom: 4px; }
+  .case:hover { background: var(--surface-2); }
+  .case.active { background: var(--brand-soft); border-color: #c7d2fe; }
+  .thumb { width: 38px; height: 48px; flex: none; border-radius: 5px; border: 1px solid var(--border);
+    background: #fff top center / 100% auto no-repeat; box-shadow: var(--shadow); }
+  .case .t { font-weight: 600; font-size: 13px; line-height: 1.3; }
+  .case .s { font-size: 12px; color: var(--text-3); margin-top: 3px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .tag { font-size: 10.5px; font-weight: 600; padding: 1px 7px; border-radius: 99px; border: 1px solid; text-transform: uppercase; letter-spacing: .03em; }
+  .tag.sus { color: var(--sus); background: var(--sus-soft); border-color: var(--sus-line); }
+  .tag.ok { color: var(--ok); background: var(--ok-soft); border-color: var(--ok-line); }
+  .tag.inc { color: var(--inc); background: var(--inc-soft); border-color: var(--inc-line); }
+  .tag.neutral { color: var(--text-2); background: var(--surface-2); border-color: var(--border); }
+  .drop { margin: 16px 4px 4px; border: 1.5px dashed var(--border-2); border-radius: 10px; padding: 18px 12px; text-align: center;
+    color: var(--text-3); cursor: pointer; background: var(--surface-2); font-size: 12.5px; }
+  .drop b { color: var(--text); display: block; margin: 6px 0 2px; font-size: 13px; }
+  .drop.over { border-color: var(--brand); background: var(--brand-soft); }
+  .drop svg { width: 22px; height: 22px; color: var(--brand); }
+
+  .stagecol { display: flex; flex-direction: column; min-width: 0; }
+  .toolbar { height: 50px; flex: none; display: flex; align-items: center; gap: 10px; padding: 0 16px;
+    border-bottom: 1px solid var(--border); background: var(--surface); }
+  .toolbar .name { font-weight: 600; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 260px; }
+  .tgl { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-2); cursor: pointer; user-select: none; }
+  .tgl input { accent-color: var(--brand); }
+  .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .zoom { display: inline-flex; border: 1px solid var(--border-2); border-radius: 8px; overflow: hidden; }
+  .zoom button { border: 0; background: var(--surface); padding: 4px 9px; cursor: pointer; color: var(--text-2); }
+  .zoom button:hover { background: var(--surface-2); }
+  .zoom span { padding: 4px 8px; font-size: 12px; color: var(--text-2); border-left: 1px solid var(--border); border-right: 1px solid var(--border); min-width: 48px; text-align: center; }
+  .canvas { flex: 1; overflow: auto; padding: 28px; display: flex; justify-content: center; align-items: flex-start;
+    background: #eceef2; background-image: radial-gradient(#d9dce3 1px, transparent 1px); background-size: 18px 18px; }
+  .sheet { position: relative; background: #fff; box-shadow: var(--shadow-lg); border-radius: 3px; flex: none; }
+  .sheet img { display: block; width: 100%; height: auto; border-radius: 3px; }
+  .sheet svg.ov { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .ov rect { fill-opacity: .1; stroke-width: 2.5; vector-effect: non-scaling-stroke; transition: fill-opacity .12s; }
+  .ov rect.suspicious { stroke: var(--sus); fill: var(--sus); }
+  .ov rect.inconclusive { stroke: var(--inc); fill: var(--inc); }
+  .ov rect.sumref { stroke: #6b7cff; fill: none; stroke-width: 1.2; stroke-dasharray: 3 3; }
+  .ov rect.clone { stroke: var(--clone); fill: var(--clone); }
+  .ov rect.truth { stroke: var(--truth); fill: none; stroke-dasharray: 6 4; stroke-width: 2; }
+  .ov line.clone { stroke: var(--clone); stroke-width: 1.6; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }
+  .ov .hl { fill-opacity: .28; stroke-width: 4; }
+  .ov text { font: 700 12px "Segoe UI", sans-serif; paint-order: stroke; stroke: #fff; stroke-width: 3px; }
+  .empty { margin: auto; text-align: center; color: var(--text-3); max-width: 420px; }
+  .empty .ill { width: 72px; height: 72px; border-radius: 18px; background: var(--brand-soft); display: grid; place-items: center; margin: 0 auto 16px; }
+  .empty h2 { color: var(--text); font-size: 17px; margin: 0 0 6px; }
+  .loader { margin: auto; text-align: center; color: var(--text-2); }
+  .loader .steps { margin-top: 14px; text-align: left; display: inline-block; font-size: 13px; }
+  .loader .steps div { padding: 2px 0; color: var(--text-3); }
+  .loader .steps div.on { color: var(--text); font-weight: 500; }
+  .spin { width: 34px; height: 34px; border: 3px solid var(--border); border-top-color: var(--brand); border-radius: 50%;
+    animation: spin .8s linear infinite; margin: 0 auto; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- inspector */
+  .insp { background: var(--surface); border-left: 1px solid var(--border); overflow-y: auto; display: flex; flex-direction: column; }
+  .verdict { margin: 18px 18px 0; border-radius: var(--radius); padding: 16px; border: 1px solid; }
+  .verdict.suspicious { background: var(--sus-soft); border-color: var(--sus-line); }
+  .verdict.inconclusive { background: var(--inc-soft); border-color: var(--inc-line); }
+  .verdict.benign { background: var(--ok-soft); border-color: var(--ok-line); }
+  .verdict .lbl { font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); font-weight: 600; }
+  .verdict .v { display: flex; align-items: center; gap: 10px; font-size: 21px; font-weight: 700; margin: 4px 0 4px; }
+  .verdict.suspicious .v { color: var(--sus); } .verdict.inconclusive .v { color: var(--inc); } .verdict.benign .v { color: var(--ok); }
+  .verdict .v svg { width: 24px; height: 24px; }
+  .verdict p { margin: 0; color: var(--text-2); font-size: 13px; }
+  .gt { margin: 12px 18px 0; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 9px;
+    background: var(--surface-2); border: 1px solid var(--border); font-size: 13px; }
+  .gt .ok { color: var(--ok); font-weight: 600; } .gt .bad { color: var(--sus); font-weight: 600; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); margin: 12px 18px 0; border: 1px solid var(--border); border-radius: 9px; overflow: hidden; }
+  .stats div { padding: 9px 10px; border-right: 1px solid var(--border); }
+  .stats div:last-child { border-right: 0; }
+  .stats b { display: block; font-size: 16px; }
+  .stats span { font-size: 11px; color: var(--text-3); }
+  .story { margin: 12px 18px 0; font-size: 13px; color: var(--text-2); line-height: 1.55; }
+  .tabs { display: flex; gap: 2px; padding: 0 18px; border-bottom: 1px solid var(--border); margin-top: 16px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .tabs button { border: 0; background: none; padding: 10px 10px; cursor: pointer; color: var(--text-3); font-weight: 500; font-size: 13px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tabs button.on { color: var(--brand); border-bottom-color: var(--brand); }
+  .tabs .n { font-size: 11px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 99px; padding: 0 6px; margin-left: 4px; color: var(--text-2); }
+  .pane { padding: 14px 18px 24px; }
+  /* ---------- BLACKBOX: how it was judged + sandbox preview */
+  .bbh { margin: 18px 0 8px; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); }
+  .judge { border: 1px solid var(--border); border-radius: 9px; background: var(--surface-2); padding: 4px 14px; }
+  .jstep { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px dashed var(--border); }
+  .jstep:last-child { border-bottom: 0; }
+  .jstep > div { flex: 1; min-width: 0; }
+  .jstep .n { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--brand-soft); color: var(--brand-ink); font-weight: 700; font-size: 12px; display: grid; place-items: center; margin-top: 1px; }
+  .addr { display: flex; flex-wrap: wrap; align-items: flex-start; margin-top: 8px; font-family: var(--mono); font-size: 15px; background: var(--surface); border: 1px solid var(--border-2); border-radius: 8px; padding: 10px 12px 6px; overflow-wrap: anywhere; }
+  .seg { display: inline-flex; flex-direction: column; min-width: 0; }
+  .seg .t { padding: 2px 1px; border-bottom: 3px solid var(--border-2); white-space: pre-wrap; word-break: break-all; }
+  .seg .l { font-family: "Segoe UI", system-ui, sans-serif; font-size: 10.5px; color: var(--text-3); padding: 3px 4px 0 1px; white-space: nowrap; }
+  .seg.dim .t { color: var(--text-3); }
+  .seg.strike .t { color: var(--sus); text-decoration: line-through; border-color: var(--sus-line); }
+  .seg.main .t { font-weight: 700; background: var(--brand-soft); border-color: var(--brand); border-radius: 4px 4px 0 0; padding: 2px 4px; }
+  .seg.main.bad .t { background: var(--sus-soft); border-color: var(--sus); color: var(--sus); }
+  .seg.main.warn .t { background: var(--inc-soft); border-color: var(--inc); color: var(--inc); }
+  .seg.main.ok .t { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+  .cmp { margin-top: 8px; }
+  .cmp .row { display: flex; align-items: baseline; gap: 12px; padding: 4px 0; }
+  .cmp .k { width: 110px; flex: none; font-size: 12px; color: var(--text-3); }
+  .cmp .v { font-family: var(--mono); font-size: 19px; letter-spacing: .06em; overflow-wrap: anywhere; }
+  .cmp .dx { background: var(--sus-soft); color: var(--sus); border-bottom: 2px solid var(--sus); font-weight: 700; padding: 0 1px; }
+  .cmp .dr { background: var(--ok-soft); color: var(--ok); border-bottom: 2px solid var(--ok); font-weight: 700; padding: 0 1px; }
+  .cmp .nl { outline: 2px dashed var(--sus); outline-offset: 1px; }
+  .checks { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 4px 16px; }
+  .checks li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 4px 6px; border-radius: 6px; }
+  .checks li.hit { background: var(--sus-soft); }
+  .checks .q { flex: 1; color: var(--text-2); }
+  .checks li.hit .q { color: var(--text); font-weight: 600; }
+  .checks .a { font-size: 11.5px; color: var(--text-3); white-space: nowrap; }
+  .ci { width: 18px; height: 18px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; }
+  .ci.ok { background: var(--ok-soft); color: var(--ok); } .ci.bad { background: var(--sus); color: #fff; } .ci.na { background: var(--surface); color: var(--text-3); border: 1px solid var(--border); }
+  .pv-rules { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .pv-rules li { font-size: 12px; background: var(--ok-soft); color: var(--ok); border: 1px solid var(--ok-line); border-radius: 99px; padding: 2px 10px; }
+  .pv-rules li::before { content: "✓ "; }
+  .pv { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr); gap: 16px; margin-top: 14px; }
+  .frame { border: 1px solid var(--border-2); border-radius: 10px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-lg); align-self: start; }
+  .fbar { display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  .fbar .dots { display: flex; gap: 5px; } .fbar .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--border-2); }
+  .furl { flex: 1; min-width: 0; font-family: var(--mono); font-size: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 99px; padding: 3px 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .furl.bad { color: var(--sus); border-color: var(--sus-line); background: var(--sus-soft); }
+  .ftag { font-size: 10.5px; color: var(--text-3); white-space: nowrap; }
+  .frame img { display: block; width: 100%; height: auto; }
+  .noshot { padding: 60px 20px; text-align: center; color: var(--text-3); }
+  .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-family: var(--mono); font-size: 11.5px; }
+  .chain .hop { background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; overflow-wrap: anywhere; }
+  .chain .arr { color: var(--text-3); }
+  @media (max-width: 900px) { .pv { grid-template-columns: 1fr; } .checks { grid-template-columns: 1fr; } }
+  /* ---------- Coordinator */
+  .co-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(300px, 1fr); gap: 18px; align-items: start; }
+  .co-grid .card { margin-bottom: 18px; }
+  .co-goal { width: 100%; font: inherit; font-size: 15px; padding: 10px 12px; border: 1px solid var(--border-2); border-radius: 8px; resize: vertical; }
+  .co-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .co-chips button { cursor: pointer; text-transform: none; font-weight: 500; }
+  .co-in { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .co-in:last-of-type { border-bottom: 0; }
+  .co-ic { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; flex: none; background: var(--brand-soft); color: var(--brand); }
+  .co-ic svg { width: 18px; height: 18px; }
+  .co-body { flex: 1; min-width: 0; }
+  .co-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px; }
+  .co-row select, .co-row input:not([type=checkbox]) { font: inherit; padding: 6px 8px; border: 1px solid var(--border-2); border-radius: 7px; background: var(--surface); min-width: 0; }
+  .co-row #coUrl { flex: 1; min-width: 220px; }
+  .co-row select { max-width: 100%; }
+  .co-sel { margin-top: 6px; font-size: 13px; }
+  .linkbtn { border: 0; background: none; color: var(--brand); cursor: pointer; padding: 0 4px; font-size: 12px; }
+  .co-limits { margin-top: 12px; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; background: var(--surface-2); }
+  .co-limits summary { cursor: pointer; font-weight: 600; font-size: 13px; }
+  .co-plan { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 12px; font-size: 12px; }
+  .co-pl { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--border); border-radius: 99px; padding: 2px 9px; color: var(--text-3); }
+  .co-pl svg { width: 13px; height: 13px; }
+  .co-pl.run { color: var(--brand-ink); background: var(--brand-soft); border-color: #c7d2fe; font-weight: 600; }
+  .co-pl.missing, .co-pl.unasked { color: var(--inc); background: var(--inc-soft); border-color: var(--inc-line); }
+  .co-meters { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .co-meters div { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }
+  .co-meters span { display: block; font-size: 11px; color: var(--text-3); }
+  .co-meters b { font-size: 15px; }
+  .co-meters i, .co-bar { display: block; height: 5px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--border); margin-top: 6px; overflow: hidden; }
+  .co-meters u, .co-bar u { display: block; height: 100%; background: var(--brand); transition: width .2s linear; }
+  .co-meters u.hot { background: var(--inc); }
+  .co-steps { list-style: none; margin: 0; padding: 0; position: relative; }
+  .co-empty { color: var(--text-3); font-size: 13px; padding: 10px 0; }
+  .co-step { display: flex; gap: 12px; padding: 0 0 14px; position: relative; }
+  .co-step:not(:last-child)::before { content: ""; position: absolute; left: 13px; top: 28px; bottom: 2px; width: 2px; background: var(--border); }
+  .co-step > div { flex: 1; min-width: 0; border: 1px solid var(--border); border-radius: 9px; padding: 8px 10px; background: var(--surface); }
+  .co-dot { width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 13px; background: var(--surface-2); border: 2px solid var(--border-2); color: var(--text-3); z-index: 1; }
+  .co-step.running .co-dot { border-color: var(--brand); background: var(--brand-soft); }
+  .co-step.running > div { border-color: #a5b4fc; box-shadow: 0 0 0 3px #e0e7ff; }
+  .co-step.completed .co-dot { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .co-step.failed .co-dot, .co-step.timed_out .co-dot { background: var(--sus); border-color: var(--sus); color: #fff; }
+  .co-step.failed > div, .co-step.timed_out > div { border-color: var(--sus-line); background: var(--sus-soft); }
+  .co-step.skipped > div { border-style: dashed; color: var(--text-3); }
+  .co-sh { display: flex; align-items: center; gap: 7px; }
+  .co-sh svg { width: 15px; height: 15px; color: var(--brand); }
+  .co-sd { font-size: 12.5px; color: var(--text-2); margin-top: 3px; overflow-wrap: anywhere; }
+  .co-st { font-size: 11.5px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .04em; }
+  .co-st.completed { color: var(--ok); } .co-st.failed, .co-st.timed_out { color: var(--sus); }
+  .spin.sm { width: 14px; height: 14px; border-width: 2px; }
+  .co-mods { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 14px; }
+  .co-mod { border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; border-left-width: 4px; }
+  .co-mod.suspicious { border-left-color: var(--sus); } .co-mod.inconclusive { border-left-color: var(--inc); } .co-mod.benign { border-left-color: var(--ok); }
+  .co-hist { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .co-hist th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); border-bottom: 1px solid var(--border); padding: 6px 8px; }
+  .co-hist td { border-bottom: 1px solid var(--border); padding: 7px 8px; vertical-align: top; overflow-wrap: anywhere; }
+  .co-hist td.num { white-space: nowrap; }
+  @media (max-width: 1000px) { .co-grid { grid-template-columns: 1fr; } }
+  .fcard { border: 1px solid var(--border); border-radius: 9px; padding: 12px; margin-bottom: 10px; background: var(--surface); box-shadow: var(--shadow); transition: border-color .12s, box-shadow .12s; }
+  .fcard:hover, .fcard.hl { border-color: #a5b4fc; box-shadow: 0 0 0 3px #e0e7ff; }
+  .fcard .h { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .fcard .ic { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; flex: none; }
+  .fcard .ic svg { width: 15px; height: 15px; }
+  .fcard .ic.suspicious { background: var(--sus-soft); color: var(--sus); }
+  .fcard .ic.inconclusive { background: var(--inc-soft); color: var(--inc); }
+  .fcard .ic.benign { background: var(--ok-soft); color: var(--ok); }
+  .fcard .name { font-weight: 600; font-size: 13.5px; }
+  .fcard .d { font-size: 13px; color: var(--text-2); }
+  .fcard .meta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; font-size: 11.5px; color: var(--text-3); }
+  .conf { display: inline-flex; align-items: center; gap: 6px; }
+  .conf i { width: 54px; height: 5px; border-radius: 3px; background: var(--border); overflow: hidden; display: inline-block; }
+  .conf i b { display: block; height: 100%; background: var(--text-2); }
+  .ev { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px; margin-bottom: 8px; font-size: 12.5px; }
+  .ev .id { font-family: var(--mono); font-weight: 600; }
+  .ev .sha { font-family: var(--mono); color: var(--text-3); font-size: 11.5px; grid-column: 1 / -1; word-break: break-all; }
+  .ev .k { color: var(--text-3); }
+  .okline { color: var(--ok); font-weight: 600; display: inline-flex; gap: 4px; align-items: center; }
+  .badline { color: var(--sus); font-weight: 600; }
+  ul.notes { margin: 0; padding-left: 18px; color: var(--text-2); font-size: 13px; }
+  ul.notes li { margin-bottom: 7px; }
+  pre.json { font-family: var(--mono); font-size: 11px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; white-space: pre-wrap; word-break: break-word; max-height: 60vh; overflow: auto; margin: 0; }
+  .note-muted { color: var(--text-3); font-size: 13px; }
+
+  /* ---------- evaluation */
+  .evalv { overflow-y: auto; height: 100%; padding: 28px 32px 48px; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  .ph { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 18px; }
+  .ph h1 { margin: 0; font-size: 22px; letter-spacing: -.01em; }
+  .ph p { margin: 4px 0 0; color: var(--text-3); }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+  .kpi .l { font-size: 12.5px; color: var(--text-3); font-weight: 500; }
+  .kpi .n { font-size: 28px; font-weight: 700; letter-spacing: -.02em; margin-top: 4px; }
+  .kpi .delta { font-size: 12px; margin-top: 2px; color: var(--text-3); }
+  .kpi .delta b { color: var(--ok); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 18px; }
+  .card .ch { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .card .ch h2 { font-size: 15px; margin: 0; }
+  .card .ch p { margin: 0; font-size: 12.5px; color: var(--text-3); }
+  .card .cb { padding: 6px 18px 14px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); font-weight: 600; padding: 10px 8px; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 8px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: 0; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.hero td { background: var(--brand-soft); font-weight: 600; }
+  .bar { display: inline-block; width: 140px; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; vertical-align: middle; margin-right: 10px; }
+  .bar b { display: block; height: 100%; background: var(--brand); border-radius: 4px; }
+  .bar.red b { background: var(--sus); }
+  .callout { border-left: 3px solid var(--brand); background: var(--brand-soft); padding: 12px 14px; border-radius: 0 8px 8px 0; color: var(--text-2); font-size: 13px; margin: 0 0 18px; }
+  .callout.warn { border-color: var(--inc); background: var(--inc-soft); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .pill-check { font-family: var(--mono); font-size: 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; }
+
+  /* ---------- ECHO */
+  .echo-main { flex: 1; overflow: auto; padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; background: var(--bg); }
+  .player { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; }
+  .player audio { width: 100%; height: 36px; }
+  .tl { position: relative; height: 34px; margin-top: 12px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--border); overflow: hidden; cursor: pointer; }
+  .tl .seg { position: absolute; top: 12px; height: 10px; background: #dfe3ea; border-radius: 3px; }
+  .tl .mk { position: absolute; top: 4px; height: 26px; min-width: 4px; border-radius: 3px; opacity: .85; }
+  .tl .head { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--text); pointer-events: none; }
+  .tl-l { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-3); margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .transcript { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 6px 0; }
+  .transcript h3 { font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); margin: 10px 18px 6px; font-weight: 600; }
+  .line { display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 8px 18px; cursor: pointer; border-left: 3px solid transparent; line-height: 1.6; }
+  .line:hover { background: var(--surface-2); }
+  .line.now { background: var(--brand-soft); border-left-color: var(--brand); }
+  .line .ts { font-family: var(--mono); font-size: 12px; color: var(--text-3); padding-top: 2px; }
+  .w.c { border-radius: 4px; padding: 1px 2px; font-weight: 600; }
+  .cl, .w.c { --c: #888; }
+  .amount { --c: #0e9384; } .deadline { --c: #dc6803; } .payment_request { --c: #7a5af8; } .name { --c: #2e90fa; } .credential_request { --c: #d92d20; }
+  .w.c { background: color-mix(in srgb, var(--c) 14%, transparent); box-shadow: inset 0 -2px 0 var(--c); }
+  .tl .mk { background: var(--c); }
+  .legend { font-size: 12px; color: var(--text-3); display: inline-flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .legend .cl { display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--c); margin-right: -6px; }
+  .claim { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 10px; align-items: center; padding: 10px 12px; border: 1px solid var(--border);
+    border-radius: 9px; margin-bottom: 8px; cursor: pointer; box-shadow: var(--shadow); }
+  .claim:hover { border-color: #a5b4fc; }
+  .claim .k { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--c);
+    background: color-mix(in srgb, var(--c) 12%, transparent); padding: 2px 7px; border-radius: 99px; }
+  .claim .v { font-weight: 600; }
+  .claim .t { font-family: var(--mono); font-size: 12px; color: var(--text-3); }
+  .claim .s { grid-column: 1 / -1; font-size: 12.5px; color: var(--text-2); }
+  .gtc { font-size: 12px; color: var(--text-3); margin-top: 6px; }
+
+  @media print {
+    .side, .topbar, .lib, .toolbar, .tabs, .btn { display: none !important; }
+    .app, .inv { display: block; height: auto; }
+    .canvas { background: none; padding: 0; overflow: visible; }
+    .insp { border: 0; overflow: visible; }
+    .pane.hidden { display: block !important; }
+    .sheet { box-shadow: none; width: 100% !important; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h2M7 8v8M11 5v14M15 9v6M19 11v2M21 12h0"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8M18 8l-5 8"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4M12 17h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></symbol>
+  <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></symbol>
+  <symbol id="i-align" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 4v16M6 8h10M10 12h6M4 16h12"/></symbol>
+  <symbol id="i-font" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 10 4l6 16M6.5 14h7M17 20h4"/></symbol>
+  <symbol id="i-layer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="7"/></symbol>
+</svg>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 3c-4 0-7 3-7 7v10l2.5-2 2.5 2 2-2 2 2 2.5-2L19 20V10c0-4-3-7-7-7z"/><circle cx="9.5" cy="10" r=".6" fill="#fff"/><circle cx="14.5" cy="10" r=".6" fill="#fff"/></svg></div>
+      <div><b>PHANTOM AI</b><span>Investigation workbench</span></div>
+    </div>
+    <div class="navlabel">Modules</div>
+    <button class="nav active" data-view="investigate"><svg><use href="#i-doc"/></svg>MIRAGE · Documents</button>
+    <button class="nav" data-view="echo"><svg><use href="#i-wave"/></svg>ECHO · Calls</button>
+    <button class="nav" data-view="blackbox"><svg><use href="#i-globe"/></svg>BLACKBOX · Web</button>
+    <button class="nav" data-view="coordinator"><svg><use href="#i-flow"/></svg>Coordinator</button>
+    <div class="navlabel">Quality</div>
+    <button class="nav" data-view="eval"><svg><use href="#i-chart"/></svg>Evaluation</button>
+    <div class="foot">Decision support only. Findings are indicators, not proof. Every result requires human review.</div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumbs" id="crumbs">MIRAGE <span style="margin:0 6px">/</span> <b>Investigate</b></div>
+      <div class="grow"></div>
+      <span class="badge-guard"><svg width="14" height="14"><use href="#i-shield"/></svg>Evidence hashed &amp; integrity-checked</span>
+      <button class="btn" id="btnJson" disabled><svg><use href="#i-download"/></svg>Export JSON</button>
+      <button class="btn primary" id="btnPrint" disabled><svg><use href="#i-print"/></svg>Print report</button>
+    </header>
+
+    <!-- ===================== INVESTIGATE ===================== -->
+    <section class="view" id="v-investigate">
+      <div class="inv">
+        <div class="lib">
+          <h3>Case library</h3>
+          <div class="seg" id="libSeg">
+            <button class="on" data-lib="real">Real receipts</button>
+            <button data-lib="synthetic">Synthetic invoices</button>
+          </div>
+          <div id="cases"></div>
+          <div class="drop" id="drop">
+            <svg><use href="#i-upload"/></svg>
+            <b>Analyse your own document</b>PNG, JPG, TIFF or PDF · click or drop
+            <input type="file" id="file" accept=".png,.jpg,.jpeg,.tif,.tiff,.pdf" hidden>
+          </div>
+        </div>
+
+        <div class="stagecol">
+          <div class="toolbar" id="toolbar">
+            <span class="name" id="docname">No document</span>
+            <div class="grow"></div>
+            <label class="tgl"><input type="checkbox" id="tFind" checked><span class="swatch" style="background:var(--sus)"></span>Findings</label>
+            <label class="tgl" id="tTruthWrap"><input type="checkbox" id="tTruth"><span class="swatch" style="background:var(--truth)"></span>Ground truth</label>
+            <div class="zoom"><button id="zOut" title="Zoom out">−</button><span id="zLbl">Fit</span><button id="zIn" title="Zoom in">+</button><button id="zFit" title="Fit to view" style="border-left:1px solid var(--border)">Fit</button></div>
+          </div>
+          <div class="canvas" id="canvas">
+            <div class="empty">
+              <div class="ill"><svg width="34" height="34" style="color:var(--brand)"><use href="#i-search"/></svg></div>
+              <h2>Select a case to investigate</h2>
+              MIRAGE reads the document, checks that its numbers agree, looks for copy-pasted characters and
+              layout inconsistencies, and ties every finding to a region of the page.
+            </div>
+          </div>
+        </div>
+
+        <div class="insp" id="insp">
+          <div class="pane"><h3>Result</h3><div class="note-muted">No document analysed yet.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ECHO ===================== -->
+    <section class="view hidden" id="v-echo">
+      <div class="inv">
+        <div class="lib">
+          <h3>Call library</h3>
+          <div id="echoCases"></div>
+          <div class="drop" id="echoDrop">
+            <svg><use href="#i-upload"/></svg>
+            <b>Analyse a recording</b>Phone recordings, WhatsApp voice notes, MP3, WAV · up to 10 min
+            <input type="file" id="echoFile" accept=".wav,.mp3,.flac,.m4a,.ogg,.opus,.aac,.amr,.3gp,.webm,.mp4,.wma" hidden>
+          </div>
+          <p class="note-muted" style="margin:12px 6px 0;font-size:12px">Speech is transcribed locally with Whisper. Audio never leaves this machine.</p>
+        </div>
+        <div class="stagecol">
+          <div class="toolbar"><span class="name" id="echoName">No recording</span><div class="grow"></div>
+            <span class="legend"><i class="cl amount"></i>amount <i class="cl deadline"></i>deadline <i class="cl payment_request"></i>payment
+              <i class="cl name"></i>name <i class="cl credential_request"></i>credential</span></div>
+          <div class="echo-main" id="echoMain">
+            <div class="empty">
+              <div class="ill"><svg width="34" height="34" style="color:var(--brand)"><use href="#i-wave"/></svg></div>
+              <h2>Select a call to analyse</h2>
+              ECHO transcribes the call, extracts amounts, deadlines, payment and credential requests and who the caller
+              claims to be, then looks for social-engineering patterns. Every claim links to the second of audio it came from.
+            </div>
+          </div>
+        </div>
+        <div class="insp" id="echoInsp"><div class="pane"><h3>Result</h3><div class="note-muted">No call analysed yet.</div></div></div>
+      </div>
+    </section>
+
+    <!-- ===================== EVALUATION ===================== -->
+    <section class="view hidden" id="v-blackbox"><div class="evalv"><div class="wrap">
+      <div class="ph"><div><h1>Is this link real?</h1>
+        <p>Checks whether a website address belongs to the real brand (Amazon, Flipkart, SBI, IRCTC…) or is a lookalike.
+        The verdict comes from the address alone; if you want, you can also see a safe picture of the page.</p></div></div>
+      <div class="card"><div class="cb" style="padding:18px">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <input id="urlInput" placeholder="Paste a link, e.g. https://flipkart-bigbillion-sale.xyz/claim"
+            style="flex:1;min-width:280px;font:inherit;font-size:15px;padding:10px 12px;border:1px solid var(--border-2);border-radius:8px">
+          <label class="tgl" title="Ask DNS whether the domain exists and the public registry when it was registered. Sends only the domain name, never opens the page.">
+            <input type="checkbox" id="urlLookups"> Safe lookups (domain age)</label>
+          <button class="btn primary" id="urlRun">Check link</button>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap" id="urlExamples"></div>
+      </div></div>
+      <div id="urlResult"></div>
+      <div class="card"><div class="ch"><h2>Brands we can verify</h2><p>Official domains are listed only when we are sure the brand controls them.</p></div>
+        <div class="cb" id="urlBrands" style="padding-top:10px"></div></div>
+      <details class="card" style="padding:14px 18px"><summary>Legacy: synthetic exploration scenarios (teammate prototype)</summary>
+        <div style="padding-top:12px">
+          <label>Scenario <select id="bbScenario"></select></label>
+          <label>Strategy <select id="bbStrategy"><option>learned</option><option>fixed</option><option>random</option></select></label>
+          <button class="btn" id="bbRun">Run</button>
+          <pre class="json" id="bbOutput">Optional prototype; the URL checker above is the BLACKBOX module.</pre>
+        </div></details>
+    </div></div></section>
+    <section class="view hidden" id="v-coordinator"><div class="evalv"><div class="wrap">
+      <div class="ph"><div><h1>Investigate a case</h1>
+        <p>Give one goal and the evidence you have. The coordinator decides which checks to run (at most three),
+        runs them under time limits, records every step, and hands the result to a human reviewer.</p></div></div>
+      <div class="co-grid">
+        <div class="card"><div class="ch"><h2>1 · What should be checked?</h2></div><div class="cb" style="padding-top:12px">
+          <textarea id="coGoal" rows="2" maxlength="2000" class="co-goal">Investigate the invoice, the call recording and the link</textarea>
+          <div class="co-chips" id="coGoalChips"></div>
+          <h3 class="bbh">2 · Evidence</h3>
+          <div class="co-in" data-mod="mirage">
+            <div class="co-ic mirage"><svg><use href="#i-doc"/></svg></div>
+            <div class="co-body"><b>Document</b> <span class="note-muted">MIRAGE · invoice or receipt (PDF, PNG, JPG, TIFF)</span>
+              <div class="co-row"><label class="btn"><svg><use href="#i-upload"/></svg> Upload<input type="file" id="coDocFile" hidden accept=".pdf,.png,.jpg,.jpeg,.tif,.tiff"></label>
+                <select id="coDocRecent"><option value="">…or pick a recent document</option></select></div>
+              <div class="co-sel" id="coDocSel"></div></div></div>
+          <div class="co-in" data-mod="echo">
+            <div class="co-ic echo"><svg><use href="#i-wave"/></svg></div>
+            <div class="co-body"><b>Call recording</b> <span class="note-muted">ECHO · WAV, MP3, M4A, FLAC…</span>
+              <div class="co-row"><label class="btn"><svg><use href="#i-upload"/></svg> Upload<input type="file" id="coAudioFile" hidden accept=".wav,.mp3,.flac,.m4a,.mp4,.ogg,.opus,.webm,.aac,.amr,.3gp,.wma"></label>
+                <select id="coAudioRecent"><option value="">…or pick a recent recording</option></select></div>
+              <div class="co-sel" id="coAudioSel"></div></div></div>
+          <div class="co-in" data-mod="blackbox">
+            <div class="co-ic blackbox"><svg><use href="#i-globe"/></svg></div>
+            <div class="co-body"><b>Website link</b> <span class="note-muted">BLACKBOX · is it the real brand or a lookalike?</span>
+              <div class="co-row"><input id="coUrl" placeholder="https://…" maxlength="2048">
+                <label class="tgl"><input type="checkbox" id="coLookups"> Safe lookups</label></div></div></div>
+          <details class="co-limits"><summary>Limits <span class="note-muted" id="coLimitsSum"></span></summary>
+            <div class="co-row" style="margin-top:8px">
+              <label>Max checks <select id="coMaxCalls"><option>1</option><option>2</option><option selected>3</option></select></label>
+              <label>Time budget <select id="coMaxSec"><option value="30">30 s</option><option value="60">60 s</option><option value="120" selected>2 min</option><option value="300">5 min</option></select></label>
+              <label>Per-check timeout <select id="coToolTo"><option value="10">10 s</option><option value="30">30 s</option><option value="90" selected>90 s</option><option value="180">3 min</option></select></label>
+            </div>
+            <label style="display:block;margin-top:8px" class="note-muted">Legacy synthetic website scenario <select id="coordScenario"><option value="">None</option></select></label>
+          </details>
+          <div class="co-plan" id="coPlan"></div>
+          <div class="co-row" style="margin-top:12px">
+            <button class="btn primary" id="coRun"><svg><use href="#i-search"/></svg> Run investigation</button>
+            <button class="btn" id="coStop" hidden>Stop after current check</button>
+            <span class="note-muted" id="coMsg"></span></div>
+        </div></div>
+        <div class="card"><div class="ch"><h2>Progress</h2><span class="grow"></span><span class="tag neutral" id="coState">idle</span></div>
+          <div class="cb" style="padding-top:12px">
+            <div class="co-meters" id="coMeters"></div>
+            <ol class="co-steps" id="coSteps"><li class="co-empty">Steps appear here when the investigation runs.</li></ol>
+          </div></div>
+      </div>
+      <div id="coReport"></div>
+    </div></div></section>
+    <section class="view hidden" id="v-eval"><div class="evalv"><div class="wrap" id="evalBody"></div></div></section>
+  </div>
+</div>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const CHECKS = {
+  copy_move:            { name: "Copy-paste clone",    icon: "i-copy" },
+  numeric_consistency:  { name: "Arithmetic",          icon: "i-calc" },
+  field_alignment:      { name: "Column alignment",    icon: "i-align" },
+  row_baseline:         { name: "Row baseline",        icon: "i-align" },
+  font_consistency:     { name: "Font / stroke width", icon: "i-font" },
+  region_inconsistency: { name: "Background patch",    icon: "i-layer" },
+  input_quality:        { name: "Input quality",       icon: "i-help" },
+  ocr_confidence:       { name: "OCR confidence",      icon: "i-help" },
+  overall:              { name: "Overall",             icon: "i-check" },
+  credential_request:   { name: "Credential request",  icon: "i-shield" },
+  unusual_payment_channel: { name: "Unusual payment channel", icon: "i-alert" },
+  pressure_pattern:     { name: "Pressure pattern",    icon: "i-alert" },
+  ml_scam_classifier:   { name: "Learned classifier",  icon: "i-chart" },
+};
+const ORDER = { suspicious: 0, inconclusive: 1, benign: 2 };
+const VERDICT = {
+  suspicious:   { t: "Suspicious",      icon: "i-alert", p: "At least one check found evidence consistent with tampering." },
+  inconclusive: { t: "Inconclusive",    icon: "i-help",  p: "Checks could not reach a conclusion; review manually." },
+  benign:       { t: "No flags raised", icon: "i-check", p: "No check found a problem. This is not proof that the document is genuine." },
+};
+let libs = { real: null, synthetic: null }, libKey = "real", state = null, zoom = null;
+
+// ------------------------------------------------------------ navigation
+let activeView = "investigate";
+const CRUMBS = { investigate: ["MIRAGE", "Documents"], echo: ["ECHO", "Calls"], blackbox: ["BLACKBOX", "Web"], coordinator: ["Coordinator", "Report"], eval: ["Quality", "Evaluation"] };
+$$(".nav[data-view]").forEach(b => b.onclick = () => {
+  $$(".nav").forEach(x => x.classList.toggle("active", x === b));
+  const v = activeView = b.dataset.view;
+  ["investigate", "echo", "blackbox", "coordinator", "eval"].forEach(k => $("#v-" + k).classList.toggle("hidden", v !== k));
+  $("#crumbs").innerHTML = `${CRUMBS[v][0]} <span style="margin:0 6px">/</span> <b>${CRUMBS[v][1]}</b>`;
+  const st = v === "echo" ? echoState : v === "investigate" ? state : v === "blackbox" ? urlState : v === "coordinator" ? coordState : null;
+  ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = !st);
+  if (v === "eval") loadEval();
+  if (v === "echo") renderEchoLib();
+});
+
+// ------------------------------------------------------------ case library
+async function loadLib(key) {
+  if (!libs[key]) libs[key] = await (await fetch(key === "real" ? "/demo/real-cases" : "/demo/cases")).json();
+  return libs[key];
+}
+async function renderLib() {
+  const lib = await loadLib(libKey);
+  const base = libKey === "real" ? "/demo/real-cases/" : "/demo/cases/";
+  $("#cases").innerHTML = (lib.cases || []).map((c, i) => {
+    const sus = c.truth.label === "suspicious";
+    return `<div class="case" data-i="${i}">
+      <div class="thumb" style="background-image:url('${base}${encodeURIComponent(c.file)}')"></div>
+      <div><div class="t">${esc(c.title)}</div>
+        <div class="s"><span class="tag ${sus ? "sus" : "ok"}">${sus ? "forged" : "genuine"}</span>${c.truth.type ? esc(c.truth.type) : ""}</div></div>
+    </div>`; }).join("") || `<div class="note-muted" style="padding:6px">${esc(lib.note || "No cases available.")}</div>`;
+  $$(".case").forEach(el => el.onclick = () => openCase(+el.dataset.i));
+}
+$$("#libSeg button").forEach(b => b.onclick = () => {
+  $$("#libSeg button").forEach(x => x.classList.toggle("on", x === b));
+  libKey = b.dataset.lib; renderLib();
+});
+async function openCase(i) {
+  $$(".case").forEach(el => el.classList.toggle("active", +el.dataset.i === i));
+  const lib = libs[libKey], c = lib.cases[i];
+  const base = libKey === "real" ? "/demo/real-cases/" : "/demo/cases/";
+  const blob = await (await fetch(base + encodeURIComponent(c.file))).blob();
+  analyze(new File([blob], c.file, { type: blob.type }), { ...c, origWidth: c.orig_width || lib.orig_width });
+}
+
+// ------------------------------------------------------------ upload
+const drop = $("#drop"), fileIn = $("#file");
+drop.onclick = () => fileIn.click();
+fileIn.onchange = () => fileIn.files[0] && upload(fileIn.files[0]);
+drop.ondragover = e => { e.preventDefault(); drop.classList.add("over"); };
+drop.ondragleave = () => drop.classList.remove("over");
+drop.ondrop = e => { e.preventDefault(); drop.classList.remove("over"); e.dataTransfer.files[0] && upload(e.dataTransfer.files[0]); };
+function upload(f) { $$(".case").forEach(el => el.classList.remove("active")); analyze(f, null); }
+
+// ------------------------------------------------------------ analysis
+async function analyze(file, demo) {
+  $("#docname").textContent = file.name;
+  const steps = ["Ingest & normalise page", "OCR words with positions", "Arithmetic & layout checks", "Copy-paste clone search", "Store evidence"];
+  $("#canvas").innerHTML = `<div class="loader"><div class="spin"></div><div style="margin-top:12px;font-weight:600">Analysing document…</div>
+    <div class="steps">${steps.map((s, i) => `<div data-s="${i}">○ ${s}</div>`).join("")}</div></div>`;
+  let k = 0; const tick = setInterval(() => { const el = $(`[data-s="${k}"]`); if (el) { el.classList.add("on"); el.textContent = "● " + steps[k]; } k = Math.min(k + 1, steps.length - 1); }, 260);
+  $("#insp").innerHTML = `<div class="pane"><h3>Result</h3><div class="note-muted">Running checks…</div></div>`;
+  ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = true);
+  const fd = new FormData(); fd.append("file", file);
+  const t0 = performance.now();
+  try {
+    const result = await (await fetch("/mirage/analyze", { method: "POST", body: fd })).json();
+    const ms = performance.now() - t0;
+    const verdict = (await (await fetch("/mirage/verdict", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(result) })).json()).verdict;
+    const records = await Promise.all(result.evidence_ids.map(async id => ({ id, ...(await (await fetch("/evidence/" + id)).json()) })));
+    const pages = records.filter(r => r.kind === "page_region").map(r => ({ id: r.id, page: r.meta.page, shape: r.meta.shape }));
+    state = { result, verdict, records, pages, pageIdx: 0, demo, name: file.name, ms };
+    zoom = null;
+    renderStage(); renderInspector();
+    ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = false);
+  } catch (e) {
+    $("#canvas").innerHTML = `<div class="empty"><h2>Analysis failed</h2>${esc(e.message)}</div>`;
+  } finally { clearInterval(tick); }
+}
+
+// ------------------------------------------------------------ stage + overlay
+function renderStage() {
+  const s = state;
+  $("#tTruthWrap").style.display = s.demo ? "inline-flex" : "none";
+  if (s.result.errors.length || !s.pages.length) {
+    $("#canvas").innerHTML = `<div class="empty"><h2>No page to display</h2>${esc(s.result.errors.map(e => e.message).join("; "))}</div>`;
+    return;
+  }
+  const pg = s.pages[s.pageIdx];
+  $("#canvas").innerHTML = `<div class="sheet" id="sheet"><img id="pimg" src="/evidence/${pg.id}/image" alt="analysed page">
+    <svg class="ov" id="ov"></svg></div>`;
+  $("#pimg").onload = () => { applyZoom(); drawOverlay(); };
+}
+function applyZoom() {
+  const img = $("#pimg"), sheet = $("#sheet"), canvas = $("#canvas");
+  if (!img || !sheet) return;
+  const fit = Math.min((canvas.clientWidth - 56) / img.naturalWidth, (canvas.clientHeight - 56) / img.naturalHeight, 1);
+  const z = zoom ?? Math.max(fit, 0.15);
+  sheet.style.width = (img.naturalWidth * z) + "px";
+  $("#zLbl").textContent = zoom == null ? "Fit" : Math.round(z * 100) + "%";
+}
+$("#zIn").onclick = () => { zoom = Math.min(3, (zoom ?? currentScale()) * 1.25); applyZoom(); };
+$("#zOut").onclick = () => { zoom = Math.max(0.1, (zoom ?? currentScale()) / 1.25); applyZoom(); };
+$("#zFit").onclick = () => { zoom = null; applyZoom(); };
+function currentScale() { const img = $("#pimg"); return img ? $("#sheet").clientWidth / img.naturalWidth : 1; }
+window.addEventListener("resize", () => state && zoom == null && applyZoom());
+
+function drawOverlay() {
+  const s = state, img = $("#pimg"), ov = $("#ov");
+  if (!img || !ov) return;
+  const W = img.naturalWidth, H = img.naturalHeight, page = s.pages[s.pageIdx].page;
+  ov.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const parts = [];
+  const rect = (b, cls, fid, pad = 4) => `<rect class="${cls}" ${fid ? `data-f="${fid}"` : ""} x="${b[0] - pad}" y="${b[1] - pad}" width="${b[2] + 2 * pad}" height="${b[3] + 2 * pad}" rx="3"/>`;
+  if ($("#tTruth").checked && s.demo) {
+    const k = W / (s.demo.origWidth || W);
+    for (const r of s.demo.truth.regions || []) parts.push(rect(r.bbox.map(v => v * k), "truth", null, 3));
+  }
+  if ($("#tFind").checked) {
+    for (const f of s.result.findings) {
+      if (f.check === "overall") continue;
+      if (f.check === "copy_move") {
+        const pairs = {};
+        for (const e of f.evidence) if (e.locator.page === page && e.locator.bbox) (pairs[e.locator.clone_pair] ||= []).push(e.locator.bbox);
+        for (const [n, boxes] of Object.entries(pairs)) {
+          boxes.forEach(b => parts.push(rect(b, "clone", f.finding_id, 5)));
+          if (boxes.length === 2) {
+            const c = b => [b[0] + b[2] / 2, b[1] + b[3] / 2], [a, z] = boxes.map(c);
+            parts.push(`<line class="clone" x1="${a[0]}" y1="${a[1]}" x2="${z[0]}" y2="${z[1]}"/>`);
+            parts.push(`<text x="${boxes[0][0] - 6}" y="${boxes[0][1] - 10}" fill="var(--clone)">#${n}</text>`);
+          }
+        }
+        continue;
+      }
+      for (const e of f.evidence) {
+        if (e.locator.page !== page || !e.locator.bbox) continue;
+        parts.push(rect(e.locator.bbox, f.check === "numeric_consistency" ? "sumref" : f.outcome, f.finding_id));
+      }
+    }
+  }
+  ov.innerHTML = parts.join("");
+  $$("rect[data-f]", ov).forEach(r => { r.onmouseenter = () => hl(r.dataset.f, true); r.onmouseleave = () => hl(r.dataset.f, false); });
+}
+$("#tFind").onchange = () => drawOverlay();
+$("#tTruth").onchange = () => drawOverlay();
+function hl(fid, on) {
+  $$(`#ov [data-f="${fid}"]`).forEach(r => r.classList.toggle("hl", on));
+  const card = $(`.fcard[data-f="${fid}"]`); if (card) card.classList.toggle("hl", on);
+}
+
+// ------------------------------------------------------------ inspector
+function renderInspector() {
+  const { result, verdict, records, demo, ms } = state, V = VERDICT[verdict];
+  const content = result.findings.filter(f => !["overall", "input_quality", "ocr_confidence"].includes(f.check));
+  const flagged = content.filter(f => f.outcome !== "benign");
+  const intact = records.every(r => r.integrity_ok);
+  let gt = "";
+  if (demo) {
+    const correct = (verdict !== "benign") === (demo.truth.label === "suspicious");
+    gt = `<div class="gt"><span>Ground truth: <b>${demo.truth.label === "suspicious" ? "forged" : "genuine"}</b>${demo.truth.type ? " · " + esc(demo.truth.type) : ""}</span>
+      <span class="grow"></span><span class="${correct ? "ok" : "bad"}">${correct ? "✓ MIRAGE agrees" : "✗ MIRAGE missed it"}</span></div>`;
+  }
+  const findings = [...result.findings].filter(f => f.check !== "overall" || result.findings.length === 1)
+    .sort((a, b) => ORDER[a.outcome] - ORDER[b.outcome]);
+  const fhtml = findings.map(f => {
+    const C = CHECKS[f.check] || { name: f.check, icon: "i-help" };
+    return `<div class="fcard" data-f="${f.finding_id}">
+      <div class="h"><div class="ic ${f.outcome}"><svg><use href="#${C.icon}"/></svg></div>
+        <span class="name">${esc(C.name)}</span><span class="grow"></span>
+        <span class="tag ${f.outcome === "suspicious" ? "sus" : f.outcome === "benign" ? "ok" : "inc"}">${f.outcome}</span></div>
+      <div class="d">${esc(f.description)}</div>
+      <div class="meta"><span class="conf">confidence <i><b style="width:${100 * f.uncertainty.confidence}%"></b></i>${f.uncertainty.confidence}</span>
+        <span>${f.evidence.length} evidence region${f.evidence.length > 1 ? "s" : ""}</span>
+        <span class="pill-check">${esc(f.check)}</span></div>
+    </div>`; }).join("") || `<div class="note-muted">No findings.</div>`;
+  const errs = result.errors.map(e => `<div class="fcard"><div class="h"><span class="tag sus">error</span><b>${esc(e.code)}</b></div><div class="d">${esc(e.message)}</div></div>`).join("");
+  const evhtml = records.map(r => `<div class="ev"><span class="id">${esc(r.id)}</span>
+      <span>${r.integrity_ok ? `<span class="okline"><svg width="13" height="13"><use href="#i-check"/></svg>verified</span>` : `<span class="badline">integrity FAILED</span>`}</span>
+      <span class="k">${esc(r.kind)}${r.meta && r.meta.page ? " · page " + r.meta.page : ""} · ${esc(r.source)}</span><span class="k">${esc((r.stored_at || "").slice(0, 19).replace("T", " "))}</span>
+      <span class="sha">sha256 ${esc(r.sha256)}</span></div>`).join("");
+  $("#insp").innerHTML = `
+    <div class="verdict ${verdict}">
+      <div class="lbl">MIRAGE verdict</div>
+      <div class="v"><svg><use href="#${V.icon}"/></svg>${V.t}</div>
+      <p>${V.p}</p>
+    </div>
+    ${gt}
+    <div class="stats">
+      <div><b>${flagged.length}</b><span>flags</span></div>
+      <div><b>${content.length}</b><span>findings</span></div>
+      <div><b>${(ms / 1000).toFixed(1)}s</b><span>runtime</span></div>
+      <div><b style="color:${intact ? "var(--ok)" : "var(--sus)"}">${intact ? "OK" : "FAIL"}</b><span>integrity</span></div>
+    </div>
+    ${demo && demo.story ? `<p class="story">${esc(demo.story)}</p>` : ""}
+    <div class="tabs">
+      <button class="on" data-t="f">Findings<span class="n">${findings.length}</span></button>
+      <button data-t="e">Evidence<span class="n">${records.length}</span></button>
+      <button data-t="n">Notes<span class="n">${result.limitations.length}</span></button>
+      <button data-t="j">Raw JSON</button>
+    </div>
+    <div class="pane" data-p="f">${errs}${fhtml}</div>
+    <div class="pane hidden" data-p="e"><p class="note-muted" style="margin-top:0">Every input and analysed page is stored content-addressed (SHA-256) and re-verified on read.</p>${evhtml}</div>
+    <div class="pane hidden" data-p="n"><ul class="notes">${result.limitations.map(l => `<li>${esc(l)}</li>`).join("")}</ul>
+      <p class="note-muted">Run <span class="pill-check">${esc(result.run_id)}</span> · human review ${result.needs_human_review ? "required" : "not required"}</p></div>
+    <div class="pane hidden" data-p="j"><pre class="json">${esc(JSON.stringify(result, null, 2))}</pre></div>`;
+  $$(".tabs button").forEach(b => b.onclick = () => {
+    $$(".tabs button").forEach(x => x.classList.toggle("on", x === b));
+    $$(".insp .pane[data-p]").forEach(p => p.classList.toggle("hidden", p.dataset.p !== b.dataset.t));
+  });
+  $$(".fcard[data-f]").forEach(el => { el.onmouseenter = () => hl(el.dataset.f, true); el.onmouseleave = () => hl(el.dataset.f, false); });
+}
+
+// ------------------------------------------------------------ export
+$("#btnJson").onclick = () => {
+  const st = activeView === "echo" ? echoState : activeView === "blackbox" ? urlState : activeView === "coordinator" ? coordState : state;
+  if (!st) return;
+  const mod = activeView === "investigate" ? "mirage" : activeView;
+  const payload = st.result ? { verdict: st.verdict, input: st.name, result: st.result } : st;
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `${mod}_report.json` });
+  a.click(); URL.revokeObjectURL(a.href);
+};
+$("#btnPrint").onclick = () => {
+  const st = activeView === "echo" ? echoState : activeView === "blackbox" ? urlState : activeView === "coordinator" ? coordState : state;
+  if (st) window.print();
+};
+
+// ------------------------------------------------------------ evaluation
+function echoPublicCard(ev) {
+  const fin = ev.echo_public, before = ev.echo_public_frozen;
+  if (!fin) return "";
+  const name = { single_agent: "Single-agent dialogues · test half", multi_agent: "Multi-agent dialogues · test half",
+    scammer_conversation: "Scammer-Conversation (never tuned on)", youtube_real: "Real YouTube scam calls (never tuned on)" };
+  const prev = n => (before || []).find(d => d.dataset === n);
+  const hy = ev.echo_hybrid || {};
+  const hkey = { single_agent: "single_agent_test", multi_agent: "multi_agent_test",
+    scammer_conversation: "scammer_conversation", youtube_real: "youtube_real" };
+  const rows = fin.map(d => { const b = prev(d.dataset), h = hy[hkey[d.dataset]];
+    const c = h ? h.corroborated : null, r = h ? h.flag_for_review : null;
+    return `<tr class="${d.dataset === "youtube_real" ? "hero" : ""}"><td>${esc(name[d.dataset] || d.dataset)}</td><td class="num">${d.n}</td>
+      <td class="num">${b ? f2(b.f1) : "–"}</td><td class="num">${f2(d.f1)}</td><td class="num"><b>${c ? f2(c.f1) : "–"}</b></td>
+      <td class="num">${c ? f2(c.recall) : f2(d.recall)}</td><td class="num">${r ? f2(r.recall) : "–"}</td>
+      <td class="num">${c && c.false_positive_rate != null ? f2(c.false_positive_rate) : "–"}</td></tr>`; }).join("");
+  const ls2 = ev.echo_librispeech_other, ls1 = ev.echo_librispeech;
+  return `<div class="card"><div class="ch"><h2>ECHO · public datasets (written by other researchers)</h2><span class="grow"></span>
+      <span class="tag neutral">BothBosu · Apache-2.0 · LibriSpeech</span></div>
+    <div class="cb" style="padding-top:14px">
+      <div class="callout warn" style="margin-bottom:14px">Our own scripted calls showed 24/24 scams caught, but those were written by us. On independent
+      datasets the first, frozen run exposed overfitting to our Indian-scam wording. Rules were then fixed using the <b>train halves only</b> and
+      scored once on the test halves; the two other sets were never used for tuning.</div>
+      <table><tr><th>Dataset</th><th class="num">Dialogues</th><th class="num">F1 before*</th><th class="num">F1 rules</th>
+        <th class="num">F1 rules + classifier</th><th class="num">Recall</th><th class="num">Flagged for review</th><th class="num">FP rate</th></tr>${rows}</table>
+      <p class="note-muted" style="margin:10px 0 0">*Before = first frozen run, measured on each full dataset (train + test).
+      Speech recognition WER: LibriSpeech test-clean ${ls1 ? (100 * ls1.wer).toFixed(1) + "%" : "–"},
+      test-other (harder speakers) ${ls2 ? (100 * ls2.wer).toFixed(1) + "%" : "–"}.
+      The learned classifier (trained on the public train halves only) may only accuse when rule evidence backs it up; on its own it flags a call
+      for review. On our genuine Indian calls it would flag 9 of 18 for review (it learned from US data), which is why it can't accuse alone.</p></div></div>`;
+}
+function echoEvalCard(ev) {
+  const t = ev.echo_calls_test, ls = ev.echo_librispeech;
+  if (!t) return "";
+  const names = { clean: "Clean", snr10: "Noise 10 dB", snr5: "Noise 5 dB", phone: "Phone line (8 kHz)" };
+  const order = ["clean", "snr10", "snr5", "phone"].filter(k => t.by_condition[k]);
+  const rows = order.map(k => { const m = t.by_condition[k];
+    return `<tr class="${k === "clean" ? "hero" : ""}"><td>${names[k]}</td><td class="num">${m.n}</td>
+      <td class="num">${f2(m.claims.precision)}</td><td class="num">${f2(m.claims.recall)}</td><td class="num">${f2(m.claims.f1)}</td>
+      <td class="num">${f2(m.scam_detection.precision)} / ${f2(m.scam_detection.recall)}</td>
+      <td class="num">${f2(m.scam_detection.false_positive_rate)}</td><td class="num">${(100 * m.mean_wer).toFixed(1)}%</td></tr>`; }).join("");
+  const c = t.by_condition.clean;
+  return `<div class="card"><div class="ch"><h2>ECHO · scripted calls (held-out wording, run once)</h2><span class="grow"></span>
+      <span class="tag neutral">synthetic voices · 42 calls × 4 conditions</span></div>
+    <div class="cb" style="padding-top:14px">
+      <div class="kpis">
+        <div class="kpi"><div class="l">Claim extraction F1 (clean)</div><div class="n">${f2(c.claims.f1)}</div><div class="delta">target ≥ 0.70</div></div>
+        <div class="kpi"><div class="l">Scam calls caught (clean)</div><div class="n">${c.scam_detection.tp} / ${c.scam_detection.tp + c.scam_detection.fn}</div><div class="delta">0 false alarms on genuine calls</div></div>
+        <div class="kpi"><div class="l">WER · LibriSpeech test-clean</div><div class="n">${ls ? (100 * ls.wer).toFixed(1) + "%" : "–"}</div><div class="delta">target ≤ 15%${ls ? ` · ${ls.n_utterances} utterances` : ""}</div></div>
+        <div class="kpi"><div class="l">Runtime per call</div><div class="n">${c.mean_runtime_s.toFixed(1)} s</div><div class="delta">local Whisper base.en on CPU</div></div>
+      </div>
+      <table><tr><th>Audio</th><th class="num">Calls</th><th class="num">Claim P</th><th class="num">Claim R</th><th class="num">Claim F1</th>
+        <th class="num">Scam P / R</th><th class="num">FP rate</th><th class="num">WER</th></tr>${rows}</table>
+      <p class="note-muted" style="margin:10px 0 0">Phone-line audio was fixed by lowering the voice-activity threshold, tuned on dev copies only
+      (first test run: claim F1 0.59, 11/24 scams; second run: 0.80, 24/24). Some name "errors" are missing labels in our generated
+      ground truth; see docs/ECHO_EVAL.md for both runs and the corrected-label numbers.</p></div></div>`;
+}
+let evalDone = false;
+const f2 = v => (v ?? 0).toFixed(2);
+async function loadEval() {
+  if (evalDone) return;
+  const ev = await (await fetch("/mirage/eval")).json();
+  const real = ev.findit_test, realVal = ev.findit_val, h = ev.holdout_hard_final || ev.holdout_hard;
+  const row = (name, m, hero) => m ? `<tr class="${hero ? "hero" : ""}"><td>${name}</td><td class="num">${m.n_documents}</td>
+    <td class="num">${f2(m.precision)}</td><td class="num">${f2(m.recall)}</td><td class="num">${f2(m.f1)}</td>
+    <td class="num">${f2(m.false_positive_rate)}</td><td class="num">${f2(m.mean_runtime_s)} s</td></tr>` : "";
+  const kpi = (l, n, d) => `<div class="kpi"><div class="l">${l}</div><div class="n">${n}</div><div class="delta">${d}</div></div>`;
+  const realBlock = real ? `
+    <div class="kpis">
+      ${kpi("F1 · real forged receipts (test)", f2(real.f1), "Find it again!, untuned, run once")}
+      ${kpi("Precision", f2(real.precision), `${real.tp} of ${real.tp + real.fp} flags were real forgeries`)}
+      ${kpi("Recall", f2(real.recall), `${real.tp} of ${real.n_forged} forged receipts caught`)}
+      ${kpi("False-positive rate", f2(real.false_positive_rate), `on ${real.fp + real.tn} genuine receipts`)}
+    </div>` : `<div class="callout warn">Real-data test results not recorded yet.</div>`;
+  const checks = real ? Object.entries(real.fired_by_check || {}).map(([c, d]) => `<tr><td><span class="pill-check">${esc(c)}</span></td>
+    <td class="num">${d.on_forged}</td><td class="num">${d.on_genuine}</td>
+    <td><span class="bar"><b style="width:${100 * d.on_forged / Math.max(1, real.n_forged)}%"></b></span>${Math.round(100 * d.on_forged / Math.max(1, real.n_forged))}% of forged</td></tr>`).join("") : "";
+  const attacks = h ? Object.entries(h.recall_by_attack).map(([k, d]) => `<tr><td>${esc(k)}</td><td class="num">${d.caught} / ${d.n}</td>
+    <td><span class="bar"><b style="width:${100 * d.recall}%"></b></span></td></tr>`).join("") : "";
+  $("#evalBody").innerHTML = `
+    <div class="ph"><div><h1>Evaluation</h1><p>Measured results only. Tuning and test data are kept separate; test sets are run once.</p></div></div>
+    <div class="card"><div class="ch"><h2>Real-world benchmark · Find it again! (ICDAR 2023)</h2><span class="grow"></span><span class="tag neutral">real scans · human forgers</span></div>
+      <div class="cb" style="padding-top:14px">${realBlock}
+        <table><tr><th>Configuration</th><th class="num">Docs</th><th class="num">Precision</th><th class="num">Recall</th><th class="num">F1</th><th class="num">FP rate</th><th class="num">Runtime</th></tr>
+          ${row("Before receipt work (val split)", ev.findit_val_baseline)}
+          ${row("Current pipeline · val split (tuning)", realVal)}
+          ${row("Current pipeline · test split (untuned, run once)", real, true)}
+        </table></div></div>
+    ${checks ? `<div class="card"><div class="ch"><h2>Which checks fired on the real test split</h2><p>A useful check fires on forged receipts and stays quiet on genuine ones.</p></div>
+      <div class="cb"><table><tr><th>Check</th><th class="num">On forged</th><th class="num">On genuine</th><th>Share of forgeries caught</th></tr>${checks}</table></div></div>` : ""}
+    ${echoPublicCard(ev)}
+    ${echoEvalCard(ev)}
+    <div class="grid2">
+      <div class="card"><div class="ch"><h2>Synthetic invoices</h2></div><div class="cb"><table>
+        <tr><th>Set</th><th class="num">Docs</th><th class="num">P</th><th class="num">R</th><th class="num">F1</th><th class="num">FPR</th><th class="num">Time</th></tr>
+        <tr><td>Week 2 (as reported)</td><td class="num">40</td><td class="num">0.67</td><td class="num">0.60</td><td class="num">0.63</td><td class="num">0.30</td><td class="num">0.30 s</td></tr>
+        ${row("Hard held-out · first Week 3 version", ev.holdout_hard)}
+        ${row("Hard held-out · final pipeline", ev.holdout_hard_final, true)}</table>
+        <p class="note-muted" style="margin:10px 0 0">The final pipeline requires two independent checks to agree before a layout hint
+        counts. That lowered synthetic recall but removed every false alarm on real receipts.</p></div></div>
+      <div class="card"><div class="ch"><h2>Synthetic held-out recall by attack (final)</h2></div><div class="cb"><table>${attacks}</table></div></div>
+    </div>
+    <div class="callout">Copy-paste detection is the strongest signal on real forgeries: real forgers mostly clone digits that already exist on the receipt.
+      Edits that leave no pixel-level trace (typed in a matching font, or re-printed and re-scanned) remain the main limitation. See docs/MIRAGE_EVAL.md.</div>`;
+  evalDone = true;
+}
+
+// ============================================================ ECHO
+let echoLib = null, echoState = null;
+const CLAIM_LABEL = { amount: "Amount", deadline: "Deadline", payment_request: "Payment", name: "Name", credential_request: "Credential" };
+const fmtT = s => { s = Math.max(0, s || 0); return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`; };
+
+async function renderEchoLib() {
+  if (!echoLib) echoLib = await (await fetch("/demo/echo-cases")).json();
+  $("#echoCases").innerHTML = (echoLib.cases || []).map((c, i) => {
+    const sus = c.truth.label === "suspicious";
+    return `<div class="case" data-e="${i}"><div class="thumb" style="display:grid;place-items:center;color:var(--brand);background:var(--brand-soft)">
+      <svg width="18" height="18"><use href="#i-wave"/></svg></div>
+      <div><div class="t">${esc(c.title)}</div><div class="s"><span class="tag ${sus ? "sus" : "ok"}">${sus ? "scam" : "genuine"}</span>
+      ${c.truth.condition !== "clean" ? `<span class="tag neutral">${esc(c.truth.condition)}</span>` : ""}</div></div></div>`;
+  }).join("") || `<div class="note-muted">No demo calls found.</div>`;
+  $$("#echoCases .case").forEach(el => el.onclick = async () => {
+    $$("#echoCases .case").forEach(x => x.classList.toggle("active", x === el));
+    const c = echoLib.cases[+el.dataset.e];
+    const blob = await (await fetch("/demo/echo-cases/" + encodeURIComponent(c.file))).blob();
+    echoAnalyze(new File([blob], c.file, { type: blob.type || "audio/wav" }), c);
+  });
+}
+const eDrop = $("#echoDrop"), eFile = $("#echoFile");
+eDrop.onclick = () => eFile.click();
+eFile.onchange = () => eFile.files[0] && echoAnalyze(eFile.files[0], null);
+eDrop.ondragover = e => { e.preventDefault(); eDrop.classList.add("over"); };
+eDrop.ondragleave = () => eDrop.classList.remove("over");
+eDrop.ondrop = e => { e.preventDefault(); eDrop.classList.remove("over"); e.dataTransfer.files[0] && echoAnalyze(e.dataTransfer.files[0], null); };
+
+async function echoAnalyze(file, demo) {
+  $("#echoName").textContent = file.name;
+  const steps = ["Validate & convert audio", "Transcribe locally (Whisper)", "Extract claims", "Detect pressure tactics", "Store evidence"];
+  $("#echoMain").innerHTML = `<div class="loader"><div class="spin"></div><div style="margin-top:12px;font-weight:600">Analysing call…</div>
+    <div class="steps">${steps.map((s, i) => `<div data-es="${i}">○ ${s}</div>`).join("")}</div>
+    <p class="note-muted" style="margin-top:10px">The first call after start-up also loads the speech model (~20 s).</p></div>`;
+  let k = 0; const tick = setInterval(() => { const el = $(`[data-es="${k}"]`); if (el) { el.classList.add("on"); el.textContent = "● " + steps[k]; } k = Math.min(k + 1, steps.length - 1); }, 700);
+  $("#echoInsp").innerHTML = `<div class="pane"><h3>Result</h3><div class="note-muted">Running…</div></div>`;
+  ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = true);
+  const fd = new FormData(); fd.append("file", file);
+  const t0 = performance.now();
+  try {
+    const result = await (await fetch("/echo/analyze", { method: "POST", body: fd })).json();
+    const ms = performance.now() - t0;
+    const verdict = (await (await fetch("/echo/verdict", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(result) })).json()).verdict;
+    const records = await Promise.all(result.evidence_ids.map(async id => ({ id, ...(await (await fetch("/evidence/" + id)).json()) })));
+    echoState = { result, verdict, records, demo, name: file.name, ms };
+    renderEchoMain(); renderEchoInsp();
+    ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = false);
+  } catch (e) {
+    $("#echoMain").innerHTML = `<div class="empty"><h2>Analysis failed</h2>${esc(e.message)}</div>`;
+  } finally { clearInterval(tick); }
+}
+
+function claimAt(claims, w) { return claims.find(c => w.start >= c.start_s - 0.05 && w.end <= c.end_s + 0.05); }
+
+function renderEchoMain() {
+  const { result, records } = echoState;
+  const tr = result.artifacts.transcript, claims = result.artifacts.claims || [];
+  const audioRec = records.find(r => r.kind === "audio");
+  if (result.errors.length && !tr) {
+    $("#echoMain").innerHTML = `<div class="empty"><h2>Could not analyse this recording</h2>${esc(result.errors.map(e => e.message).join("; "))}</div>`;
+    return;
+  }
+  const dur = Math.max(tr.duration_s || 0, ...tr.segments.map(s => s.end), 1);
+  const pct = s => (100 * s / dur).toFixed(3) + "%";
+  const lines = tr.segments.map(s => {
+    const ws = (s.words && s.words.length ? s.words : [{ text: s.text, start: s.start, end: s.end }]).map((w, i) => {
+      const c = claimAt(claims, w);
+      // Whisper splits "50,000" into "50" + ",000": no space before punctuation-led tokens.
+      const sp = i && !/^[,.!?;:%')]/.test(w.text) ? " " : "";
+      return sp + (c ? `<span class="w c ${c.type}" title="${esc(CLAIM_LABEL[c.type])}: ${esc(c.value)}">${esc(w.text)}</span>` : `<span class="w">${esc(w.text)}</span>`);
+    }).join("");
+    return `<div class="line" data-t="${s.start}" data-end="${s.end}"><span class="ts">${fmtT(s.start)}</span><span>${ws}</span></div>`;
+  }).join("") || `<div class="note-muted" style="padding:10px 18px">No speech recognised.</div>`;
+  $("#echoMain").innerHTML = `
+    <div class="player">
+      <audio id="eAudio" controls preload="auto" src="/evidence/${audioRec.id}/audio"></audio>
+      <div class="tl" id="eTl">
+        ${tr.segments.map(s => `<div class="seg" style="left:${pct(s.start)};width:${pct(s.end - s.start)}"></div>`).join("")}
+        ${claims.map(c => `<div class="mk ${c.type}" title="${esc(CLAIM_LABEL[c.type])}: ${esc(c.value)} (${fmtT(c.start_s)})"
+            style="left:${pct(c.start_s)};width:${pct(Math.max(0.15, c.end_s - c.start_s))}"></div>`).join("")}
+        <div class="head" id="eHead" style="left:0"></div>
+      </div>
+      <div class="tl-l"><span>0:00</span><span>${claims.length} claim${claims.length === 1 ? "" : "s"} marked on the timeline</span><span>${fmtT(dur)}</span></div>
+    </div>
+    <div class="transcript"><h3>Transcript · ${esc(tr.model)} · ${tr.segments.length} segments</h3>${lines}</div>`;
+  const audio = $("#eAudio");
+  $$(".line").forEach(l => l.onclick = () => { audio.currentTime = +l.dataset.t; audio.play(); });
+  $("#eTl").onclick = e => { const r = e.currentTarget.getBoundingClientRect(); audio.currentTime = dur * (e.clientX - r.left) / r.width; audio.play(); };
+  audio.ontimeupdate = () => {
+    $("#eHead").style.left = pct(audio.currentTime);
+    $$(".line").forEach(l => l.classList.toggle("now", audio.currentTime >= +l.dataset.t && audio.currentTime < +l.dataset.end));
+  };
+}
+function echoSeek(t) { const a = $("#eAudio"); if (a) { a.currentTime = t; a.play(); } }
+
+function renderEchoInsp() {
+  const { result, verdict, records, demo, ms } = echoState, V = VERDICT[verdict];
+  const claims = result.artifacts.claims || [];
+  const flagged = result.findings.filter(f => f.outcome === "suspicious");
+  let gt = "";
+  if (demo) {
+    const correct = (verdict === "suspicious") === (demo.truth.label === "suspicious");
+    gt = `<div class="gt"><span>Ground truth: <b>${demo.truth.label === "suspicious" ? "scam" : "genuine"}</b> · ${esc(demo.truth.type)}</span>
+      <span class="grow"></span><span class="${correct ? "ok" : "bad"}">${correct ? "✓ ECHO agrees" : "✗ ECHO missed it"}</span></div>`;
+  }
+  const fhtml = [...result.findings].sort((a, b) => ORDER[a.outcome] - ORDER[b.outcome]).map(f => {
+    const C = CHECKS[f.check] || { name: f.check, icon: "i-help" };
+    const times = f.evidence.filter(e => e.locator.start_s != null).map(e =>
+      `<a href="#" class="pill-check" onclick="echoSeek(${e.locator.start_s});return false">▶ ${fmtT(e.locator.start_s)}</a>`).join(" ");
+    return `<div class="fcard"><div class="h"><div class="ic ${f.outcome}"><svg><use href="#${C.icon}"/></svg></div>
+      <span class="name">${esc(C.name)}</span><span class="grow"></span><span class="tag ${f.outcome === "suspicious" ? "sus" : f.outcome === "benign" ? "ok" : "inc"}">${f.outcome}</span></div>
+      <div class="d">${esc(f.description)}</div>
+      <div class="meta"><span class="conf">confidence <i><b style="width:${100 * f.uncertainty.confidence}%"></b></i>${f.uncertainty.confidence}</span>${times}</div></div>`;
+  }).join("");
+  const chtml = claims.map(c => `<div class="claim ${c.type}" onclick="echoSeek(${c.start_s})">
+      <span class="k">${esc(CLAIM_LABEL[c.type])}</span><span class="v">${esc(c.value)}</span><span class="t">▶ ${fmtT(c.start_s)}</span>
+      <span class="s">${esc(c.supporting_text)}</span></div>`).join("") || `<div class="note-muted">No claims extracted.</div>`;
+  const gtClaims = demo ? `<p class="gtc">Expected claims (ground truth): ${demo.truth.claims.map(c => `${esc(CLAIM_LABEL[c.type])} <b>${esc(c.key)}</b>`).join(" · ") || "none"}</p>` : "";
+  const evhtml = records.map(r => `<div class="ev"><span class="id">${esc(r.id)}</span>
+      <span>${r.integrity_ok ? `<span class="okline"><svg width="13" height="13"><use href="#i-check"/></svg>verified</span>` : `<span class="badline">integrity FAILED</span>`}</span>
+      <span class="k">${esc(r.kind)} · ${esc(r.source)}</span><span class="k">${esc((r.stored_at || "").slice(0, 19).replace("T", " "))}</span>
+      <span class="sha">sha256 ${esc(r.sha256)}</span></div>`).join("");
+  const conf = result.artifacts.transcript ? result.artifacts.transcript.segments.flatMap(s => s.words || []) : [];
+  const asr = conf.length ? conf.reduce((a, w) => a + w.probability, 0) / conf.length : 0;
+  $("#echoInsp").innerHTML = `
+    <div class="verdict ${verdict}"><div class="lbl">ECHO verdict</div>
+      <div class="v"><svg><use href="#${V.icon}"/></svg>${verdict === "suspicious" ? "Likely scam" : verdict === "benign" ? "No scam pattern" : "Review needed"}</div>
+      <p>${verdict === "suspicious" ? "Strong indicators, several pressure tactics, or a classifier hit backed by rule evidence."
+        : verdict === "inconclusive" ? "The learned classifier finds this call scam-like, but no rule found supporting evidence. A person should listen to it." : V.p}</p></div>
+    ${gt}
+    <div class="stats">
+      <div><b>${flagged.length}</b><span>flags</span></div><div><b>${claims.length}</b><span>claims</span></div>
+      <div><b>${(ms / 1000).toFixed(1)}s</b><span>runtime</span></div><div><b>${asr ? Math.round(100 * asr) + "%" : "–"}</b><span>ASR conf.</span></div>
+    </div>
+    ${demo && demo.story ? `<p class="story">${esc(demo.story)}</p>` : ""}
+    <div class="tabs" id="eTabs">
+      <button class="on" data-t="f">Findings<span class="n">${result.findings.length}</span></button>
+      <button data-t="c">Claims<span class="n">${claims.length}</span></button>
+      <button data-t="e">Evidence<span class="n">${records.length}</span></button>
+      <button data-t="n">Notes<span class="n">${result.limitations.length}</span></button>
+      <button data-t="j">Raw JSON</button></div>
+    <div class="pane" data-ep="f">${result.errors.map(e => `<div class="fcard"><span class="tag sus">error</span> ${esc(e.message)}</div>`).join("")}${fhtml}</div>
+    <div class="pane hidden" data-ep="c">${chtml}${gtClaims}</div>
+    <div class="pane hidden" data-ep="e"><p class="note-muted" style="margin-top:0">The original audio and the transcript are stored content-addressed and re-verified on read.</p>${evhtml}</div>
+    <div class="pane hidden" data-ep="n"><ul class="notes">${result.limitations.map(l => `<li>${esc(l)}</li>`).join("")}</ul></div>
+    <div class="pane hidden" data-ep="j"><pre class="json">${esc(JSON.stringify(result, null, 2))}</pre></div>`;
+  $$("#eTabs button").forEach(b => b.onclick = () => {
+    $$("#eTabs button").forEach(x => x.classList.toggle("on", x === b));
+    $$("#echoInsp .pane[data-ep]").forEach(p => p.classList.toggle("hidden", p.dataset.ep !== b.dataset.t));
+  });
+}
+
+let bbState = null, coordState = null;
+fetch("/blackbox/scenarios").then(r => r.json()).then(data => {
+  (data.scenarios || []).forEach(name => {
+    $("#bbScenario").add(new Option(name, name));
+    $("#coordScenario").add(new Option(name, name));
+  });
+});
+$("#bbRun").onclick = async () => {
+  $("#bbOutput").textContent = "Exploring…";
+  try {
+    const response = await fetch("/blackbox/investigate", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({scenario: $("#bbScenario").value, strategy: $("#bbStrategy").value})
+    });
+    bbState = await response.json();
+    $("#bbOutput").textContent = JSON.stringify(bbState, null, 2);
+    $("#btnJson").disabled = $("#btnPrint").disabled = !response.ok;
+  } catch (error) { $("#bbOutput").textContent = String(error); }
+};
+
+// ============================================================ BLACKBOX: URL checker
+let urlState = null;
+const URL_EXAMPLES = [
+  ["https://www.flipkart.com/offers", "official"], ["https://onlinesbi.sbi", "official"],
+  ["https://flipkart-bigbillion-sale.xyz/claim", "fake"], ["http://amaz0n-offers.shop/login", "fake"],
+  ["https://www.amazon.in@evil-site.ru/login", "fake"], ["https://sbi-kyc-update.online/", "fake"],
+  ["https://xn--mazon-3ve.com", "fake"], ["https://myntra.shop", "suspicious"], ["https://www.wikipedia.org", "unrelated"]];
+const URL_VERDICT = {
+  official: { cls: "benign", icon: "i-check", t: "Official website", p: "This domain belongs to the brand." },
+  likely_fake: { cls: "suspicious", icon: "i-alert", t: "Likely FAKE", p: "It imitates a brand but is not one of the brand's domains. Do not enter details or pay." },
+  suspicious: { cls: "inconclusive", icon: "i-help", t: "Suspicious", p: "Warning signs, but not clearly impersonating a brand. Verify before trusting it." },
+  no_brand_link: { cls: "benign", icon: "i-help", t: "No brand link", p: "Not linked to any brand we track and no lookalike signs. That is not a guarantee it is safe." } };
+const STRENGTH_TAG = { strong: "sus", medium: "inc", weak: "neutral" };
+$("#urlExamples").innerHTML = URL_EXAMPLES.map(([u, k]) =>
+  `<button class="tag ${k === "official" ? "ok" : k === "fake" ? "sus" : k === "suspicious" ? "inc" : "neutral"}" style="cursor:pointer;font-weight:500;text-transform:none" data-u="${esc(u)}">${esc(u.replace(/^https?:\/\//, ""))}</button>`).join("");
+$$("#urlExamples button").forEach(b => b.onclick = () => { $("#urlInput").value = b.dataset.u; runUrlCheck(); });
+$("#urlRun").onclick = () => runUrlCheck();
+$("#urlInput").onkeydown = e => { if (e.key === "Enter") runUrlCheck(); };
+fetch("/blackbox/brands").then(r => r.json()).then(d => {
+  $("#urlBrands").innerHTML = `<table><tr><th>Brand</th><th>Official domains</th></tr>${(d.brands || []).map(b =>
+    `<tr><td><b>${esc(b.name)}</b></td><td class="note-muted" style="font-family:var(--mono);font-size:12px">${b.official.map(esc).join(" · ")}${b.restricted.length ? ` · any verified *.${b.restricted.map(esc).join(" / *.")}` : ""}</td></tr>`).join("")}</table>`;
+}).catch(() => {});
+async function runUrlCheck() {
+  const url = $("#urlInput").value.trim();
+  if (!url) return;
+  $("#urlResult").innerHTML = `<div class="card"><div class="cb" style="padding:22px"><div class="spin"></div></div></div>`;
+  const r = await fetch("/blackbox/check-url", { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url, lookups: $("#urlLookups").checked }) });
+  const result = await r.json();
+  urlState = { result, name: url, verdict: (result.artifacts && result.artifacts.url_check || {}).verdict };
+  ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = false);
+  if (!r.ok || result.errors && result.errors.length) {
+    $("#urlResult").innerHTML = `<div class="card"><div class="cb" style="padding:18px"><span class="tag sus">error</span> ${esc((result.errors && result.errors[0] || {}).message || result.detail || "Could not check this link")}</div></div>`;
+    return;
+  }
+  const c = result.artifacts.url_check, V = URL_VERDICT[c.verdict], brands = await (await fetch("/blackbox/brands")).json();
+  const brand = (brands.brands || []).find(b => b.key === c.brand);
+  const sigs = (c.signals || []).map(s => `<div class="fcard"><div class="h"><span class="tag ${STRENGTH_TAG[s.strength]}">${esc(s.strength)}</span>
+      <span class="name">${esc(s.name.replace(/_/g, " "))}</span></div><div class="d">${esc(s.detail)}</div></div>`).join("")
+    || `<p class="note-muted">No warning signs.</p>`;
+  const lk = c.lookups || {};
+  const look = Object.keys(lk).length ? `<div class="stats" style="margin:12px 0 0">
+      <div><b>${lk.resolves === false ? "No" : lk.resolves ? "Yes" : "–"}</b><span>exists in DNS</span></div>
+      <div><b>${esc(lk.registered || "–")}</b><span>registered</span></div>
+      <div><b>${lk.age_days != null ? lk.age_days + " d" : "–"}</b><span>domain age</span></div>
+      <div><b>${esc(lk.rdap_error || "OK")}</b><span>registry lookup</span></div></div>` : "";
+  $("#urlResult").innerHTML = `
+    <div class="card"><div class="cb" style="padding:18px">
+      <div class="verdict ${V.cls}" style="margin:0"><div class="lbl">BLACKBOX verdict${brand ? " · " + esc(brand.name) : ""}</div>
+        <div class="v"><svg><use href="#${V.icon}"/></svg>${V.t}${brand && c.verdict !== "official" ? ` (imitating ${esc(brand.name)})` : ""}</div><p>${esc(c.summary)} ${V.p}</p></div>
+      <div class="gt"><span>This link really goes to: <b style="font-family:var(--mono)">${esc(c.registrable)}</b></span><span class="grow"></span>
+        ${brand ? `<span class="note-muted">${esc(brand.name)}'s real sites: <span style="font-family:var(--mono)">${brand.official.slice(0, 4).map(esc).join(", ")}</span></span>` : ""}</div>
+      ${look}
+      ${renderJudged(result.artifacts.explain, c, brand)}
+      <h3 class="bbh">Why (${(c.signals || []).length} signal${(c.signals || []).length === 1 ? "" : "s"})</h3>${sigs}
+      <ul class="notes" style="margin-top:10px">${result.limitations.map(l => `<li>${esc(l)}</li>`).join("")}</ul>
+      <p class="note-muted" style="margin:8px 0 0">Evidence: <span class="pill-check">${esc(result.evidence_ids[0])}</span> · run ${esc(result.run_id)}</p>
+    </div></div>
+    <div class="card" id="pvCard"><div class="ch"><h2>See the website safely</h2>
+      <p>Our server opens the page in a locked-down, throwaway browser and sends you a picture. Your own browser never loads it.</p></div>
+      <div class="cb" style="padding-top:8px">
+        <ul class="pv-rules"><li>JavaScript off</li><li>No cookies or saved data</li><li>No downloads</li><li>Nothing typed or clicked</li><li>Private network addresses blocked</li><li>15-second limit</li></ul>
+        <p class="note-muted" style="margin:8px 0 12px">Note: the website's owner can see one visit from this computer's internet address. For a scam link, that can tell the scammer the link was opened.</p>
+        <button class="btn primary" id="pvRun"><svg style="width:15px;height:15px"><use href="#i-shield"/></svg> Preview safely</button>
+        <div id="pvOut"></div></div></div>`;
+  $("#pvRun").onclick = () => runPreview(url);
+}
+
+// ---------- "How it was judged": the address taken apart, real vs fake letters, checklist
+function renderJudged(x, c, brand) {
+  if (!x) return "";
+  const p = x.parts, fakeCls = c.verdict === "official" ? "ok" : c.verdict === "likely_fake" ? "bad" : c.verdict === "suspicious" ? "warn" : "";
+  const seg = (txt, cls, label) => txt ? `<span class="seg ${cls}"><span class="t">${esc(txt)}</span><span class="l">${label}</span></span>` : "";
+  const bar = `<div class="addr">
+      ${seg(p.scheme + "://", "dim", p.scheme === "https" ? "encrypted" : "not encrypted")}
+      ${seg(p.userinfo ? p.userinfo + "@" : "", "strike", "ignored by browser")}
+      ${seg(p.subdomain ? p.subdomain + "." : "", "dim", "subdomain (anyone can pick)")}
+      ${seg(p.domain + (p.suffix ? "." + p.suffix : ""), "main " + fakeCls, "the real owner")}
+      ${seg(p.port ? ":" + p.port : "", "dim", "port")}
+      ${seg(p.path && p.path !== "/" ? p.path : "", "dim", "page path")}</div>
+    <p class="note-muted" style="margin:6px 0 0">Only the highlighted part decides who owns the site${p.decoded_domain !== (p.domain + (p.suffix ? "." + p.suffix : "")) ? `. Shown in a browser as <b style="font-family:var(--mono)">${esc(p.decoded_domain)}</b>` : ""}.</p>`;
+  let cmp = "";
+  if (x.comparison) {
+    const k = x.comparison, ch = (s, cls) => [...s].map(t => `<span class="${cls}${t.charCodeAt(0) > 127 ? " nl" : ""}" title="${t.charCodeAt(0) > 127 ? "non-Latin letter U+" + t.codePointAt(0).toString(16).toUpperCase().padStart(4, "0") : ""}">${esc(t)}</span>`).join("");
+    // letter-level imitation: colour the differing letters; borrowed name: show both plainly
+    const fake = k.letter_level ? k.ops.map(o => o.op === "equal" ? esc(o.fake) : ch(o.fake, "dx")).join("")
+      : `<span style="color:var(--sus);font-weight:700">${esc(k.fake)}</span>`;
+    const real = k.letter_level ? k.ops.map(o => o.op === "equal" ? esc(o.real) : ch(o.real, "dr")).join("")
+      : `<span style="color:var(--ok);font-weight:700">${esc(k.real)}</span>`;
+    cmp = `<div class="cmp"><div class="row"><span class="k">This link</span><span class="v">${fake}</span></div>
+      <div class="row"><span class="k">Real ${esc(brand ? brand.name : "")}</span><span class="v">${real}</span></div>
+      <p class="note-muted" style="margin:6px 0 0">${k.letter_level ? "Red letters are where the link differs from the real site: swapped, added or missing." : "The link borrows the brand's name but adds its own words and ending."}
+      ${k.non_latin.length ? ` <b class="badline">Contains non-Latin letters (${k.non_latin.map(t => "U+" + t.codePointAt(0).toString(16).toUpperCase().padStart(4, "0")).join(", ")}) that look identical to normal ones.</b>` : ""}</p></div>`;
+  }
+  const icon = { pass: ["ok", "✓"], fail: ["bad", "✗"], "n/a": ["na", "–"], not_run: ["na", "…"] };
+  const checks = x.checks.map(ch => {
+    let st = ch.state;
+    if (ch.key === "official" && st === "n/a") st = "n/a";
+    const [cls, sym] = icon[st];
+    const say = ch.key === "official" ? (st === "pass" ? "yes" : st === "fail" ? "no" : "no brand involved")
+      : ch.key === "https" ? (st === "pass" ? "yes" : "no") : st === "fail" ? "found" : st === "not_run" ? "turn on safe lookups" : "no";
+    const bad = ch.key === "official" ? st === "fail" : st === "fail";
+    return `<li class="${bad ? "hit" : ""}"><span class="ci ${ch.key === "official" && st === "pass" ? "ok" : bad ? "bad" : cls}">${ch.key === "official" && st === "pass" ? "✓" : bad ? "✗" : sym}</span><span class="q">${esc(ch.question)}</span><span class="a">${say}</span></li>`;
+  }).join("");
+  const nFail = x.checks.filter(ch => ch.state === "fail").length;
+  return `<h3 class="bbh">How it was judged</h3>
+    <div class="judge"><div class="jstep"><span class="n">1</span><div><b>Take the address apart</b>${bar}</div></div>
+      ${cmp ? `<div class="jstep"><span class="n">2</span><div><b>${x.comparison.letter_level ? "Compare with the real site, letter by letter" : "Compare with the real site"}</b>${cmp}</div></div>` : ""}
+      <div class="jstep"><span class="n">${cmp ? 3 : 2}</span><div><b>Run every test</b> <span class="note-muted">(${nFail} of ${x.checks.length} raised a flag)</span><ul class="checks">${checks}</ul></div></div></div>`;
+}
+
+// ---------- sandboxed preview
+async function runPreview(url) {
+  const btn = $("#pvRun");
+  btn.disabled = true;
+  $("#pvOut").innerHTML = `<div style="padding:16px 0;display:flex;gap:10px;align-items:center"><div class="spin"></div><span class="note-muted">Opening in the sandbox (up to 15 s)…</span></div>`;
+  let d;
+  try {
+    const r = await fetch("/blackbox/preview", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url }) });
+    d = await r.json();
+    if (!r.ok) throw new Error(typeof d.detail === "string" ? d.detail : "Preview failed");
+  } catch (e) {
+    $("#pvOut").innerHTML = `<div class="callout warn" style="margin-top:12px"><b>No preview.</b> ${esc(e.message)}</div>`;
+    btn.disabled = false;
+    return;
+  }
+  btn.disabled = false;
+  if (urlState) urlState.preview = d;
+  const fc = d.final_check || {}, V = URL_VERDICT[fc.verdict];
+  const chain = (d.redirects || []).length > 1 ? `<div class="chain">${d.redirects.map((u, i) => `<span class="hop">${esc(u)}</span>${i < d.redirects.length - 1 ? '<span class="arr">→</span>' : ""}`).join("")}</div>` : "";
+  const obs = (d.observations || []).map(o => `<div class="fcard"><div class="h"><span class="tag ${STRENGTH_TAG[o.strength]}">${esc(o.strength)}</span><span class="name">${esc(o.name.replace(/_/g, " "))}</span></div><div class="d">${esc(o.detail)}</div></div>`).join("")
+    || `<p class="note-muted">The visit added no new warning signs.</p>`;
+  $("#pvOut").innerHTML = `
+    <div class="pv">
+      <div class="frame"><div class="fbar"><span class="dots"><i></i><i></i><i></i></span>
+        <span class="furl ${fc.verdict === "likely_fake" ? "bad" : ""}">${esc(d.final_url || d.requested_url)}</span><span class="ftag">picture only · not live</span></div>
+        ${d.screenshot_id ? `<img alt="Sandboxed screenshot of ${esc(d.final_url || d.requested_url)}" src="/evidence/${esc(d.screenshot_id)}/screenshot">` : `<div class="noshot">No picture: ${esc(d.load_error || "the page did not load")}</div>`}</div>
+      <div class="pvside">
+        <div class="stats" style="margin:0;grid-template-columns:repeat(2,1fr)">
+          <div><b>${d.status ?? "–"}</b><span>server reply</span></div>
+          <div><b>${(d.redirects || []).length ? d.redirects.length - 1 : "–"}</b><span>redirects</span></div>
+          <div><b>${d.password_fields ?? "–"}</b><span>password boxes</span></div>
+          <div><b>${d.seconds}s</b><span>${d.requests} requests${(d.blocked_requests || []).length ? ", " + d.blocked_requests.length + " blocked" : ""}</span></div></div>
+        <p style="margin:10px 0 4px"><b>Page title:</b> ${esc(d.title || "–")}</p>
+        ${V ? `<p style="margin:0 0 8px"><b>Final address:</b> <span class="tag ${STRENGTH_TAG[fc.verdict === "likely_fake" ? "strong" : fc.verdict === "suspicious" ? "medium" : "weak"]}">${esc(V.t)}</span> <span style="font-family:var(--mono);font-size:12px">${esc(fc.registrable || "")}</span></p>` : ""}
+        ${chain}
+        <h3 class="bbh" style="margin-top:12px">What the visit showed</h3>${obs}
+        <p class="note-muted" style="margin:8px 0 0">Screenshot evidence: <span class="pill-check">${esc(d.screenshot_id || "none")}</span></p>
+      </div></div>`;
+}
+
+// ============================================================ Coordinator: inputs, live progress, report
+const CO_MODS = {
+  mirage: { name: "MIRAGE", what: "Document check", icon: "i-doc" },
+  echo: { name: "ECHO", what: "Call check", icon: "i-wave" },
+  blackbox: { name: "BLACKBOX", what: "Link check", icon: "i-globe" } };
+// mirrors phantom/coordinator/engine.py KEYWORDS (used only to preview the plan)
+const CO_KEYWORDS = {
+  mirage: ["document", "invoice", "receipt", "image", "pdf", "bill"],
+  echo: ["audio", "voice", "call", "speech", "recording"],
+  blackbox: ["web", "website", "browser", "site", "url", "link", "domain"] };
+const CO_ALL = ["investigate", "all", "everything", "investigate all"];
+const CO_GOALS = ["Investigate the invoice, the call recording and the link", "Check this invoice",
+  "Is this call a scam?", "Is this link real?", "investigate"];
+const CO_STOP = {
+  completed: "All planned checks finished.", completed_with_errors: "Finished, but some checks reported errors.",
+  call_budget: "Stopped: the maximum number of checks was reached.", time_budget: "Stopped: the time budget ran out.",
+  repeated_failures: "Stopped after two checks failed in a row.", all_failed: "Every planned check failed.",
+  nothing_to_do: "Nothing to run: the goal does not mention any supplied evidence.",
+  stopped_by_user: "Stopped by you before the remaining checks." };
+const CO_STATUS = { completed: ["benign", "i-check", "Investigation complete"], partial: ["inconclusive", "i-help", "Partly complete"],
+  failed: ["suspicious", "i-alert", "Investigation failed"], nothing_to_do: ["inconclusive", "i-help", "Nothing was run"] };
+const co = { doc: null, audio: null, run: null, t0: 0, timer: null, steps: {}, plan: [], budget: null, calls: 0 };
+
+$("#coGoalChips").innerHTML = CO_GOALS.map(g => `<button class="tag neutral" data-g="${esc(g)}">${esc(g)}</button>`).join("");
+$$("#coGoalChips button").forEach(b => b.onclick = () => { $("#coGoal").value = b.dataset.g; coPlanPreview(); });
+
+async function coRecent(kind, sel) {
+  try {
+    const d = await (await fetch(`/evidence/recent?kind=${kind}`)).json();
+    const first = sel.options[0];
+    sel.innerHTML = "";
+    sel.add(first);
+    (d.items || []).forEach(it => sel.add(new Option(`${it.source} · ${it.evidence_id}`, it.evidence_id)));
+  } catch (e) { /* list stays empty */ }
+}
+function coShowSel(slot) {
+  const it = co[slot], box = $(slot === "doc" ? "#coDocSel" : "#coAudioSel");
+  box.innerHTML = it ? `<span class="pill-check">${esc(it.id)}</span> <b>${esc(it.source)}</b>
+    <button class="linkbtn" data-clear="${slot}">remove</button>` : "";
+  const b = box.querySelector("[data-clear]");
+  if (b) b.onclick = () => { co[slot] = null; $(slot === "doc" ? "#coDocRecent" : "#coAudioRecent").value = ""; coShowSel(slot); coPlanPreview(); };
+  coPlanPreview();
+}
+async function coUpload(input, kind, slot) {
+  const f = input.files[0];
+  if (!f) return;
+  const box = $(slot === "doc" ? "#coDocSel" : "#coAudioSel");
+  box.innerHTML = `<span class="note-muted">Uploading ${esc(f.name)}…</span>`;
+  const fd = new FormData();
+  fd.append("file", f);
+  const r = await fetch(`/evidence/upload?kind=${kind}`, { method: "POST", body: fd });
+  const d = await r.json();
+  input.value = "";
+  if (!r.ok) { box.innerHTML = `<span class="badline">${esc(d.detail || "Upload failed")}</span>`; return; }
+  co[slot] = { id: d.evidence_id, source: d.source };
+  coShowSel(slot);
+  coRecent(kind, $(slot === "doc" ? "#coDocRecent" : "#coAudioRecent"));
+}
+$("#coDocFile").onchange = e => coUpload(e.target, "document", "doc");
+$("#coAudioFile").onchange = e => coUpload(e.target, "audio", "audio");
+$("#coDocRecent").onchange = e => { const o = e.target.selectedOptions[0]; co.doc = e.target.value ? { id: e.target.value, source: o.text.split(" · ")[0] } : null; coShowSel("doc"); };
+$("#coAudioRecent").onchange = e => { const o = e.target.selectedOptions[0]; co.audio = e.target.value ? { id: e.target.value, source: o.text.split(" · ")[0] } : null; coShowSel("audio"); };
+["#coGoal", "#coUrl", "#coMaxCalls", "#coMaxSec", "#coToolTo", "#coordScenario"].forEach(s => $(s).addEventListener("input", coPlanPreview));
+
+function coSupplied() {
+  return { mirage: co.doc && co.doc.id, echo: co.audio && co.audio.id,
+    blackbox: $("#coUrl").value.trim() || ($("#coordScenario").value ? "scenario" : "") };
+}
+function coPlanPreview() {
+  const g = $("#coGoal").value.toLowerCase().trim(), sup = coSupplied();
+  const named = Object.keys(CO_MODS).filter(m => CO_KEYWORDS[m].some(w => new RegExp("\\b" + w).test(g)));
+  const fallback = !!g && !CO_ALL.includes(g) && !named.length;  // no evidence named: check everything supplied
+  const all = CO_ALL.includes(g) || fallback;
+  const rows = Object.keys(CO_MODS).map(m => {
+    const asked = all || named.includes(m);
+    const st = asked && sup[m] ? "run" : named.includes(m) ? "missing" : sup[m] ? "unasked" : "off";
+    const say = { run: fallback ? "will run (goal names no evidence type, so everything supplied is checked)" : "will run",
+      missing: "goal asks for it, but no evidence given", unasked: "evidence given, but the goal does not ask for it", off: "not needed" }[st];
+    return `<span class="co-pl ${st}"><svg><use href="#${CO_MODS[m].icon}"/></svg>${CO_MODS[m].name}: ${say}</span>`;
+  }).join("");
+  $("#coPlan").innerHTML = `<span class="note-muted" style="margin-right:4px">Plan:</span>${rows}`;
+  $("#coLimitsSum").textContent = `· up to ${$("#coMaxCalls").value} checks, ${$("#coMaxSec").selectedOptions[0].text} total, ${$("#coToolTo").selectedOptions[0].text} each`;
+}
+
+function coMeters() {
+  const b = co.budget || { max_calls: +$("#coMaxCalls").value, max_seconds: +$("#coMaxSec").value };
+  const el = co.t0 ? (performance.now() - co.t0) / 1000 : 0;
+  const pct = (v, m) => Math.min(100, Math.round(100 * v / m));
+  $("#coMeters").innerHTML = `
+    <div><span>Checks used</span><b>${co.calls} / ${b.max_calls}</b><i><u style="width:${pct(co.calls, b.max_calls)}%"></u></i></div>
+    <div><span>Time used</span><b>${el.toFixed(1)} s / ${b.max_seconds} s</b><i><u class="${el > b.max_seconds * .8 ? "hot" : ""}" style="width:${pct(el, b.max_seconds)}%"></u></i></div>`;
+}
+const CO_STEP_TXT = { waiting: "waiting", running: "running…", completed: "done", failed: "failed", timed_out: "timed out", skipped: "skipped" };
+function coRenderSteps() {
+  const order = co.plan.length ? co.plan : Object.keys(co.steps);
+  if (!order.length) { $("#coSteps").innerHTML = `<li class="co-empty">${co.run ? "Planning…" : "No checks were planned."}</li>`; return; }
+  $("#coSteps").innerHTML = order.map((m, i) => {
+    const s = co.steps[m] || { status: "waiting" }, M = CO_MODS[m];
+    let detail = "";
+    if (s.status === "running") {
+      const el = (performance.now() - s.t) / 1000;
+      detail = `${el.toFixed(1)} s of max ${s.timeout} s<i class="co-bar"><u style="width:${Math.min(100, 100 * el / s.timeout)}%"></u></i>`;
+    } else if (s.status === "completed") detail = `${s.findings} finding${s.findings === 1 ? "" : "s"} · ${s.seconds} s`;
+    else if (s.status === "failed" || s.status === "timed_out") detail = `<span class="badline">${esc(s.code || "")}</span> ${esc(s.error || "")}`;
+    else if (s.status === "skipped") detail = esc(s.reason || "");
+    return `<li class="co-step ${s.status}"><span class="co-dot">${s.status === "running" ? '<span class="spin sm"></span>' : s.status === "completed" ? "✓" : s.status === "waiting" ? i + 1 : s.status === "skipped" ? "–" : "✗"}</span>
+      <div><div class="co-sh"><svg><use href="#${M.icon}"/></svg><b>${M.name}</b> <span class="note-muted">${M.what}</span><span class="grow"></span>
+      <span class="co-st">${CO_STEP_TXT[s.status] || esc(s.status)}</span></div><div class="co-sd">${detail}</div></div></li>`;
+  }).join("");
+}
+function coTick() { coMeters(); if (Object.values(co.steps).some(s => s.status === "running")) coRenderSteps(); }
+
+function coEvent(ev) {
+  if (ev.type === "started") { co.run = ev.run; $("#coStop").hidden = false; }
+  else if (ev.type === "plan") { co.plan = ev.plan; co.budget = ev.budget; }
+  else if (ev.type === "start") { co.steps[ev.module] = { status: "running", t: performance.now(), timeout: ev.timeout_s }; co.calls++; }
+  else if (ev.type === "step") {
+    const s = ev.step;
+    if (!co.plan.includes(s.module)) co.plan.push(s.module);
+    co.steps[s.module] = s;
+  } else if (ev.type === "report") coFinish(ev.report);
+  else if (ev.type === "error") coFinish(null, ev.message);
+  coRenderSteps(); coMeters();
+}
+async function coRunInvestigation() {
+  if (!$("#coGoal").value.trim()) { $("#coMsg").textContent = "Write a goal first, e.g. \"Check this invoice\"."; $("#coGoal").focus(); return; }
+  const body = { goal: $("#coGoal").value.trim(), document_evidence_id: co.doc && co.doc.id, audio_evidence_id: co.audio && co.audio.id,
+    website_url: $("#coUrl").value.trim() || null, url_lookups: $("#coLookups").checked, scenario: $("#coordScenario").value || null,
+    max_calls: +$("#coMaxCalls").value, max_seconds: +$("#coMaxSec").value, tool_timeout: +$("#coToolTo").value };
+  Object.assign(co, { run: null, steps: {}, plan: [], budget: null, calls: 0, t0: performance.now() });
+  $("#coRun").disabled = true; $("#coMsg").textContent = ""; $("#coReport").innerHTML = "";
+  $("#coState").className = "tag inc"; $("#coState").textContent = "running";
+  clearInterval(co.timer); co.timer = setInterval(coTick, 200);
+  coRenderSteps(); coMeters();
+  try {
+    const r = await fetch("/coordinator/stream", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    if (!r.ok) {
+      const d = await r.json().catch(() => ({}));
+      const msg = Array.isArray(d.detail) ? d.detail.map(x => `${x.loc.slice(-1)[0]}: ${x.msg}`).join("; ") : d.detail;
+      return coFinish(null, msg || `request failed (${r.status})`);
+    }
+    const reader = r.body.getReader(), dec = new TextDecoder();
+    let buf = "";
+    for (;;) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let nl;
+      while ((nl = buf.indexOf("\n")) >= 0) {
+        const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
+        if (line) coEvent(JSON.parse(line));
+      }
+    }
+    if (co.run) coFinish(null, "the connection closed before the report arrived");
+  } catch (e) { coFinish(null, String(e.message || e)); }
+}
+$("#coRun").onclick = coRunInvestigation;
+$("#coStop").onclick = async () => {
+  if (!co.run) return;
+  $("#coStop").disabled = true; $("#coMsg").textContent = "Stopping after the current check…";
+  await fetch(`/coordinator/stop/${encodeURIComponent(co.run)}`, { method: "POST" }).catch(() => {});
+};
+
+const CO_VERDICT = { suspicious: ["suspicious", "Suspicious"], inconclusive: ["inconclusive", "Inconclusive"], benign: ["benign", "No problems found"],
+  official: ["benign", "Official website"], likely_fake: ["suspicious", "Likely FAKE website"], no_brand_link: ["benign", "No brand link"] };
+function coModVerdict(res, report) {
+  const v = (report.verdicts || []).find(x => x.module === res.module);
+  if (res.errors && res.errors.length && !res.findings.length) return ["inconclusive", "Could not analyse"];
+  if (v && res.module === "blackbox" && v.verdict === "suspicious") return ["inconclusive", "Suspicious website"];
+  return CO_VERDICT[v && v.verdict] || ["inconclusive", "See findings"];
+}
+function coFinish(report, error) {
+  clearInterval(co.timer); co.timer = null;
+  co.run = null;
+  $("#coRun").disabled = false; $("#coStop").hidden = true; $("#coStop").disabled = false;
+  if (!report) {
+    $("#coState").className = "tag sus"; $("#coState").textContent = "error";
+    $("#coMsg").textContent = "";
+    $("#coReport").innerHTML = `<div class="callout warn"><b>The investigation could not run.</b> ${esc(error)}</div>`;
+    return;
+  }
+  coordState = report;
+  ["#btnJson", "#btnPrint"].forEach(s => $(s).disabled = false);
+  co.plan = report.plan.length ? report.plan : co.plan;
+  report.trace.forEach(t => { co.steps[t.module] = t; });
+  coRenderSteps(); coMeters();
+  const [cls, icon, title] = CO_STATUS[report.status] || CO_STATUS.partial;
+  $("#coState").className = `tag ${cls === "benign" ? "ok" : cls === "suspicious" ? "sus" : "inc"}`;
+  $("#coState").textContent = report.status.replace(/_/g, " ");
+  $("#coMsg").textContent = `Finished in ${report.elapsed_s} s`;
+  const mods = report.results.map(res => {
+    const [vc, vt] = coModVerdict(res, report), M = CO_MODS[res.module];
+    return `<div class="co-mod ${vc}"><div class="co-sh"><svg><use href="#${M.icon}"/></svg><b>${M.name}</b><span class="grow"></span>
+      <span class="tag ${vc === "benign" ? "ok" : vc === "suspicious" ? "sus" : "inc"}">${esc(vt)}</span></div>
+      <div class="note-muted" style="font-size:12px;margin-top:4px">${res.findings.length} finding${res.findings.length === 1 ? "" : "s"} · ${res.evidence_ids.length} evidence item${res.evidence_ids.length === 1 ? "" : "s"}</div></div>`;
+  }).join("");
+  const warn = (report.warnings || []).map(w => `<div class="callout warn" style="margin:0 0 8px"><b>${w.code === "instructions_in_content" ? "Hidden instructions found in the evidence" : w.code === "goal_names_no_evidence" ? "Goal did not name the evidence" : "Check the inputs"}.</b> ${esc(w.message)}</div>`).join("");
+  const errs = (report.errors || []).map(e => `<li><span class="tag sus">${esc(e.code)}</span> <b>${esc((CO_MODS[e.module] || {}).name || e.module)}</b>: ${esc(e.message)}</li>`).join("");
+  const miss = (report.missing_inputs || []).map(m => `<li>${esc(m === "no relevant supplied input" ? m : `${CO_MODS[m] ? CO_MODS[m].what : m}: the goal mentions it but no evidence was given`)}</li>`).join("");
+  const order = { suspicious: 0, inconclusive: 1, benign: 2 };
+  const fnd = [...report.findings].sort((a, b) => order[a.outcome] - order[b.outcome]).map(f => {
+    const oc = f.outcome;
+    return `<div class="fcard"><div class="h"><span class="tag ${oc === "suspicious" ? "sus" : oc === "inconclusive" ? "inc" : "ok"}">${esc(oc)}</span>
+      <span class="tag neutral">${esc((CO_MODS[f.module] || {}).name || f.module)}</span><span class="name">${esc((CHECKS[f.check] || {}).name || f.check.replace(/^verdict_/, "verdict: ").replace(/_/g, " "))}</span></div>
+      <div class="d">${esc(f.description)}</div>
+      <div class="meta"><span>evidence ${[...new Set(f.evidence.map(e => e.evidence_id))].map(id => ({ evidence_id: id })).map(e => `<a class="pill-check" href="/evidence/${esc(e.evidence_id)}" target="_blank" rel="noopener">${esc(e.evidence_id)}</a>`).join(" ")}</span>
+      <span>confidence ${Math.round(100 * f.uncertainty.confidence)}% (uncalibrated)</span></div></div>`;
+  }).join("") || `<p class="note-muted">No findings.</p>`;
+  const hist = report.trace.map((t, i) => `<tr><td class="num">${i + 1}</td><td><b>${esc((CO_MODS[t.module] || {}).name || t.module)}</b></td>
+    <td><span class="co-st ${t.status}">${esc(CO_STEP_TXT[t.status] || t.status)}</span></td>
+    <td class="num">${t.seconds != null ? t.seconds + " s" : t.elapsed_s != null ? "at " + t.elapsed_s + " s" : "–"}</td>
+    <td>${esc(t.reason || t.error || (t.run_id ? `run ${t.run_id} · ${t.findings} finding(s)` : ""))}</td></tr>`).join("");
+  // headline = what the checks found; the run status (complete / partial / failed) is the detail
+  const mv = report.results.map(res => coModVerdict(res, report)[0]);
+  const nBad = mv.filter(v => v === "suspicious").length, nInc = mv.filter(v => v === "inconclusive").length;
+  const [hc, hi, ht] = !report.results.length ? [cls, icon, title]
+    : nBad ? ["suspicious", "i-alert", `Problems found by ${nBad} of ${mv.length} check${mv.length === 1 ? "" : "s"}`]
+    : nInc ? ["inconclusive", "i-help", `Unclear: ${nInc} of ${mv.length} check${mv.length === 1 ? "" : "s"} need a closer look`]
+    : ["benign", "i-check", `No problems found by ${mv.length} check${mv.length === 1 ? "" : "s"}`];
+  const runNote = report.status === "completed" ? "" : ` <span class="tag ${cls === "suspicious" ? "sus" : "inc"}">${esc(title)}</span>`;
+  $("#coReport").innerHTML = `
+    <div class="card"><div class="cb" style="padding:18px">
+      <div class="verdict ${hc}" style="margin:0"><div class="lbl">Coordinator report · needs human review${runNote}</div>
+        <div class="v"><svg><use href="#${hi}"/></svg>${ht}</div>
+        <p>${esc(CO_STOP[report.stop_reason] || report.stop_reason)} ${report.tool_calls} check${report.tool_calls === 1 ? "" : "s"} run in ${report.elapsed_s} s.
+        These are leads for a person to verify, not accusations.</p></div>
+      ${mods ? `<div class="co-mods">${mods}</div>` : ""}
+      ${warn ? `<div style="margin-top:14px">${warn}</div>` : ""}
+      ${errs ? `<h3 class="bbh">Problems</h3><ul class="notes">${errs}</ul>` : ""}
+      ${miss ? `<h3 class="bbh">Missing evidence</h3><ul class="notes">${miss}</ul>` : ""}
+      <h3 class="bbh">Findings (${report.findings.length})</h3>${fnd}
+      <h3 class="bbh">Action history</h3>
+      <table class="co-hist"><tr><th>#</th><th>Check</th><th>Result</th><th>Time</th><th>Detail</th></tr>${hist}</table>
+      <p class="note-muted" style="margin:10px 0 0">Evidence items: ${report.evidence_ids.map(id => `<a class="pill-check" href="/evidence/${esc(id)}" target="_blank" rel="noopener">${esc(id)}</a>`).join(" ") || "none"}
+       · limits: ${report.budget.max_calls} checks, ${report.budget.max_seconds} s total, ${report.budget.tool_timeout} s per check</p>
+    </div></div>`;
+}
+coRecent("document", $("#coDocRecent")); coRecent("audio", $("#coAudioRecent"));
+coPlanPreview(); coMeters();
+renderLib();
+</script>
+</body>
+</html>

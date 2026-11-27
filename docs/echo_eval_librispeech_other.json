@@ -1,0 +1,6 @@
+{
+  "n_utterances": 200,
+  "audio_minutes": 23.0,
+  "wer": 0.1065,
+  "real_time_factor": 0.142
+}

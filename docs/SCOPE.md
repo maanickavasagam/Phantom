@@ -16,7 +16,8 @@ evidence, reports uncertainty and produces reports for human review.
 ## Supported inputs (v1)
 - **MIRAGE:** PDF (≤ 20 pages), PNG, JPG/JPEG, TIFF. English text only.
 - **ECHO:** WAV, MP3, FLAC, M4A; mono or stereo; ≤ 10 minutes; English (Tamil as a stretch goal).
-- **BLACKBOX:** Local synthetic sites served from `localhost` only, from an allowlist.
+- **BLACKBOX:** Any web address (text only) for the brand-lookalike check. Legacy prototype:
+  local synthetic sites served from `localhost` only, from an allowlist.
 
 ## Success criteria
 | Module | Metric | v1 target |
@@ -30,7 +31,13 @@ evidence, reports uncertainty and produces reports for human review.
 
 ## Explicit exclusions
 - Training large OCR, vision or speech models from scratch.
-- Browsing live/public websites, or real credentials or personal data.
+- Browsing live/public websites, or real credentials or personal data. **Amendment
+  (26 Nov 2026, team decision):** one exception, the BLACKBOX *safe preview*. On an explicit
+  click, the server takes a single screenshot of a public page in a throwaway headless
+  browser: JavaScript off, no cookies/storage/downloads, private and local addresses blocked
+  on every request, at most 60 requests, a 15 s limit, nothing clicked, typed or submitted.
+  The verdict itself never depends on opening the page. The user is told that the visit is
+  visible to the site's owner.
 - Reinforcement learning (not required for the action ranker).
 - Autonomous accusations: outputs are investigation support for a human reviewer.
 - Paid LLM APIs in the core workflow.

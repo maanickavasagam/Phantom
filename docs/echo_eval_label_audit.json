@@ -1,0 +1,37 @@
+{
+ "note": "Recompute ECHO test claim scores with the generator's missing organisation\nlabels added. Only organisations the test script literally says are added:\n  bank_kyc v1        \"this call is from {bank} security team\"\n  courier_customs v1 \"this call is from the DHL parcel department\"\n  electricity v1     \"a final notice from the power department\"\n  bank_reminder v1   \"this message is from {bank}\"\n  doctor v1          \"calling from Sunrise Hospital\"\n  insurance v1       \"a courtesy call from Star Health\"",
+ "claims_with_corrected_labels": {
+  "clean": {
+   "tp": 112,
+   "fp": 8,
+   "fn": 8,
+   "precision": 0.933,
+   "recall": 0.933,
+   "f1": 0.933
+  },
+  "phone": {
+   "tp": 106,
+   "fp": 12,
+   "fn": 14,
+   "precision": 0.898,
+   "recall": 0.883,
+   "f1": 0.891
+  },
+  "snr10": {
+   "tp": 106,
+   "fp": 11,
+   "fn": 14,
+   "precision": 0.906,
+   "recall": 0.883,
+   "f1": 0.895
+  },
+  "snr5": {
+   "tp": 105,
+   "fp": 12,
+   "fn": 15,
+   "precision": 0.897,
+   "recall": 0.875,
+   "f1": 0.886
+  }
+ }
+}

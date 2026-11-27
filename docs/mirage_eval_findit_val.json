@@ -1,0 +1,2250 @@
+{
+  "split": "val",
+  "n_documents": 192,
+  "n_forged": 33,
+  "missing_from_download": [
+    "X51006619709.png"
+  ],
+  "tp": 14,
+  "fp": 1,
+  "fn": 19,
+  "tn": 158,
+  "precision": 0.933,
+  "recall": 0.424,
+  "f1": 0.583,
+  "false_positive_rate": 0.006,
+  "flagged_forged_correctly_localised": 14,
+  "fp_rate_on_genuine_with_handwriting": 0.0,
+  "fired_by_check": {
+    "copy_move": {
+      "on_forged": 14,
+      "on_genuine": 0
+    },
+    "numeric_consistency": {
+      "on_forged": 0,
+      "on_genuine": 1
+    }
+  },
+  "mean_runtime_s": 1.217,
+  "errors": 0,
+  "rows": [
+    {
+      "file": "X00016469612.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.062,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005200931.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.804,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005230605.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.128,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005433538.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.628,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005441401.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.76,
+      "entities": [
+        "Product",
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005441407.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.048,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005442344.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.858,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005442376.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.689,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005442386.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.649,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005442392.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.633,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005444037.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.494,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005444040.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.046,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005444041.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.23,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005444046.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.215,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005447841.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.167,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005447844.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.116,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005447852.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.972,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005568890.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.089,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005568891.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.367,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005568899.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.852,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005582745.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.542,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005605333.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.478,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005605335.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.177,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005663272.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.696,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005663278.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.384,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005676538.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.115,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005676539.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.978,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005676543.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.066,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005676548.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.05,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005677327.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.135,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005677332.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.922,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005677334.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.027,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005677335.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.037,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005705804.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.044,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005711404.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 0.839,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005711446.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.025,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005711454.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.328,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005712021.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.213,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005712038.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.225,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005715006.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.874,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005719873.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.305,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005719874.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.863,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005719895.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.59,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005719896.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.925,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005719898.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.129,
+      "entities": [
+        "Product"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005719904.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 0.939,
+      "entities": [
+        "Product",
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51005722668.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.936,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005724624.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.103,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005724626.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.17,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005741929.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.986,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005741944.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.18,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005745187.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.944,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005745214.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.989,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005749912.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.131,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005757282.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.382,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005757292.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.121,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005757304.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.257,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005757323.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.193,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005757346.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.22,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005763964.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.934,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005764154.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.534,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005806678.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.307,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005806696.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.89,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51005806702.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.111,
+      "entities": [
+        "Product",
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006008086.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.443,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006008095.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.109,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006008166.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.352,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006248253.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.974,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006311764.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.094,
+      "entities": [
+        "Product",
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006311779.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.144,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006311780.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.612,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006327953.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.823,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006328913.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.839,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006329395.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.77,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006334770.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.104,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006334819.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.04,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006335547.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.893,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006387812.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.444,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006387950.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.185,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006387973.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.949,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006388066.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.055,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006393377.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.602,
+      "entities": [
+        "Product"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006414392.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.474,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006414429.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.244,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006414483.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.264,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006414600.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.468,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006414636.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 2.173,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006414675.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.544,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006414719.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.333,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006414728.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.364,
+      "entities": [
+        "Product",
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006441474.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.047,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006466055.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 2.895,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006466056.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.09,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006466070.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.923,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006466778.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.695,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006502533.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.079,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006554833.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.28,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006555072.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.262,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006555125.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.807,
+      "entities": [
+        "Other",
+        "Product",
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006555780.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.385,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006555835.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.436,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006556596.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.493,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006556658.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.534,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006556732.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.434,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006556815.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": false,
+      "runtime_s": 1.508,
+      "entities": [],
+      "checks_fired": [
+        "numeric_consistency"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006556821.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.381,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006556851.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.796,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006557119.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.405,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006557169.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.473,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006557173.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.628,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006557194.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.661,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006557210.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.506,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006619346.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.425,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006619545.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.903,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006619563.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.856,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006619567.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.887,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006619783.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.969,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006619785.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.921,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006620161.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.191,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006620176.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.033,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006714066.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.171,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006828199.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.956,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006828201.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.133,
+      "entities": [
+        "Company",
+        "Other",
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51006828217.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.525,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006857132.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.036,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006857660.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.261,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006912960.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.344,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006912976.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.564,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006913030.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.251,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006913051.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.379,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006913068.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.429,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51006913073.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.46,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007103641.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.371,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007103687.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.894,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007135247.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.006,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007225399.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.062,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007225417.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.996,
+      "entities": [
+        "Other"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007225442.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.448,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007231275.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.263,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339095.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.563,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339097.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.468,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339110.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.499,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339114.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.507,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339117.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "suspicious",
+      "localised": true,
+      "runtime_s": 1.599,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [
+        "copy_move"
+      ],
+      "errors": []
+    },
+    {
+      "file": "X51007339120.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.388,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339121.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.514,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339131.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.498,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339133.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.322,
+      "entities": [
+        "Company",
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339135.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.446,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339136.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.532,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339139.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.368,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339157.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.427,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339650.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 2.061,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339651.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 2.284,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007339657.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 2.239,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007419197.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.767,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007579725.png",
+      "forged": true,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.838,
+      "entities": [
+        "Total/payment"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007579726.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.982,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007846283.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.778,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007846309.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.286,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007846310.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.444,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007846370.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.313,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007846372.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.307,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51007846391.png",
+      "forged": false,
+      "handwritten": true,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.315,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008030563.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.995,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008042777.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.89,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008042779.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.93,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008042783.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.92,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008042792.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.826,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008064061.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.156,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008099041.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.881,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008099048.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.975,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008099049.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.105,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008099054.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.1,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008099083.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.858,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008099085.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.066,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008099089.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.054,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008099100.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.184,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008114281.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.969,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008114283.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.161,
+      "entities": [
+        "Other"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008114284.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.134,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008123446.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.917,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008123476.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.933,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008142032.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.124,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008142060.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.238,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008142061.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.239,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008142062.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.162,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008142065.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.2,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008164510.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 0.807,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008164997.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.066,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51008164999.png",
+      "forged": false,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.115,
+      "entities": [],
+      "checks_fired": [],
+      "errors": []
+    },
+    {
+      "file": "X51009008095.png",
+      "forged": true,
+      "handwritten": false,
+      "predicted": "benign",
+      "localised": false,
+      "runtime_s": 1.033,
+      "entities": [
+        "Metadata"
+      ],
+      "checks_fired": [],
+      "errors": []
+    }
+  ]
+}

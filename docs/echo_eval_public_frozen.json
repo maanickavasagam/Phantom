@@ -1,0 +1,294 @@
+[
+  {
+    "dataset": "single_agent",
+    "split": "all",
+    "n": 1600,
+    "tp": 454,
+    "fp": 54,
+    "fn": 346,
+    "tn": 746,
+    "precision": 0.894,
+    "recall": 0.568,
+    "f1": 0.694,
+    "false_positive_rate": 0.068,
+    "flagged_rate_by_type": {
+      "appointment (genuine)": 0.0,
+      "delivery (genuine)": 0.05,
+      "insurance (genuine)": 0.01,
+      "refund (scam)": 0.655,
+      "reward (scam)": 0.67,
+      "ssn (scam)": 0.695,
+      "support (scam)": 0.25,
+      "wrong (genuine)": 0.21
+    },
+    "indicators_fired": {
+      "scam": {
+        "pressure_pattern": 251,
+        "unusual_payment_channel": 165,
+        "credential_request": 133
+      },
+      "genuine": {
+        "credential_request": 49,
+        "pressure_pattern": 6
+      }
+    },
+    "examples": {
+      "missed_scams": [
+        {
+          "type": "refund",
+          "text": "Suspect: Hello, this is Alex from Amazon customer service. I'm calling to inform you that you're eligible for a refund of $500 due to a technical issue with your recent purchase.  Innocent: Oh, really? What purchase was that?  Suspect: Let me check on that. Ah, yes! It was an order from last month for a laptop.  Innocent: I don't remember buying a laptop from Amazon. Can you provide more details a"
+        },
+        {
+          "type": "refund",
+          "text": "Suspect: Hello, my name is David and I'm calling from the Federal Trade Commission. How are you today? Innocent: I'm doing great, thanks for asking. What can I do for you, David? Suspect: We've been monitoring your account and noticed that you've been overcharged on a recent purchase. You're eligible for a refund of $500. Innocent: Oh, really? Which purchase was that? I don't remember being overch"
+        },
+        {
+          "type": "refund",
+          "text": "Suspect: Hello, my name is John from Amazon customer service. I'm calling to inform you that we've issued a refund for your recent purchase. Innocent: Oh, really? I didn't make a purchase recently. Can you tell me more about it? Suspect: Yes, of course. It seems there was an error on our part, and we need to correct the issue. Can you please confirm your account information so I can assist you fur"
+        },
+        {
+          "type": "refund",
+          "text": "Suspect: Hello, my name is John and I'm calling from the Microsoft Windows Support Team. We've received a notification that your computer has been infected with a virus. Innocent: Oh no, that sounds serious. Can you tell me more about it? Suspect: Yes, of course. Our system indicates that your computer has been compromised and we need to take immediate action to remove the virus. Innocent: Okay, I"
+        },
+        {
+          "type": "refund",
+          "text": "Suspect: Hello, is this Mr. Johnson?  Innocent: Yes, it is. Who's calling?  Suspect: My name is David from Amazon customer service. We've been trying to reach you about a refund for an unauthorized purchase on your account.  Innocent: Oh, I wasn't aware of any unauthorized purchases. Can you tell me more about it?  Suspect: Yes, of course. It seems someone made a purchase for $500 on your account "
+        }
+      ],
+      "false_alarms": [
+        {
+          "type": "delivery",
+          "fired": [
+            "credential_request"
+          ],
+          "text": "Suspect: Hi, I'm calling from XYZ Delivery Service. I just wanted to confirm that you're expecting a package to be delivered today? Innocent: Yeah, I think so. What's the package for again? Suspect: It's for a laptop you ordered from our company. Innocent: Okay, and how did I pay for it? Suspect: Let me check...ah yes, it says here you paid with your credit card. Innocent: What's the last four dig"
+        },
+        {
+          "type": "delivery",
+          "fired": [
+            "credential_request"
+          ],
+          "text": "Suspect: Hi, I'm calling from XYZ Delivery Services. I just wanted to confirm that you're available to receive your package today? Innocent: Yeah, what's the package for again? Suspect: It's a delivery of some electronics you ordered online. Innocent: Electronics? I don't remember ordering anything. Can you tell me more about it? Suspect: Let me check on that. Can you please hold for just a second"
+        },
+        {
+          "type": "delivery",
+          "fired": [
+            "pressure_pattern"
+          ],
+          "text": "Suspect: Hi, I'm calling from XYZ Delivery Service. I just wanted to confirm that your package will be delivered today between 2-5 pm. Innocent: Oh, great! Yeah, I've been waiting for that package. Can you tell me what's in the package? Suspect: Let me check. Okay, it says here that it's a book you ordered from an online retailer. Innocent: Hmm, that sounds right. But can you tell me more about th"
+        },
+        {
+          "type": "delivery",
+          "fired": [
+            "credential_request"
+          ],
+          "text": "Suspect: Hi, I'm calling from XYZ Delivery Service. I just wanted to confirm that your package will be delivered today between 2-4 pm. Innocent: Okay, what's the package about? Suspect: It's a laptop you ordered from our company. The order number is #1234. Innocent: And how did I pay for it? Suspect: According to our records, you paid with your Visa credit card. Innocent: Can you tell me the last "
+        },
+        {
+          "type": "delivery",
+          "fired": [
+            "credential_request"
+          ],
+          "text": "Suspect: Hi, I'm calling to confirm the delivery of my package that was supposed to arrive yesterday.  Innocent: Oh, yeah! What's the tracking number?  Suspect: It's #1234567890.  Innocent: Okay, let me check on that for you. Can you please tell me what you ordered?  Suspect: I ordered a laptop from Amazon.  Innocent: Alright, and can you confirm your credit card number so I can look up the order?"
+        }
+      ]
+    }
+  },
+  {
+    "dataset": "multi_agent",
+    "split": "all",
+    "n": 1600,
+    "tp": 615,
+    "fp": 78,
+    "fn": 185,
+    "tn": 722,
+    "precision": 0.887,
+    "recall": 0.769,
+    "f1": 0.824,
+    "false_positive_rate": 0.098,
+    "flagged_rate_by_type": {
+      "appointment (genuine)": 0.04,
+      "delivery (genuine)": 0.06,
+      "insurance (genuine)": 0.28,
+      "refund (scam)": 0.66,
+      "reward (scam)": 0.815,
+      "ssn (scam)": 0.97,
+      "support (scam)": 0.63,
+      "wrong (genuine)": 0.01
+    },
+    "indicators_fired": {
+      "scam": {
+        "pressure_pattern": 499,
+        "credential_request": 270,
+        "unusual_payment_channel": 151
+      },
+      "genuine": {
+        "pressure_pattern": 72,
+        "unusual_payment_channel": 6,
+        "credential_request": 3
+      }
+    },
+    "examples": {
+      "missed_scams": [
+        {
+          "type": "ssn",
+          "text": "Innocent: Hello.  Suspect: Hello, this is Officer Johnson from the Social Security Administration. We've been trying to reach you, Emily, about a very serious matter. Your social security number has been compromised and is being used in a fraudulent activity. If we don't take immediate action, your benefits will be suspended and you may face legal consequences. Can you please confirm your social s"
+        },
+        {
+          "type": "ssn",
+          "text": "Innocent: Hello.  Suspect: Hello, is this Karen Johnson? This is Officer James from the Social Security Administration. We've been trying to reach you about a serious issue with your social security number. It's been flagged for fraudulent activity and we need to verify some information to resolve this matter. Can you please confirm your social security number for me? Innocent: I'm not giving out "
+        },
+        {
+          "type": "ssn",
+          "text": "Innocent: Hello.  Suspect: Hello, Mr. Lars. My name is Officer Rachel Johnson from the Social Security Administration. I'm calling to inform you that your Social Security number has been compromised and is being used fraudulently. We've received reports of suspicious activity on your account, and I need to verify some information to resolve this matter. Can you please confirm your Social Security "
+        },
+        {
+          "type": "ssn",
+          "text": "Innocent: Hello.  Suspect: Hello, this is Officer Johnson from the Social Security Administration. We've been trying to reach you, EQ2lb, about a serious matter regarding your social security number. It's been flagged for suspicious activity and we need to verify some information to prevent it from being suspended. Can you please confirm your social security number for me? Innocent: What's this ab"
+        },
+        {
+          "type": "ssn",
+          "text": "Innocent: Hello.  Suspect: Hello, is this Rachel Wilson? My name is Officer James from the Social Security Administration. We've been trying to reach you regarding a serious issue with your social security number. It's been suspended due to suspicious activity. Can you please confirm your social security number so I can assist you in resolving this matter? Innocent: What's the real reason you're c"
+        }
+      ],
+      "false_alarms": [
+        {
+          "type": "delivery",
+          "fired": [
+            "pressure_pattern"
+          ],
+          "text": "Innocent: Hello.  Suspect: Hi, this is Karen from Speedy Deliveries. I'm calling to confirm the details of your delivery scheduled for today. Can you please confirm your name and address to ensure I have the correct information? Innocent: Whoa, hold on. How did you get my number? And how do I know you're really from Speedy Deliveries? Can you prove it? Suspect: I apologize for any concern. Your ph"
+        },
+        {
+          "type": "delivery",
+          "fired": [
+            "credential_request"
+          ],
+          "text": "Innocent: Hello.  Suspect: Hello! My name is Karen and I'm calling from Speedy Deliveries. I'm calling to confirm the details of a delivery scheduled for today. Is this Emily Wilson? Innocent: Who's Speedy Deliveries? I've never heard of them. How did you get my number? Suspect: Speedy Deliveries is a courier service that handles deliveries for various online retailers. We received your contact in"
+        },
+        {
+          "type": "delivery",
+          "fired": [
+            "pressure_pattern"
+          ],
+          "text": "Innocent: Hello.  Suspect: Hi, this is Karen from Speedy Deliveries. I'm calling to confirm the details of your delivery scheduled for today. Can I please confirm that your address is 123 Main Street, Apartment 4B? And will you be available to receive the package between 2-4 pm today? Innocent: What's with all the questions? You people can't even get the delivery right. What makes you think I'm go"
+        },
+        {
+          "type": "delivery",
+          "fired": [
+            "pressure_pattern"
+          ],
+          "text": "Innocent: Hello.  Suspect: Hello, this is Karen from Speedy Deliveries. I'm calling to confirm the details of your upcoming delivery. Can I please speak with Emily Wilson? Innocent: Who's Emily Wilson? Suspect: I apologize for the mistake. I must have the wrong name. According to our records, the package is being delivered to a Mr. or Ms. Thompson at this address. Is that correct? Innocent: Thomps"
+        },
+        {
+          "type": "delivery",
+          "fired": [
+            "pressure_pattern"
+          ],
+          "text": "Innocent: Hello.  Suspect: Hello! My name is Karen and I'm calling from Speedy Deliveries. I'm calling to confirm the details of your delivery scheduled for today. Can you please confirm your name and address for me? Innocent: Karen? Speedy Deliveries? I don't remember ordering anything. What's being delivered again? Suspect: I apologize for the confusion. Let me check on that for you. According t"
+        }
+      ]
+    }
+  },
+  {
+    "dataset": "scammer_conversation",
+    "split": "all",
+    "n": 1000,
+    "tp": 13,
+    "fp": 0,
+    "fn": 511,
+    "tn": 476,
+    "precision": 1.0,
+    "recall": 0.025,
+    "f1": 0.048,
+    "false_positive_rate": 0.0,
+    "flagged_rate_by_type": {
+      "unknown (genuine)": 0.0,
+      "unknown (scam)": 0.025
+    },
+    "indicators_fired": {
+      "scam": {
+        "pressure_pattern": 10,
+        "credential_request": 3
+      },
+      "genuine": {}
+    },
+    "examples": {
+      "missed_scams": [
+        {
+          "type": "unknown",
+          "text": "Person A: Hello, I'm calling from the bank and need to verify your account details. Person B: I wasn't expecting this call. Can you specify the reason for this verification? Person A: We noticed some unusual activities and need to secure your account. Person B: I understand the concern. Can you provide your employee ID for verification? Person A: Due to security protocols, I cannot share personal "
+        },
+        {
+          "type": "unknown",
+          "text": "Person A: Good day, I'm calling from a lottery company to inform you that you've won a substantial prize. Person B: Oh, really? Can you provide details on how I won this prize? Person A: You were randomly selected as a winner through our automated system. Person B: I see. Can you confirm the name of the lottery company and your position there? Person A: I'm unable to disclose that information due "
+        },
+        {
+          "type": "unknown",
+          "text": "Person A: Hello, I'm calling from the tax department and need to verify your tax information. Person B: I wasn't expecting this call. Can you specify the reason for this verification? Person A: We noticed some discrepancies in your recent filings and need to update your information. Person B: I understand the concern. Can you provide your employee ID for verification? Person A: Due to security pro"
+        },
+        {
+          "type": "unknown",
+          "text": "Person A: Hello, this is John from the insurance department. We noticed some discrepancies in your policy and need to update your information. Person B: I wasn't aware of any issues. Can you elaborate on the discrepancies? Person A: Yes, we detected some errors in your recent premium payments. Person B: I see. Can you confirm your position at the insurance department and provide a direct line to y"
+        },
+        {
+          "type": "unknown",
+          "text": "Person A: Good day, I'm calling from a tech support company to assist with your computer issues. Person B: Oh, really? What specific issues are you referring to? Person A: Your computer is infected with malware and needs immediate attention. Person B: I see. Can you provide the name of the company you're calling from and your employee ID? Person A: I'm unable to disclose that information due to pr"
+        }
+      ],
+      "false_alarms": []
+    }
+  },
+  {
+    "dataset": "youtube_real",
+    "split": "all",
+    "n": 20,
+    "tp": 6,
+    "fp": 0,
+    "fn": 14,
+    "tn": 0,
+    "precision": 1.0,
+    "recall": 0.3,
+    "f1": 0.462,
+    "false_positive_rate": null,
+    "flagged_rate_by_type": {
+      "refund (scam)": 0.25,
+      "reward (scam)": 0.429,
+      "ssn (scam)": 0.25,
+      "support (scam)": 0.2
+    },
+    "indicators_fired": {
+      "scam": {
+        "pressure_pattern": 4,
+        "unusual_payment_channel": 2,
+        "credential_request": 1
+      },
+      "genuine": {}
+    },
+    "examples": {
+      "missed_scams": [
+        {
+          "type": "support",
+          "text": "Innocent: Yes, hello.\nSuspect: Yes ma'am, are you there?\nInnocent: Is Kelvin there?\nSuspect: Yes ma'am, this is Kevin, the computer guy. You remember me?\nInnocent: Um, I think so. I maybe had talked to you the other day.\nSuspect: Yes ma'am. So first of all, I want you to join this call. This is in regards to your computer. As I already told you, the IP address of your computer has been compromised"
+        },
+        {
+          "type": "support",
+          "text": "Suspect: Your Geek Squad subscription is upgraded to the premium version. That is why you have been charged for it, ma'am.\n\nInnocent: Is there any way to cancel that and get back down to the original?\n\nSuspect: Yes, ma'am, we have options. Also, you can activate a $20 plan.\n\nInnocent: Oh, a $20 plan sounds good. I wouldn't mind that. I don't need the premium. Suspect: So, you want it to be cancele"
+        },
+        {
+          "type": "support",
+          "text": "Suspect: Cancellation department, how may I help you? Oh yeah, this call is about your computer service that just expired, that's why your account has been charged $400. So do you want to cancel it or do you want to renew it?\n\nInnocent: Uh, no, I want to cancel it.\n\nSuspect: Okay, not a problem. So if you want to cancel the service and stop the statement, what you need to do is follow the corporat"
+        },
+        {
+          "type": "refund",
+          "text": "Suspect: My name is Brad Williams. You called the cancellation department of Norton. Norton is an antivirus software that protects your computer. When you bought your computer, we provided the subscription and software. This software on your computer has expired, and today is the auto-renewal date. That\u2019s why you received the email and your account has been charged. Now, it\u2019s up to you whether you"
+        },
+        {
+          "type": "refund",
+          "text": "Innocent: I don't want to renew it.\n\nSuspect: Okay, you just tell me your order ID number, sir.\n\nInnocent: There's an invoice number and the customer number. Which one do you need? And then there's another extra ID number.\n\nSuspect: The invoice number, sir.\n\nInnocent: Norton 115243853CX.\n\nSuspect: Okay, hold on a moment. I just need to check my records. Just give me a moment.\n\nInnocent: Yeah, hell"
+        }
+      ],
+      "false_alarms": []
+    }
+  }
+]

@@ -1,0 +1,192 @@
+{
+ "note": "Scripted calls synthesized with offline Windows voices (phantom.echo.make_calls, test split). Not real recordings.",
+ "cases": [
+  {
+   "file": "01_digital_arrest.wav",
+   "title": "'Digital arrest' police impersonation",
+   "story": "Caller claims to be from a law-enforcement agency, threatens arrest, demands a 'security deposit' within hours and asks for secrecy: several pressure tactics in one call.",
+   "truth": {
+    "label": "suspicious",
+    "type": "digital arrest",
+    "condition": "clean",
+    "claims": [
+     {
+      "type": "name",
+      "key": "khan"
+     },
+     {
+      "type": "name",
+      "key": "cyber crime department"
+     },
+     {
+      "type": "amount",
+      "key": "50000"
+     },
+     {
+      "type": "deadline",
+      "key": "1 hour"
+     },
+     {
+      "type": "payment_request",
+      "key": "payment"
+     }
+    ]
+   },
+   "reference": "Good afternoon. My name is Officer Khan, I am speaking on behalf of the Cyber Crime Department. Okay, how can I help? Your Aadhaar number has been linked to money laundering. You will be arrested today. You need to send 50,000 rupees as a security deposit in the next one hours. Keep this confidential, it is a secret investigation."
+  },
+  {
+   "file": "02_card_cvv_request.wav",
+   "title": "Bank 'security team' asks for card + CVV",
+   "story": "Asks for the card number and CVV. Any request for a credential is a strong indicator on its own.",
+   "truth": {
+    "label": "suspicious",
+    "type": "bank kyc",
+    "condition": "clean",
+    "claims": [
+     {
+      "type": "credential_request",
+      "key": "card number"
+     },
+     {
+      "type": "credential_request",
+      "key": "cvv"
+     },
+     {
+      "type": "deadline",
+      "key": "30 minute"
+     }
+    ]
+   },
+   "reference": "Sir, this call is from ICICI Bank security team. Your debit card has been blocked due to suspicious activity. What do I need to do? Tell me your card number and the CVV on the back, and we will unblock it in thirty minutes."
+  },
+  {
+   "file": "03_lottery_fee.wav",
+   "title": "Lottery prize with a 'tax' fee",
+   "story": "Too-good-to-be-true prize plus a small upfront payment via PhonePe and a deadline.",
+   "truth": {
+    "label": "suspicious",
+    "type": "lottery",
+    "condition": "clean",
+    "claims": [
+     {
+      "type": "amount",
+      "key": "25000"
+     },
+     {
+      "type": "amount",
+      "key": "2500"
+     },
+     {
+      "type": "payment_request",
+      "key": "upi"
+     },
+     {
+      "type": "deadline",
+      "key": "tonight"
+     }
+    ]
+   },
+   "reference": "Hello, your mobile number has won a prize of 25,000 rupees. Send 2,500 rupees tax through PhonePe before tonight to claim it. Who is this? Do not tell your family, they will ask for a share."
+  },
+  {
+   "file": "04_remote_access.wav",
+   "title": "Fake tech support (TeamViewer)",
+   "story": "Asks the victim to install a remote-access app, then pay a 'repair fee' by UPI.",
+   "truth": {
+    "label": "suspicious",
+    "type": "tech support",
+    "condition": "clean",
+    "claims": [
+     {
+      "type": "payment_request",
+      "key": "remote access app"
+     },
+     {
+      "type": "amount",
+      "key": "1200"
+     },
+     {
+      "type": "payment_request",
+      "key": "upi"
+     },
+     {
+      "type": "deadline",
+      "key": "now"
+     }
+    ]
+   },
+   "reference": "This is the Windows help desk. We detected hackers on your laptop. Install TeamViewer now and give me the access code. Okay, one moment. The repair fee is 1,200 rupees, pay it by UPI after we finish."
+  },
+  {
+   "file": "05_genuine_bank_notice.wav",
+   "title": "Genuine bank notice",
+   "story": "A real-style bank message that mentions the password and CVV only to warn the customer. ECHO must not treat the warning as a request.",
+   "truth": {
+    "label": "benign",
+    "type": "bank reminder",
+    "condition": "clean",
+    "claims": [
+     {
+      "type": "amount",
+      "key": "450"
+     }
+    ]
+   },
+   "reference": "Good evening, this message is from ICICI Bank. A payment of 450 rupees is due on your loan account this month. For your safety, do not share your password or CVV with anyone."
+  },
+  {
+   "file": "06_genuine_friend_upi.wav",
+   "title": "Genuine: friend asks for UPI money",
+   "story": "A friend asks for their share by UPI. Payment request + amount, but no manipulation tactic: genuine.",
+   "truth": {
+    "label": "benign",
+    "type": "friend upi",
+    "condition": "clean",
+    "claims": [
+     {
+      "type": "amount",
+      "key": "300"
+     },
+     {
+      "type": "payment_request",
+      "key": "upi"
+     }
+    ]
+   },
+   "reference": "Hi, about the birthday gift we planned. Your share is 300 rupees, just transfer it by UPI whenever you are free. No problem."
+  },
+  {
+   "file": "07_noisy_scam_5db.wav",
+   "title": "Same scam type in heavy noise (5 dB)",
+   "story": "Heavy background noise. Shows how speech recognition errors affect what ECHO can find.",
+   "truth": {
+    "label": "suspicious",
+    "type": "digital arrest",
+    "condition": "snr5",
+    "claims": [
+     {
+      "type": "name",
+      "key": "khan"
+     },
+     {
+      "type": "name",
+      "key": "customs department"
+     },
+     {
+      "type": "amount",
+      "key": "50000"
+     },
+     {
+      "type": "deadline",
+      "key": "2 hour"
+     },
+     {
+      "type": "payment_request",
+      "key": "payment"
+     }
+    ]
+   },
+   "reference": "Good afternoon. My name is Officer Khan, I am speaking on behalf of the Customs Department. Okay, how can I help? Your Aadhaar number has been linked to money laundering. You will be arrested today. You need to send 50,000 rupees as a security deposit in the next two hours. Keep this confidential, it is a secret investigation."
+  }
+ ]
+}
